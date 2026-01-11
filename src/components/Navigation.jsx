@@ -1,23 +1,19 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, memo } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useTilt } from "../hooks/useTilt";
 import { TiltableLink } from "./Tiltable";
+import { URLS } from "../constants";
 
 const Navigation = memo(function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const navigate = useNavigate();
   const logoTiltRef = useTilt({ maxTilt: 3, scale: 1.02 });
   const joinNowTiltRef = useTilt({ maxTilt: 4, scale: 1.02 });
   const menuButtonTiltRef = useTilt({ maxTilt: 3, scale: 1.02 });
 
-  useEffect(() => {
-    // No-op: keep effect in case future scroll behaviors are needed
-  }, []);
-
   const handleJoinClick = () => {
-    window.open('https://campus.hellorubric.com/?tab=memberships&s=6719', '_blank');
+    window.open(URLS.membership, '_blank');
   };
 
   const handleNavigationClick = () => {
@@ -29,6 +25,7 @@ const Navigation = memo(function Navigation() {
   const navigationItems = [
     { to: "/", label: "Home" },
     { to: "/about", label: "About" },
+    { to: "/events", label: "Events" },
     { to: "/sponsors", label: "Sponsors" },
     { to: "/contact", label: "Contact" }
   ];

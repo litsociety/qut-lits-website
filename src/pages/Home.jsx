@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
-import { ArrowRight, Users, Calendar, Award, BookOpen, Briefcase, Globe, Zap, Network, Scale, Cpu, Database, Brain, Code, Rocket, Search, GitBranch, Layers, Sparkles, Target, TrendingUp, Shield, Eye, Lock, Instagram, Facebook, Linkedin, Mail } from "lucide-react";
+import { ArrowRight, Users, Calendar, Briefcase, Globe, Zap, Network, Scale, Cpu, Database, Brain, Code, Rocket, Search, GitBranch, Layers, Sparkles, Target, TrendingUp } from "lucide-react";
 import Navigation from "../components/Navigation";
 import AnimatedBackground from "../components/AnimatedBackground";
-import { useTilt } from "../hooks/useTilt";
+import { CTASection } from "../components/Footer";
 import { useSwipe } from "../hooks/useSwipe";
 import { Tiltable, TiltableButton, TiltableAnchor, TiltableLink } from "../components/Tiltable";
+import { URLS, ANIMATION } from "../constants";
 
 // Hero section data
 const HERO_DATA = {
@@ -14,7 +14,7 @@ const HERO_DATA = {
   subtitle: "Immersing students in the disruptive world of law and technology",
   description: "Established in 2023, our society is dedicated to connecting students with the people, tools and processes that are shaping the future. As the only student society in Australia focused on law and technology, we are fostering bold conversations and empowering the next generation of legal innovators.",
   cta: "Join Our Community",
-  ctaLink: "https://campus.hellorubric.com/?tab=memberships&s=6719",
+  ctaLink: URLS.membership,
   stats: [
     { number: "500+", label: "Active Members", icon: Users },
     { number: "50+", label: "Industry Partners", icon: Network },
@@ -208,7 +208,7 @@ function BannerSlideshow() {
               className="w-full h-full object-cover"
               loading={currentSlide === 0 ? "eager" : "lazy"}
               decoding="async"
-              fetchPriority={currentSlide === 0 ? "high" : "low"}
+              fetchpriority={currentSlide === 0 ? "high" : "low"}
               sizes="100vw"
             />
             <div className="absolute inset-0 bg-black/55"></div>
@@ -241,7 +241,7 @@ function BannerSlideshow() {
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
               index === currentSlide ? 'bg-primary w-8' : 'bg-white/50'
             }`}
-            tiltOptions={{ maxTilt: 2, scale: 1.05 }}
+            tiltOptions={ANIMATION.tilt.subtle}
           />
         ))}
       </div>
@@ -263,7 +263,7 @@ function HeroSection() {
             target="_blank"
             rel="noopener noreferrer"
             className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-primary to-purple text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 shadow-2xl hover:shadow-primary/10 font-rubik overflow-hidden"
-            tiltOptions={{ maxTilt: 4, scale: 1.02 }}
+            tiltOptions={ANIMATION.tilt.interactive}
           >
             <span className="relative z-10">{HERO_DATA.cta}</span>
             <ArrowRight className="h-5 w-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
@@ -272,7 +272,7 @@ function HeroSection() {
           <TiltableLink
             to="/about"
             className="group inline-flex items-center gap-3 border-2 border-white/30 text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm font-rubik"
-            tiltOptions={{ maxTilt: 4, scale: 1.02 }}
+            tiltOptions={ANIMATION.tilt.interactive}
           >
             Learn More
             <ArrowRight className="h-5 w-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
@@ -300,7 +300,7 @@ function BenefitsSection() {
           {BENEFITS.map((benefit, index) => (
             <Tiltable
               key={benefit.title}
-              tiltOptions={{ maxTilt: 4, scale: 1.02 }}
+              tiltOptions={ANIMATION.tilt.default}
               className="h-full"
             >
               <div className="group text-center p-8 bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm hover:border-white/20 transition-all duration-300 hover:bg-white/10 h-full flex flex-col">
@@ -318,87 +318,7 @@ function BenefitsSection() {
   );
 }
 
-function CTASection() {
-  return (
-    <section className="py-24 relative" aria-label="Call to action section">
-      <div className="max-w-4xl mx-auto px-6 text-center">
-        <Tiltable tiltOptions={{ maxTilt: 3, scale: 1.01 }}>
-          <div className="liquid-glass-strong rounded-3xl p-16 border border-white/20 shadow-2xl">
-          <h2 className="text-4xl font-bold text-white mb-6 font-tomorrow">
-            Ready to Shape the Future?
-          </h2>
-          <p className="text-xl text-white/80 mb-10 font-montserrat max-w-2xl mx-auto leading-relaxed">
-            Join us today and become part of a community that's driving innovation 
-            at the intersection of law and technology.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-10">
-            <TiltableAnchor
-              href="https://campus.hellorubric.com/?tab=memberships&s=6719"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative inline-flex items-center bg-gradient-to-r from-primary to-purple text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 shadow-2xl hover:shadow-primary/25 font-rubik overflow-hidden"
-              tiltOptions={{ maxTilt: 4, scale: 1.02 }}
-            >
-              <span className="relative z-10">Join Now</span>
-            </TiltableAnchor>
-            <TiltableLink
-              to="/about"
-              className="group inline-flex items-center gap-3 border-2 border-white/30 text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm font-rubik"
-              tiltOptions={{ maxTilt: 4, scale: 1.02 }}
-            >
-              Learn More
-              <ArrowRight className="h-5 w-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
-            </TiltableLink>
-          </div>
-
-          {/* Social Links */}
-          <div className="flex justify-center items-center gap-6 pt-6 border-t border-white/10">
-            <TiltableAnchor
-              href="https://www.facebook.com/lawinnovationandtechsociety/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all duration-300"
-              aria-label="Facebook"
-              tiltOptions={{ maxTilt: 5, scale: 1.03 }}
-            >
-              <Facebook className="h-5 w-5 text-white/70 group-hover:text-primary transition-colors duration-300" />
-            </TiltableAnchor>
-            <TiltableAnchor
-              href="https://www.instagram.com/qutlitsociety/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all duration-300"
-              aria-label="Instagram"
-              tiltOptions={{ maxTilt: 5, scale: 1.03 }}
-            >
-              <Instagram className="h-5 w-5 text-white/70 group-hover:text-primary transition-colors duration-300" />
-            </TiltableAnchor>
-            <TiltableAnchor
-              href="https://www.linkedin.com/company/law-innovation-and-technology-society/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all duration-300"
-              aria-label="LinkedIn"
-              tiltOptions={{ maxTilt: 5, scale: 1.03 }}
-            >
-              <Linkedin className="h-5 w-5 text-white/70 group-hover:text-primary transition-colors duration-300" />
-            </TiltableAnchor>
-            <TiltableAnchor
-              href="mailto:litsociety@qut.edu.au"
-              className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all duration-300"
-              aria-label="Email"
-              tiltOptions={{ maxTilt: 5, scale: 1.03 }}
-            >
-              <Mail className="h-5 w-5 text-white/70 group-hover:text-primary transition-colors duration-300" />
-            </TiltableAnchor>
-          </div>
-          </div>
-        </Tiltable>
-      </div>
-    </section>
-  );
-}
+// CTASection imported from shared Footer component
 
 function Home() {
   return (

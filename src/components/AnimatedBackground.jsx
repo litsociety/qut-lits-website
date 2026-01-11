@@ -1,50 +1,53 @@
-import React, { useEffect, useRef, useState, memo } from 'react';
+import React, { useEffect, useState, memo, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 const AnimatedBackground = memo(function AnimatedBackground() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [particles, setParticles] = useState([]);
+  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
 
-  useEffect(() => {
-    // Generate random particles - reduced for better performance
-    const newParticles = Array.from({ length: 8 }, (_, i) => ({
+  // Generate particles once on mount (memoized to prevent recreation)
+  const particles = useMemo(() => 
+    Array.from({ length: 6 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 3 + 2,
-      duration: Math.random() * 20 + 10,
-      delay: Math.random() * 5,
-    }));
-    setParticles(newParticles);
-  }, []);
+      size: Math.random() * 2 + 1.5,
+      duration: Math.random() * 15 + 12,
+      delay: Math.random() * 3,
+    })), []
+  );
 
   useEffect(() => {
     let rafId = null;
-    let lastX = 0;
-    let lastY = 0;
+    let lastX = 50;
+    let lastY = 50;
+    let throttleTimeout = null;
 
     const handleMouseMove = (e) => {
-      if (rafId) return;
+      if (throttleTimeout) return;
       
-      rafId = requestAnimationFrame(() => {
-        const newX = (e.clientX / window.innerWidth) * 100;
-        const newY = (e.clientY / window.innerHeight) * 100;
-        
-        // Only update if change is significant (reduces updates)
-        if (Math.abs(newX - lastX) > 1 || Math.abs(newY - lastY) > 1) {
-          setMousePosition({ x: newX, y: newY });
-          lastX = newX;
-          lastY = newY;
-        }
-        
-        rafId = null;
-      });
+      throttleTimeout = setTimeout(() => {
+        rafId = requestAnimationFrame(() => {
+          const newX = (e.clientX / window.innerWidth) * 100;
+          const newY = (e.clientY / window.innerHeight) * 100;
+          
+          // Only update if change is significant (reduces updates)
+          if (Math.abs(newX - lastX) > 2 || Math.abs(newY - lastY) > 2) {
+            setMousePosition({ x: newX, y: newY });
+            lastX = newX;
+            lastY = newY;
+          }
+          
+          rafId = null;
+        });
+        throttleTimeout = null;
+      }, 50); // Throttle to 20fps max for mouse tracking
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       if (rafId) cancelAnimationFrame(rafId);
+      if (throttleTimeout) clearTimeout(throttleTimeout);
     };
   }, []);
 

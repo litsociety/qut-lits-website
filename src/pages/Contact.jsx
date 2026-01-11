@@ -1,21 +1,19 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { ArrowRight, Send, MessageCircle } from "lucide-react";
+import { Send, MessageCircle } from "lucide-react";
 import Navigation from "../components/Navigation";
 import AnimatedBackground from "../components/AnimatedBackground";
-import { useTilt } from "../hooks/useTilt";
 import { Tiltable, TiltableAnchor, TiltableButton } from "../components/Tiltable";
+import { CONTACT, URLS, ANIMATION } from "../constants";
 
 function EmailButton() {
   return (
     <TiltableAnchor
-      href="mailto:litsociety@qut.edu.au"
+      href={URLS.email}
       className="inline-flex items-center gap-3 bg-gradient-to-r from-primary to-purple text-white px-8 py-4 rounded-xl font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 shadow-lg hover:shadow-primary/10 font-rubik"
-      tiltOptions={{ maxTilt: 4, scale: 1.02 }}
+      tiltOptions={ANIMATION.tilt.interactive}
     >
       <Send className="h-5 w-5" />
-      litsociety@qut.edu.au
+      {CONTACT.email}
     </TiltableAnchor>
   );
 }
@@ -26,7 +24,7 @@ function SubmitButton({ isSubmitting = false }) {
       type="submit"
       disabled={isSubmitting}
       className="w-full bg-gradient-to-r from-primary to-purple text-white px-8 py-4 rounded-xl font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 shadow-lg hover:shadow-primary/10 font-rubik flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-transparent"
-      tiltOptions={{ maxTilt: 4, scale: 1.01 }}
+      tiltOptions={ANIMATION.tilt.interactive}
       aria-busy={isSubmitting}
     >
       {isSubmitting ? (
@@ -46,7 +44,7 @@ function SubmitButton({ isSubmitting = false }) {
 
 function FAQBox() {
   return (
-    <Tiltable tiltOptions={{ maxTilt: 3, scale: 1.01 }}>
+    <Tiltable tiltOptions={ANIMATION.tilt.default}>
       <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
       <h3 className="text-2xl font-bold text-white mb-6 font-rubik">Frequently Asked Questions</h3>
       <div className="space-y-4">

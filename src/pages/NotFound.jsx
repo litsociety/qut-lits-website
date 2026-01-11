@@ -1,9 +1,10 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Home, Search, ArrowLeft, HelpCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Home, ArrowLeft, HelpCircle } from "lucide-react";
 import Navigation from "../components/Navigation";
 import AnimatedBackground from "../components/AnimatedBackground";
 import { TiltableLink, TiltableButton } from "../components/Tiltable";
+import { ANIMATION } from "../constants";
 
 function NotFound() {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ function NotFound() {
             <TiltableLink
               to="/"
               className="group inline-flex items-center gap-3 bg-gradient-to-r from-primary to-purple text-white px-8 py-4 rounded-2xl text-lg font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 shadow-2xl hover:shadow-primary/10 font-rubik"
-              tiltOptions={{ maxTilt: 4, scale: 1.02 }}
+              tiltOptions={ANIMATION.tilt.interactive}
             >
               <Home className="h-5 w-5" />
               Go Home
@@ -51,7 +52,7 @@ function NotFound() {
             <TiltableButton
               onClick={() => navigate(-1)}
               className="group inline-flex items-center gap-3 border-2 border-white/30 text-white px-8 py-4 rounded-2xl text-lg font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm font-rubik"
-              tiltOptions={{ maxTilt: 4, scale: 1.02 }}
+              tiltOptions={ANIMATION.tilt.interactive}
             >
               <ArrowLeft className="h-5 w-5" />
               Go Back
@@ -64,28 +65,28 @@ function NotFound() {
               <TiltableLink
                 to="/"
                 className="text-white/80 hover:text-white hover:bg-white/10 p-3 rounded-xl transition-all duration-300 font-rubik text-sm"
-                tiltOptions={{ maxTilt: 3, scale: 1.02 }}
+                tiltOptions={ANIMATION.tilt.default}
               >
                 Home
               </TiltableLink>
               <TiltableLink
                 to="/about"
                 className="text-white/80 hover:text-white hover:bg-white/10 p-3 rounded-xl transition-all duration-300 font-rubik text-sm"
-                tiltOptions={{ maxTilt: 3, scale: 1.02 }}
+                tiltOptions={ANIMATION.tilt.default}
               >
                 About
               </TiltableLink>
               <TiltableLink
                 to="/sponsors"
                 className="text-white/80 hover:text-white hover:bg-white/10 p-3 rounded-xl transition-all duration-300 font-rubik text-sm"
-                tiltOptions={{ maxTilt: 3, scale: 1.02 }}
+                tiltOptions={ANIMATION.tilt.default}
               >
                 Sponsors
               </TiltableLink>
               <TiltableLink
                 to="/contact"
                 className="text-white/80 hover:text-white hover:bg-white/10 p-3 rounded-xl transition-all duration-300 font-rubik text-sm"
-                tiltOptions={{ maxTilt: 3, scale: 1.02 }}
+                tiltOptions={ANIMATION.tilt.default}
               >
                 Contact
               </TiltableLink>

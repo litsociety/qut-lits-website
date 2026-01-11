@@ -1,10 +1,23 @@
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
-import { useEffect } from 'react'
-import Home from './pages/Home'
-import About from './pages/About'
-import Contact from './pages/Contact'
-import Sponsors from './pages/Sponsors'
-import NotFound from './pages/NotFound'
+import { useEffect, Suspense, lazy } from 'react'
+import { LoadingSpinner } from './components/LoadingSpinner'
+
+// Lazy load pages for better initial load performance
+const Home = lazy(() => import('./pages/Home'))
+const About = lazy(() => import('./pages/About'))
+const Contact = lazy(() => import('./pages/Contact'))
+const Sponsors = lazy(() => import('./pages/Sponsors'))
+const Events = lazy(() => import('./pages/Events'))
+const NotFound = lazy(() => import('./pages/NotFound'))
+
+// Loading fallback component
+function PageLoader() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-dark-blue via-dark-purple to-dark-blue">
+      <LoadingSpinner size="lg" />
+    </div>
+  )
+}
 
 // Component to scroll to top on route/hash/history changes
 function ScrollToTop() {
@@ -42,13 +55,16 @@ export default function App() {
   return (
     <Router>
       <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/sponsors" element={<Sponsors />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/sponsors" element={<Sponsors />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </Router>
   )
 }
