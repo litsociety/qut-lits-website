@@ -43,7 +43,7 @@ const EXECUTIVE_TEAM = [
 
 const PAST_PRESIDENTS = [
   {
-    name: "Vinesh",
+    name: "Vinesh Nangia",
     role: "2025 President & Chief Returning Officer",
     image: "/vinesh.jpg",
     bio: "",

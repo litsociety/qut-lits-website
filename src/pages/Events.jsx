@@ -81,6 +81,42 @@ const EVENTS = [
   // MARCH
   {
     id: 4,
+    title: "Intro to Tech Law",
+    category: "workshop",
+    date: "2026-03-02",
+    time: "TBA",
+    location: "QUT Gardens Point Campus",
+    description: "An introductory workshop exploring the intersection of technology and law. Learn about key legal frameworks, regulations, and challenges in the tech industry. Perfect for students new to tech law.",
+    image: "/lits-slideshow-7.jpg",
+    icon: Code,
+    registrationLink: "#"
+  },
+  {
+    id: 5,
+    title: "Intro to Legal Tech",
+    category: "workshop",
+    date: "2026-03-09",
+    time: "TBA",
+    location: "QUT Gardens Point Campus",
+    description: "Discover how technology is transforming the legal profession. This workshop covers legal technology tools, automation, and innovation in legal practice. No prior experience required.",
+    image: "/lits-slideshow-7.jpg",
+    icon: Code,
+    registrationLink: "#"
+  },
+  {
+    id: 6,
+    title: "Technology in Legal Investigations",
+    category: "workshop",
+    date: "2026-03-16",
+    time: "TBA",
+    location: "QUT Gardens Point Campus",
+    description: "Explore how technology is revolutionizing legal investigations. Learn about digital forensics, e-discovery, data analysis, and other tech tools used in modern legal investigations.",
+    image: "/lits-slideshow-7.jpg",
+    icon: Code,
+    registrationLink: "#"
+  },
+  {
+    id: 7,
     title: "Faculty of Science – Welcome & Connect Event",
     category: "workshop",
     date: "2026-03-04",
@@ -92,7 +128,7 @@ const EVENTS = [
     registrationLink: "#"
   },
   {
-    id: 5,
+    id: 8,
     title: "QUTIES Mega Launch",
     category: "workshop",
     date: "2026-03-07",
@@ -104,7 +140,7 @@ const EVENTS = [
     registrationLink: "#"
   },
   {
-    id: 6,
+    id: 9,
     title: "Mel Storey – Book Tour Event",
     category: "workshop",
     date: "2026-03-19",
@@ -116,7 +152,7 @@ const EVENTS = [
     registrationLink: "#"
   },
   {
-    id: 7,
+    id: 10,
     title: "Legal Tech Challenge",
     category: "landmark",
     date: "2026-03-27",
@@ -130,7 +166,7 @@ const EVENTS = [
   
   // APRIL
   {
-    id: 8,
+    id: 11,
     title: "Law & Tech Networking Night",
     category: "landmark",
     date: "2026-04-16",
@@ -144,7 +180,7 @@ const EVENTS = [
   
   // MAY
   {
-    id: 9,
+    id: 12,
     title: "End-of-Semester 1 Social Drinks",
     category: "social",
     date: "2026-05-22",
@@ -158,7 +194,7 @@ const EVENTS = [
   
   // JULY - SEMESTER 2
   {
-    id: 10,
+    id: 13,
     title: "Semester 2 Orientation Week",
     category: "social",
     date: "2026-07-13",
@@ -170,7 +206,7 @@ const EVENTS = [
     registrationLink: "#"
   },
   {
-    id: 11,
+    id: 14,
     title: "Welcome Coffee (Semester 2)",
     category: "social",
     date: "2026-07-14",
@@ -182,7 +218,7 @@ const EVENTS = [
     registrationLink: "#"
   },
   {
-    id: 12,
+    id: 15,
     title: "QUT Open Day",
     category: "workshop",
     date: "2026-07-27",
@@ -196,19 +232,7 @@ const EVENTS = [
   
   // AUGUST
   {
-    id: 13,
-    title: "LITS Additional Social Event",
-    category: "social",
-    date: "2026-12-31",
-    time: "TBA",
-    location: "To be confirmed",
-    description: "Join us for an additional LITS social event - networking or trivia night. Date and venue to be confirmed. Stay tuned for updates!",
-    image: "/lits-slideshow-9.jpeg",
-    icon: Sparkles,
-    registrationLink: "#"
-  },
-  {
-    id: 14,
+    id: 16,
     title: "QUT Tech Industry Night",
     category: "landmark",
     date: "2026-08-14",
@@ -222,7 +246,7 @@ const EVENTS = [
   
   // SEPTEMBER
   {
-    id: 15,
+    id: 17,
     title: "Innovate & Regulate – Law & Technology Panel",
     category: "landmark",
     date: "2026-09-04",
@@ -236,7 +260,7 @@ const EVENTS = [
   
   // OCTOBER
   {
-    id: 16,
+    id: 18,
     title: "End-of-Semester 2 Social Drinks",
     category: "social",
     date: "2026-10-16",
@@ -395,9 +419,38 @@ function EventsSection() {
     return [...EVENTS].sort((a, b) => {
       const dateA = new Date(a.date);
       const dateB = new Date(b.date);
-      if (isNaN(dateA.getTime())) return 1;
-      if (isNaN(dateB.getTime())) return -1;
-      return dateA - dateB;
+      
+      // Handle invalid dates - put them at the end
+      const isValidA = !isNaN(dateA.getTime()) && a.date !== "2026-12-31";
+      const isValidB = !isNaN(dateB.getTime()) && b.date !== "2026-12-31";
+      
+      if (!isValidA && !isValidB) return 0;
+      if (!isValidA) return 1;
+      if (!isValidB) return -1;
+      
+      // Primary sort: by date
+      const dateDiff = dateA.getTime() - dateB.getTime();
+      if (dateDiff !== 0) return dateDiff;
+      
+      // Secondary sort: by time (if dates are the same)
+      // Extract time from time string (e.g., "6:00 PM" or "TBA")
+      const timeA = a.time.toLowerCase();
+      const timeB = b.time.toLowerCase();
+      
+      // If both have "TBA" or similar, maintain original order
+      if (timeA.includes("tba") && timeB.includes("tba")) return 0;
+      if (timeA.includes("tba")) return 1;
+      if (timeB.includes("tba")) return -1;
+      
+      // Try to parse time (simple extraction of hour)
+      const hourA = parseInt(timeA.match(/\d+/)?.[0] || "0");
+      const hourB = parseInt(timeB.match(/\d+/)?.[0] || "0");
+      const isPMA = timeA.includes("pm");
+      const isPMB = timeB.includes("pm");
+      const hour24A = (hourA === 12 ? 0 : hourA) + (isPMA ? 12 : 0);
+      const hour24B = (hourB === 12 ? 0 : hourB) + (isPMB ? 12 : 0);
+      
+      return hour24A - hour24B;
     });
   }, []);
 
