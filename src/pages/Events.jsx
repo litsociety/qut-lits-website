@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, memo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Calendar, Clock, MapPin, Users, ArrowRight, Code, Network, BookOpen, Award, Sparkles, Rocket, CalendarPlus } from "lucide-react";
 import Navigation from "../components/Navigation";
@@ -275,17 +275,17 @@ const EVENTS = [
   }
 ];
 
-function HeroSection() {
+const HeroSection = memo(function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleSubscribeToAll = () => {
+  const handleSubscribeToAll = useCallback(() => {
     setIsModalOpen(true);
-  };
+  }, []);
 
-  const handleDownloadAll = () => {
+  const handleDownloadAll = useCallback(() => {
     const icsContent = generateICSForAllEvents(EVENTS);
     downloadICS(icsContent, 'qut-lits-events-2026.ics');
-  };
+  }, []);
 
   return (
     <section className="relative pt-32 pb-16 overflow-hidden" aria-label="Events section">
@@ -331,44 +331,47 @@ function HeroSection() {
       </div>
     </section>
   );
-}
+});
 
-function EventCard({ event }) {
+const EventCard = memo(function EventCard({ event }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const eventDate = new Date(event.date);
-  const isValidDate = !isNaN(eventDate.getTime()) && event.date !== "2026-12-31";
-  const formattedDate = isValidDate 
-    ? eventDate.toLocaleDateString('en-AU', { 
-        day: 'numeric', 
-        month: 'long', 
-        year: 'numeric' 
-      })
-    : "Date TBA";
+  
+  const formattedDate = useMemo(() => {
+    const eventDate = new Date(event.date);
+    const isValidDate = !isNaN(eventDate.getTime()) && event.date !== "2026-12-31";
+    return isValidDate 
+      ? eventDate.toLocaleDateString('en-AU', { 
+          day: 'numeric', 
+          month: 'long', 
+          year: 'numeric' 
+        })
+      : "Date TBA";
+  }, [event.date]);
 
-  const category = EVENT_CATEGORIES[event.category] || EVENT_CATEGORIES.workshop;
+  const category = useMemo(() => EVENT_CATEGORIES[event.category] || EVENT_CATEGORIES.workshop, [event.category]);
   const CategoryIcon = category.icon;
 
-  const handleAddToCalendar = (e) => {
+  const handleAddToCalendar = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
     setIsModalOpen(true);
-  };
+  }, []);
 
-  const handleDownload = () => {
+  const handleDownload = useCallback(() => {
     const icsContent = generateICS(event);
     const filename = `${event.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.ics`;
     downloadICS(icsContent, filename);
-  };
+  }, [event]);
 
   return (
     <Tiltable tiltOptions={{ maxTilt: 5, scale: 1.02 }} className="h-full">
-      <div className="group bg-white/5 rounded-3xl overflow-hidden border border-white/10 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 hover:bg-white/10 h-full flex flex-col">
+      <div className="group bg-white/5 rounded-3xl overflow-hidden border border-white/10 backdrop-blur-sm hover:border-primary/30 transition-all duration-200 hover:bg-white/10 h-full flex flex-col">
         {/* Event Image */}
         <div className="relative h-48 overflow-hidden">
           <img
             src={event.image}
             alt={event.title}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 will-change-transform"
             loading="lazy"
             decoding="async"
             onError={(e) => {
@@ -395,7 +398,7 @@ function EventCard({ event }) {
             >
               <button
                 onClick={handleAddToCalendar}
-                className="group bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 hover:border-primary/50 rounded-full p-2.5 transition-all duration-300 inline-block"
+                className="group bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 hover:border-primary/50 rounded-full p-2.5 transition-all duration-200 inline-block"
                 aria-label={`Add ${event.title} to calendar`}
                 title="Add to calendar"
               >
@@ -408,7 +411,7 @@ function EventCard({ event }) {
 
         {/* Event Content */}
         <div className="p-6 flex-1 flex flex-col">
-          <h3 className="text-2xl font-bold text-white mb-4 font-tomorrow group-hover:text-primary transition-colors duration-300">
+          <h3 className="text-2xl font-bold text-white mb-4 font-tomorrow group-hover:text-primary transition-colors duration-200">
             {event.title}
           </h3>
           
@@ -461,7 +464,7 @@ function EventCard({ event }) {
       </div>
     </Tiltable>
   );
-}
+});
 
 function EventLegend() {
   return (
@@ -537,7 +540,11 @@ function EventsSection() {
               key={event.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
+              transition={{ 
+                duration: 0.3, 
+                delay: Math.min(index * 0.03, 0.3),
+                ease: [0.25, 0.46, 0.45, 0.94]
+              }}
             >
               <EventCard event={event} />
             </motion.div>

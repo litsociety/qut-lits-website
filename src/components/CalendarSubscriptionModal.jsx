@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Download, CalendarPlus, ChevronRight } from "lucide-react";
@@ -245,29 +245,6 @@ function CalendarSubscriptionModal({ isOpen, onClose, onDownload, eventTitle }) 
     }
   }, [isOpen]);
 
-  const availableCalendars = selectedDevice ? CALENDAR_OPTIONS[selectedDevice] || [] : [];
-  const instructionKey = selectedDevice && selectedCalendar 
-    ? `${selectedDevice}-${selectedCalendar}` 
-    : null;
-  const instructions = instructionKey ? INSTRUCTIONS[instructionKey] : null;
-
-  const handleDeviceSelect = (deviceId) => {
-    setSelectedDevice(deviceId);
-    setSelectedCalendar(null);
-    setCurrentStep(2);
-  };
-
-  const handleCalendarSelect = (calendarId) => {
-    setSelectedCalendar(calendarId);
-    setCurrentStep(3);
-  };
-
-  const handleDownload = () => {
-    if (onDownload) {
-      onDownload();
-    }
-  };
-
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -275,10 +252,44 @@ function CalendarSubscriptionModal({ isOpen, onClose, onDownload, eventTitle }) 
     return () => setMounted(false);
   }, []);
 
+  const availableCalendars = useMemo(() => 
+    selectedDevice ? CALENDAR_OPTIONS[selectedDevice] || [] : [], 
+    [selectedDevice]
+  );
+  
+  const instructionKey = useMemo(() => 
+    selectedDevice && selectedCalendar 
+      ? `${selectedDevice}-${selectedCalendar}` 
+      : null,
+    [selectedDevice, selectedCalendar]
+  );
+  
+  const instructions = useMemo(() => 
+    instructionKey ? INSTRUCTIONS[instructionKey] : null,
+    [instructionKey]
+  );
+
+  const handleDeviceSelect = useCallback((deviceId) => {
+    setSelectedDevice(deviceId);
+    setSelectedCalendar(null);
+    setCurrentStep(2);
+  }, []);
+
+  const handleCalendarSelect = useCallback((calendarId) => {
+    setSelectedCalendar(calendarId);
+    setCurrentStep(3);
+  }, []);
+
+  const handleDownload = useCallback(() => {
+    if (onDownload) {
+      onDownload();
+    }
+  }, [onDownload]);
+
   if (!isOpen || !mounted) return null;
 
   const modalContent = (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       <div className="fixed inset-0 z-[1050] flex items-center justify-center p-4">
         {/* Backdrop */}
         <motion.div
@@ -291,9 +302,10 @@ function CalendarSubscriptionModal({ isOpen, onClose, onDownload, eventTitle }) 
 
         {/* Modal */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          initial={{ opacity: 0, scale: 0.96, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          exit={{ opacity: 0, scale: 0.96, y: 10 }}
+          transition={{ duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
           onClick={(e) => e.stopPropagation()}
           className="relative bg-gradient-to-br from-dark-blue via-dark-purple to-dark-blue rounded-2xl md:rounded-3xl border border-white/20 backdrop-blur-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto z-10"
         >
@@ -331,8 +343,9 @@ function CalendarSubscriptionModal({ isOpen, onClose, onDownload, eventTitle }) 
             {/* Step 1: Device Selection */}
             {currentStep === 1 && (
               <motion.div
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className="space-y-4"
               >
                 <h3 className="text-base sm:text-lg font-semibold text-white font-rubik mb-3 sm:mb-4">
@@ -356,8 +369,9 @@ function CalendarSubscriptionModal({ isOpen, onClose, onDownload, eventTitle }) 
             {/* Step 2: Calendar Selection */}
             {currentStep === 2 && (
               <motion.div
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className="space-y-4"
               >
                 <button
@@ -391,8 +405,9 @@ function CalendarSubscriptionModal({ isOpen, onClose, onDownload, eventTitle }) 
             {/* Step 3: Instructions */}
             {currentStep === 3 && instructions && (
               <motion.div
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className="space-y-6"
               >
                 <button
