@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar, Clock, MapPin, Users, ArrowRight, Zap, Code, Network, BookOpen, Brain, Award, Sparkles, Rocket, CalendarPlus } from "lucide-react";
+import { Calendar, Clock, MapPin, Users, ArrowRight, Code, Network, BookOpen, Award, Sparkles, Rocket, CalendarPlus } from "lucide-react";
 import Navigation from "../components/Navigation";
 import AnimatedBackground from "../components/AnimatedBackground";
 import { CTASection } from "../components/Footer";

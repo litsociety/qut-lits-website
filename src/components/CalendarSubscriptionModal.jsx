@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Download, Check, CalendarPlus, ChevronRight } from "lucide-react";
+import { X, Download, CalendarPlus, ChevronRight } from "lucide-react";
 
 const DEVICE_OPTIONS = [
   { id: 'ios', label: 'iOS (iPhone/iPad)' },
@@ -267,9 +268,16 @@ function CalendarSubscriptionModal({ isOpen, onClose, onDownload, eventTitle }) 
     }
   };
 
-  if (!isOpen) return null;
+  const [mounted, setMounted] = useState(false);
 
-  return (
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
+  if (!isOpen || !mounted) return null;
+
+  const modalContent = (
     <AnimatePresence>
       <div className="fixed inset-0 z-[1050] flex items-center justify-center p-4">
         {/* Backdrop */}
@@ -432,6 +440,8 @@ function CalendarSubscriptionModal({ isOpen, onClose, onDownload, eventTitle }) 
       </div>
     </AnimatePresence>
   );
+
+  return createPortal(modalContent, document.body);
 }
 
 export default CalendarSubscriptionModal;
