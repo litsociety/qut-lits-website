@@ -1,10 +1,12 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar, Clock, MapPin, Users, ArrowRight, Zap, Code, Network, BookOpen, Brain, Award, Sparkles, Rocket } from "lucide-react";
+import { Calendar, Clock, MapPin, Users, ArrowRight, Zap, Code, Network, BookOpen, Brain, Award, Sparkles, Rocket, CalendarPlus } from "lucide-react";
 import Navigation from "../components/Navigation";
 import AnimatedBackground from "../components/AnimatedBackground";
 import { CTASection } from "../components/Footer";
 import { Tiltable, TiltableAnchor } from "../components/Tiltable";
+import { generateICS, generateICSForAllEvents, downloadICS } from "../utils/calendar";
+import CalendarSubscriptionModal from "../components/CalendarSubscriptionModal";
 
 // Event category definitions
 const EVENT_CATEGORIES = {
@@ -274,6 +276,17 @@ const EVENTS = [
 ];
 
 function HeroSection() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleSubscribeToAll = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleDownloadAll = () => {
+    const icsContent = generateICSForAllEvents(EVENTS);
+    downloadICS(icsContent, 'qut-lits-events-2026.ics');
+  };
+
   return (
     <section className="relative pt-32 pb-16 overflow-hidden" aria-label="Events section">
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
@@ -288,16 +301,40 @@ function HeroSection() {
           Our Events
         </h1>
         
-        <p className="text-xl md:text-2xl text-white/80 font-montserrat max-w-4xl mx-auto leading-relaxed">
+        <p className="text-xl md:text-2xl text-white/80 font-montserrat max-w-4xl mx-auto leading-relaxed mb-8">
           Join us for workshops, networking events, speaker series, and more. 
           Explore the intersection of law and technology with industry leaders and fellow students.
         </p>
+
+        {/* Subscribe to All Events Button */}
+        <Tiltable
+          tiltOptions={{ maxTilt: 3, scale: 1.02 }}
+          className="inline-block"
+        >
+          <button
+            onClick={handleSubscribeToAll}
+            className="group inline-flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 hover:border-primary/50 rounded-full px-6 py-3 transition-all duration-300 font-rubik text-white"
+            aria-label="Subscribe to all events"
+          >
+            <CalendarPlus className="h-5 w-5 text-primary group-hover:scale-110 transition-transform duration-300" />
+            <span className="text-sm font-semibold">Subscribe to All Events</span>
+          </button>
+        </Tiltable>
+
+        {/* Calendar Subscription Modal */}
+        <CalendarSubscriptionModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onDownload={handleDownloadAll}
+          eventTitle={null}
+        />
       </div>
     </section>
   );
 }
 
 function EventCard({ event }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const eventDate = new Date(event.date);
   const isValidDate = !isNaN(eventDate.getTime()) && event.date !== "2026-12-31";
   const formattedDate = isValidDate 
@@ -310,6 +347,18 @@ function EventCard({ event }) {
 
   const category = EVENT_CATEGORIES[event.category] || EVENT_CATEGORIES.workshop;
   const CategoryIcon = category.icon;
+
+  const handleAddToCalendar = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsModalOpen(true);
+  };
+
+  const handleDownload = () => {
+    const icsContent = generateICS(event);
+    const filename = `${event.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.ics`;
+    downloadICS(icsContent, filename);
+  };
 
   return (
     <Tiltable tiltOptions={{ maxTilt: 5, scale: 1.02 }} className="h-full">
@@ -336,6 +385,23 @@ function EventCard({ event }) {
                 {category.label}
               </span>
             </div>
+          </div>
+
+          {/* Add to Calendar Icon */}
+          <div className="absolute top-4 right-4">
+            <Tiltable
+              tiltOptions={{ maxTilt: 3, scale: 1.1 }}
+              className="inline-block"
+            >
+              <button
+                onClick={handleAddToCalendar}
+                className="group bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 hover:border-primary/50 rounded-full p-2.5 transition-all duration-300 inline-block"
+                aria-label={`Add ${event.title} to calendar`}
+                title="Add to calendar"
+              >
+                <CalendarPlus className="h-4 w-4 text-white group-hover:text-primary transition-colors duration-300" />
+              </button>
+            </Tiltable>
           </div>
 
         </div>
@@ -384,6 +450,14 @@ function EventCard({ event }) {
             </div>
           )}
         </div>
+
+        {/* Calendar Subscription Modal */}
+        <CalendarSubscriptionModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onDownload={handleDownload}
+          eventTitle={event.title}
+        />
       </div>
     </Tiltable>
   );
