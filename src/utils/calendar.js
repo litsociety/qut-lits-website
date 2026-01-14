@@ -151,8 +151,10 @@ export function generateICS(event) {
   lines.push(`LOCATION:${escapeICS(event.location)}`);
   
   // Timestamp (use UTC for timestamp)
+  // getTimezoneOffset() returns offset in minutes (negative for ahead of UTC)
+  // To convert local to UTC: UTC = local - offset
   const now = new Date();
-  const utcNow = new Date(now.getTime() + (now.getTimezoneOffset() * 60 * 1000));
+  const utcNow = new Date(now.getTime() - (now.getTimezoneOffset() * 60 * 1000));
   lines.push(`DTSTAMP:${formatICSDate(utcNow)}Z`);
   
   // Status

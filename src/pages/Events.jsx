@@ -282,6 +282,10 @@ const HeroSection = memo(function HeroSection() {
     setIsModalOpen(true);
   }, []);
 
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
+
   const handleDownloadAll = useCallback(() => {
     const icsContent = generateICSForAllEvents(EVENTS);
     downloadICS(icsContent, 'qut-lits-events-2026.ics');
@@ -324,7 +328,7 @@ const HeroSection = memo(function HeroSection() {
         {/* Calendar Subscription Modal */}
         <CalendarSubscriptionModal
           isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          onClose={handleCloseModal}
           onDownload={handleDownloadAll}
           eventTitle={null}
         />
@@ -355,6 +359,10 @@ const EventCard = memo(function EventCard({ event }) {
     e.preventDefault();
     e.stopPropagation();
     setIsModalOpen(true);
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false);
   }, []);
 
   const handleDownload = useCallback(() => {
@@ -457,7 +465,7 @@ const EventCard = memo(function EventCard({ event }) {
         {/* Calendar Subscription Modal */}
         <CalendarSubscriptionModal
           isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          onClose={handleCloseModal}
           onDownload={handleDownload}
           eventTitle={event.title}
         />
