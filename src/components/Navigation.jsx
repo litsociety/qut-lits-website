@@ -82,7 +82,7 @@ const Navigation = memo(function Navigation() {
             <button
               ref={joinNowTiltRef}
               onClick={handleJoinClick}
-              className="bg-gradient-to-r from-primary to-purple text-white px-6 py-3 rounded-xl font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 font-rubik shadow-lg hover:shadow-xl focus:outline-none"
+              className="bg-gradient-to-r from-primary to-purple text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 font-rubik shadow-[0_0_18px_rgba(0,194,203,0.45)] hover:shadow-[0_0_28px_rgba(0,194,203,0.65)] hover:brightness-110 focus:outline-none"
               aria-label="Join QUT LITS - Opens in new tab"
             >
               Join Now
