@@ -47,7 +47,7 @@ const Navigation = memo(function Navigation() {
           >
             <div className="relative">
               <img 
-                src="./apple-touch-logo.png" 
+                src="/apple-touch-logo.png"
                 alt="QUT LITS Logo" 
                 className="h-10 w-10 rounded-xl transition-transform duration-300" 
                 loading="eager"
