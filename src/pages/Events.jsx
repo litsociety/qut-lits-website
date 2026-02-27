@@ -72,7 +72,7 @@ const EVENTS = [
     title: "Welcome Coffee (Semester 1)",
     category: "social",
     date: "2026-02-26",
-    time: "TBA",
+    time: "11:00 AM",
     location: "Merlo Coffee, Gardens Point",
     description: "Kick off the semester with a casual welcome coffee event at Merlo. Meet new members, reconnect with friends, and learn about upcoming events and opportunities.",
     image: "/lits-slideshow-9.jpeg",
