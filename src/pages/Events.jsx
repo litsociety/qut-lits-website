@@ -86,36 +86,36 @@ const EVENTS = [
     title: "Intro to Tech Law",
     category: "workshop",
     date: "2026-03-02",
-    time: "4:00 PM – 5:00 PM",
+    time: "5:00 PM – 6:00 PM",
     location: "QUT Gardens Point Campus D-106",
     description: "An introductory workshop exploring the intersection of technology and law. Learn about key legal frameworks, regulations, and challenges in the tech industry. Perfect for students new to tech law.",
     image: "/lits-slideshow-7.jpg",
     icon: Code,
-    registrationLink: "#"
+    registrationLink: "https://campus.hellorubric.com/?eid=53721"
   },
   {
     id: 5,
     title: "Intro to Legal Tech",
     category: "workshop",
     date: "2026-03-09",
-    time: "4:00 PM – 5:00 PM",
+    time: "5:00 PM – 6:00 PM",
     location: "QUT Gardens Point Campus D-106",
     description: "Discover how technology is transforming the legal profession. This workshop covers legal technology tools, automation, and innovation in legal practice. No prior experience required.",
     image: "/lits-slideshow-7.jpg",
     icon: Code,
-    registrationLink: "#"
+    registrationLink: "https://campus.hellorubric.com/?eid=53722"
   },
   {
     id: 6,
     title: "Technology in Legal Investigations",
     category: "workshop",
     date: "2026-03-23",
-    time: "4:00 PM – 5:00 PM",
+    time: "5:00 PM – 6:00 PM",
     location: "QUT Gardens Point Campus D-106",
     description: "Explore how technology is revolutionizing legal investigations. Learn about digital forensics, e-discovery, data analysis, and other tech tools used in modern legal investigations.",
     image: "/lits-slideshow-7.jpg",
     icon: Code,
-    registrationLink: "#"
+    registrationLink: "https://campus.hellorubric.com/?eid=53724"
   },
   {
     id: 7,
