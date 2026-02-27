@@ -151,19 +151,20 @@ const EVENTS = [
     description: "Join us for Mel Storey's book tour event. An opportunity to engage with thought leadership in law and technology. This event requires co-operation with QUTLS and possibly QLS.",
     image: "/lits-slideshow-7.jpg",
     icon: BookOpen,
-    registrationLink: "#"
+    registrationLink: "https://campus.hellorubric.com/?eid=53921"
   },
   {
     id: 10,
     title: "Legal Tech Challenge",
     category: "landmark",
     date: "2026-03-27",
+    displayDate: "27, 28 & 29 March 2026",
     time: "Fri 5–8PM · Sat 10AM–5PM · Sun 1–5PM",
     location: "QUT Gardens Point Campus P Block Atrium",
-    description: "An interactive event that encourages students to design innovative technology-based solutions to real-world legal problems. Participants pitch their ideas to a panel of industry judges. No coding experience required — only a passion for creativity, problem-solving and innovation. Runs Friday 27 March (5–8PM), Saturday 28 March (10AM–5PM), and Sunday 29 March (1–5PM).",
+    description: "An interactive event that encourages students to design innovative technology-based solutions to real-world legal problems. Participants pitch their ideas to a panel of industry judges. No coding experience required, only a passion for creativity, problem-solving and innovation. Runs Friday 27 March (5–8PM), Saturday 28 March (10AM–5PM), and Sunday 29 March (1–5PM). Early Bird tickets $15, General Admission from 13 March at $30.",
     image: "/lits-slideshow-8.jpg",
     icon: Code,
-    registrationLink: "#"
+    registrationLink: "https://campus.hellorubric.com/?eid=55497"
   },
   
   // APRIL
@@ -337,20 +338,21 @@ const HeroSection = memo(function HeroSection() {
   );
 });
 
-const EventCard = memo(function EventCard({ event }) {
+const EventCard = memo(function EventCard({ event, isPrevious }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   const formattedDate = useMemo(() => {
+    if (event.displayDate) return event.displayDate;
     const eventDate = new Date(event.date);
     const isValidDate = !isNaN(eventDate.getTime()) && event.date !== "2026-12-31";
-    return isValidDate 
-      ? eventDate.toLocaleDateString('en-AU', { 
-          day: 'numeric', 
-          month: 'long', 
-          year: 'numeric' 
+    return isValidDate
+      ? eventDate.toLocaleDateString('en-AU', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
         })
       : "Date TBA";
-  }, [event.date]);
+  }, [event.date, event.displayDate]);
 
   const category = useMemo(() => EVENT_CATEGORIES[event.category] || EVENT_CATEGORIES.workshop, [event.category]);
   const CategoryIcon = category.icon;
@@ -444,21 +446,23 @@ const EventCard = memo(function EventCard({ event }) {
           </div>
 
           {/* CTA Button */}
-          {event.registrationLink && event.registrationLink !== "#" ? (
-            <TiltableAnchor
-              href={event.registrationLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-purple text-white px-6 py-3 rounded-xl font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 shadow-lg hover:shadow-primary/25 font-rubik"
-              tiltOptions={{ maxTilt: 4, scale: 1.02 }}
-            >
-              Register Now
-              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-            </TiltableAnchor>
-          ) : (
-            <div className="inline-flex items-center justify-center gap-2 bg-white/10 text-white/60 px-6 py-3 rounded-xl font-semibold font-rubik cursor-not-allowed">
-              Registration Coming Soon
-            </div>
+          {!isPrevious && (
+            event.registrationLink && event.registrationLink !== "#" ? (
+              <TiltableAnchor
+                href={event.registrationLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-purple text-white px-6 py-3 rounded-xl font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 shadow-lg hover:shadow-primary/25 font-rubik"
+                tiltOptions={{ maxTilt: 4, scale: 1.02 }}
+              >
+                Register Now
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+              </TiltableAnchor>
+            ) : (
+              <div className="inline-flex items-center justify-center gap-2 bg-white/10 text-white/60 px-6 py-3 rounded-xl font-semibold font-rubik cursor-not-allowed">
+                Registration Coming Soon
+              </div>
+            )
           )}
         </div>
 
@@ -526,7 +530,7 @@ function EventsSection() {
     return { previousEvents: previous, sem1Events: sem1, sem2Events: sem2 };
   }, [today]);
 
-  const renderGrid = (events, baseDelay = 0) => (
+  const renderGrid = (events, baseDelay = 0, isPrevious = false) => (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       {events.map((event, index) => (
         <motion.div
@@ -539,7 +543,7 @@ function EventsSection() {
             ease: [0.25, 0.46, 0.45, 0.94]
           }}
         >
-          <EventCard event={event} />
+          <EventCard event={event} isPrevious={isPrevious} />
         </motion.div>
       ))}
     </div>
@@ -589,7 +593,7 @@ function EventsSection() {
             <h2 className="text-4xl font-bold text-white mb-10 font-tomorrow">
               Previous Events
             </h2>
-            {renderGrid(previousEvents, sem1Events.length + sem2Events.length)}
+            {renderGrid(previousEvents, sem1Events.length + sem2Events.length, true)}
           </div>
         )}
 
