@@ -262,7 +262,7 @@ function HeroSection() {
             href={HERO_DATA.ctaLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative inline-flex items-center gap-3 bg-primary text-dark-blue px-10 py-5 rounded-2xl text-xl font-semibold hover:bg-primary/90 transition-all duration-300 shadow-2xl font-rubik overflow-hidden"
+            className="group relative inline-flex items-center gap-3 bg-white/20 backdrop-blur-sm border border-white/30 text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:bg-white/30 hover:border-white/50 transition-all duration-300 font-rubik overflow-hidden"
             tiltOptions={ANIMATION.tilt.interactive}
           >
             <span className="relative z-10">{HERO_DATA.cta}</span>
