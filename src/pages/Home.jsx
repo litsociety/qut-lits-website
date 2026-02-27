@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import { ArrowRight, Users, Calendar, Briefcase, Globe, Zap, Network, Scale, Cpu, Database, Brain, Code, Rocket, Search, GitBranch, Layers, Sparkles, Target, TrendingUp } from "lucide-react";
 import Navigation from "../components/Navigation";
 import AnimatedBackground from "../components/AnimatedBackground";
 import { CTASection } from "../components/Footer";
 import { useSwipe } from "../hooks/useSwipe";
-import { Tiltable, TiltableButton, TiltableAnchor, TiltableLink } from "../components/Tiltable";
-import { URLS, ANIMATION } from "../constants";
+import { URLS } from "../constants";
 
 // Hero section data
 const HERO_DATA = {
@@ -183,7 +183,7 @@ function BannerSlideshow() {
   }, []);
 
   return (
-    <section 
+    <section
       ref={swipeRef}
       className="relative h-[70vh] min-h-[600px] overflow-hidden z-10"
       aria-label="Featured slideshow"
@@ -202,8 +202,8 @@ function BannerSlideshow() {
         >
           {/* Background Image with Overlay */}
           <div className="absolute inset-0">
-            <img 
-              src={BANNER_SLIDES[currentSlide].image} 
+            <img
+              src={BANNER_SLIDES[currentSlide].image}
               alt={BANNER_SLIDES[currentSlide].title}
               className="w-full h-full object-cover"
               loading={currentSlide === 0 ? "eager" : "lazy"}
@@ -235,13 +235,12 @@ function BannerSlideshow() {
       {/* Slide Indicators */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
         {BANNER_SLIDES.map((_, index) => (
-          <TiltableButton
+          <button
             key={index}
             onClick={() => setCurrentSlide(index)}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
               index === currentSlide ? 'bg-primary w-8' : 'bg-white/50'
             }`}
-            tiltOptions={ANIMATION.tilt.subtle}
           />
         ))}
       </div>
@@ -256,27 +255,25 @@ function HeroSection() {
         <p className="text-lg md:text-xl mb-8 text-white/90 font-montserrat max-w-3xl mx-auto leading-relaxed">
           {HERO_DATA.description}
         </p>
-        
+
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-          <TiltableAnchor
+          <a
             href={HERO_DATA.ctaLink}
             target="_blank"
             rel="noopener noreferrer"
             className="group relative inline-flex items-center gap-3 bg-white/20 backdrop-blur-sm border border-white/30 text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:bg-white/30 hover:border-white/50 transition-all duration-300 font-rubik overflow-hidden"
-            tiltOptions={ANIMATION.tilt.interactive}
           >
             <span className="relative z-10">{HERO_DATA.cta}</span>
             <ArrowRight className="h-5 w-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
-          </TiltableAnchor>
-          
-          <TiltableLink
+          </a>
+
+          <Link
             to="/about"
             className="group inline-flex items-center gap-3 border-2 border-white/30 text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm font-rubik"
-            tiltOptions={ANIMATION.tilt.interactive}
           >
             Learn More
             <ArrowRight className="h-5 w-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
-          </TiltableLink>
+          </Link>
         </div>
       </div>
     </section>
@@ -298,9 +295,8 @@ function BenefitsSection() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch">
           {BENEFITS.map((benefit, index) => (
-            <Tiltable
+            <div
               key={benefit.title}
-              tiltOptions={ANIMATION.tilt.default}
               className="h-full"
             >
               <div className="group text-center p-8 bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm hover:border-white/20 transition-all duration-300 hover:bg-white/10 h-full flex flex-col">
@@ -310,7 +306,7 @@ function BenefitsSection() {
                 <h3 className="text-xl font-bold text-white mb-4 font-rubik">{benefit.title}</h3>
                 <p className="text-white/80 font-montserrat leading-relaxed">{benefit.description}</p>
               </div>
-            </Tiltable>
+            </div>
           ))}
         </div>
       </div>

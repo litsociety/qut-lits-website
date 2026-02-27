@@ -48,7 +48,7 @@ export default function AnnouncementBanner() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00c2cb]" />
               </span>
 
-              <p className="text-sm font-rubik leading-snug text-white/80 truncate sm:whitespace-normal">
+              <p className="text-sm font-rubik leading-snug text-white/80 truncate">
                 <span className="font-semibold text-white tracking-tight">
                   Legal Tech Challenge
                 </span>

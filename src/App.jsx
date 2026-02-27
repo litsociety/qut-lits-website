@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect, Suspense, lazy } from 'react'
 import { LoadingSpinner } from './components/LoadingSpinner'
 import AnnouncementBanner from './components/AnnouncementBanner'

@@ -4,8 +4,7 @@ import { Gem, Heart, Download } from "lucide-react";
 import Navigation from "../components/Navigation";
 import AnimatedBackground from "../components/AnimatedBackground";
 import { SocialLinks } from "../components/Footer";
-import { Tiltable, TiltableAnchor } from "../components/Tiltable";
-import { URLS, ANIMATION } from "../constants";
+import { URLS } from "../constants";
 
 // Sponsor data organized by tier
 const SPONSOR_TIERS = [
@@ -80,9 +79,9 @@ function HeroSection() {
         <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 font-tomorrow leading-tight">
           Thank You to Our Sponsors
         </h1>
-        
+
         <p className="text-xl md:text-2xl text-white/90 font-montserrat max-w-3xl mx-auto leading-relaxed">
-          We are grateful for the generous support of our sponsors who make our mission possible. 
+          We are grateful for the generous support of our sponsors who make our mission possible.
           Together, we're shaping the future of law and technology.
         </p>
       </div>
@@ -115,87 +114,85 @@ function SponsorTierCard({ tier, index }) {
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
     >
-      <Tiltable tiltOptions={{ maxTilt: 2, scale: 1.01 }}>
-        <div 
-          className="relative rounded-3xl overflow-hidden backdrop-blur-md bg-white/[0.04]"
-          style={{ border: `1px solid ${styles.borderColor}` }}
-        >
-          {/* Subtle gradient overlay */}
-          <div 
-            className="absolute inset-0 opacity-40 pointer-events-none"
-            style={{ background: `linear-gradient(to bottom right, ${styles.primary}20, ${styles.primary}10, transparent)` }}
-          />
-          
-          {/* Glass highlight */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.06] via-transparent to-transparent pointer-events-none" />
-          
-          {/* Content */}
-          <div className="relative z-10 p-8 md:p-10">
-            {/* Tier header */}
-            <div className="flex justify-center mb-6">
-              <div 
-                className="inline-flex items-center gap-3 px-5 py-2.5 rounded-xl bg-white/[0.06]"
-                style={{ border: `1px solid ${styles.borderColor}` }}
+      <div
+        className="relative rounded-3xl overflow-hidden backdrop-blur-md bg-white/[0.04]"
+        style={{ border: `1px solid ${styles.borderColor}` }}
+      >
+        {/* Subtle gradient overlay */}
+        <div
+          className="absolute inset-0 opacity-40 pointer-events-none"
+          style={{ background: `linear-gradient(to bottom right, ${styles.primary}20, ${styles.primary}10, transparent)` }}
+        />
+
+        {/* Glass highlight */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.06] via-transparent to-transparent pointer-events-none" />
+
+        {/* Content */}
+        <div className="relative z-10 p-8 md:p-10">
+          {/* Tier header */}
+          <div className="flex justify-center mb-6">
+            <div
+              className="inline-flex items-center gap-3 px-5 py-2.5 rounded-xl bg-white/[0.06]"
+              style={{ border: `1px solid ${styles.borderColor}` }}
+            >
+              <tier.icon
+                className="h-5 w-5"
+                style={{ color: styles.primary }}
+              />
+              <h2
+                className="text-xl md:text-2xl font-bold font-tomorrow"
+                style={{ color: styles.primary }}
               >
-                <tier.icon 
-                  className="h-5 w-5"
-                  style={{ color: styles.primary }}
-                />
-                <h2 
-                  className="text-xl md:text-2xl font-bold font-tomorrow"
-                  style={{ color: styles.primary }}
-                >
-                  {tier.name} Tier
-                </h2>
-              </div>
+                {tier.name} Tier
+              </h2>
             </div>
-
-            {/* Description */}
-            <p className="text-center text-white/50 font-montserrat text-sm mb-8 max-w-sm mx-auto">
-              {tier.description}
-            </p>
-
-            {/* Sponsors area */}
-            {tier.sponsors.length > 0 ? (
-              <div className="flex flex-wrap justify-center items-center gap-10">
-                {tier.sponsors.map((sponsor, sponsorIndex) => (
-                  <a 
-                    key={sponsorIndex} 
-                    href={sponsor.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center transition-opacity duration-300 hover:opacity-80"
-                    title={`Visit ${sponsor.name}`}
-                  >
-                    <img
-                      src={sponsor.logo}
-                      alt={`${sponsor.name} logo`}
-                      className="max-h-20 md:max-h-28 max-w-[280px] object-contain brightness-0 invert"
-                      loading="lazy"
-                      decoding="async"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  </a>
-                ))}
-              </div>
-            ) : (
-              <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] py-6 px-8">
-                <p className="text-white/30 font-montserrat italic text-center text-sm">
-                  Sponsor announcements coming soon
-                </p>
-              </div>
-            )}
           </div>
 
-          {/* Bottom accent */}
-          <div 
-            className="h-px w-full opacity-40"
-            style={{ background: `linear-gradient(90deg, transparent 10%, ${styles.primary} 50%, transparent 90%)` }}
-          />
+          {/* Description */}
+          <p className="text-center text-white/50 font-montserrat text-sm mb-8 max-w-sm mx-auto">
+            {tier.description}
+          </p>
+
+          {/* Sponsors area */}
+          {tier.sponsors.length > 0 ? (
+            <div className="flex flex-wrap justify-center items-center gap-10">
+              {tier.sponsors.map((sponsor, sponsorIndex) => (
+                <a
+                  key={sponsorIndex}
+                  href={sponsor.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center transition-opacity duration-300 hover:opacity-80"
+                  title={`Visit ${sponsor.name}`}
+                >
+                  <img
+                    src={sponsor.logo}
+                    alt={`${sponsor.name} logo`}
+                    className="max-h-20 md:max-h-28 max-w-[280px] object-contain brightness-0 invert"
+                    loading="lazy"
+                    decoding="async"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                </a>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] py-6 px-8">
+              <p className="text-white/30 font-montserrat italic text-center text-sm">
+                Sponsor announcements coming soon
+              </p>
+            </div>
+          )}
         </div>
-      </Tiltable>
+
+        {/* Bottom accent */}
+        <div
+          className="h-px w-full opacity-40"
+          style={{ background: `linear-gradient(90deg, transparent 10%, ${styles.primary} 50%, transparent 90%)` }}
+        />
+      </div>
     </motion.div>
   );
 }
@@ -216,39 +213,35 @@ function BecomeASponsorSection() {
   return (
     <section className="py-24 relative" aria-label="Become a sponsor section">
       <div className="max-w-4xl mx-auto px-6 text-center">
-        <Tiltable tiltOptions={{ maxTilt: 3, scale: 1.01 }}>
-          <div className="liquid-glass-strong rounded-3xl p-16 border border-white/20 shadow-2xl">
+        <div className="liquid-glass-strong rounded-3xl p-16 border border-white/20 shadow-2xl">
           <h2 className="text-4xl font-bold text-white mb-6 font-tomorrow">
             Become a Sponsor
           </h2>
           <p className="text-xl text-white/80 mb-10 font-montserrat max-w-2xl mx-auto leading-relaxed">
-            Partner with us to empower the next generation of legal tech innovators. 
+            Partner with us to empower the next generation of legal tech innovators.
             Your support helps students bridge the gap between law and technology.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-10">
-            <TiltableAnchor
+            <a
               href={URLS.prospectus}
               download="LITS 2026 Prospectus.pdf"
               className="group relative inline-flex items-center gap-3 bg-white/10 backdrop-blur-md text-white px-8 py-4 rounded-2xl text-lg font-semibold hover:bg-white/20 transition-all duration-300 shadow-xl hover:shadow-2xl border border-white/20 hover:border-primary/50 font-rubik"
-              tiltOptions={ANIMATION.tilt.interactive}
             >
               <Download className="h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
               <span>Download Prospectus</span>
-            </TiltableAnchor>
-            <TiltableAnchor
+            </a>
+            <a
               href="/contact"
               className="group relative inline-flex items-center bg-gradient-to-r from-primary to-purple text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 shadow-2xl hover:shadow-primary/25 font-rubik overflow-hidden"
-              tiltOptions={ANIMATION.tilt.interactive}
             >
               <span className="relative z-10">Get in Touch</span>
-            </TiltableAnchor>
+            </a>
           </div>
 
           {/* Social Links */}
           <SocialLinks />
-          </div>
-        </Tiltable>
+        </div>
       </div>
     </section>
   );
@@ -272,4 +265,3 @@ function Sponsors() {
 }
 
 export default Sponsors;
-

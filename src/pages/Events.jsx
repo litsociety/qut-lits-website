@@ -4,7 +4,6 @@ import { Calendar, Clock, MapPin, Users, ArrowRight, Code, Network, BookOpen, Aw
 import Navigation from "../components/Navigation";
 import AnimatedBackground from "../components/AnimatedBackground";
 import { CTASection } from "../components/Footer";
-import { Tiltable, TiltableAnchor } from "../components/Tiltable";
 import { generateICS, generateICSForAllEvents, downloadICS } from "../utils/calendar";
 import CalendarSubscriptionModal from "../components/CalendarSubscriptionModal";
 
@@ -79,7 +78,7 @@ const EVENTS = [
     icon: Sparkles,
     registrationLink: "#"
   },
-  
+
   // MARCH
   {
     id: 4,
@@ -166,7 +165,7 @@ const EVENTS = [
     icon: Code,
     registrationLink: "https://campus.hellorubric.com/?eid=55497"
   },
-  
+
   // APRIL
   {
     id: 11,
@@ -180,7 +179,7 @@ const EVENTS = [
     icon: Network,
     registrationLink: "#"
   },
-  
+
   // MAY
   {
     id: 12,
@@ -194,7 +193,7 @@ const EVENTS = [
     icon: Sparkles,
     registrationLink: "#"
   },
-  
+
   // JULY - SEMESTER 2
   {
     id: 13,
@@ -232,7 +231,7 @@ const EVENTS = [
     icon: Users,
     registrationLink: "#"
   },
-  
+
   // AUGUST
   {
     id: 16,
@@ -246,7 +245,7 @@ const EVENTS = [
     icon: Network,
     registrationLink: "#"
   },
-  
+
   // SEPTEMBER
   {
     id: 17,
@@ -260,7 +259,7 @@ const EVENTS = [
     icon: Users,
     registrationLink: "#"
   },
-  
+
   // OCTOBER
   {
     id: 18,
@@ -305,26 +304,21 @@ const HeroSection = memo(function HeroSection() {
         <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 font-tomorrow leading-tight">
           Our Events
         </h1>
-        
+
         <p className="text-xl md:text-2xl text-white/80 font-montserrat max-w-4xl mx-auto leading-relaxed mb-8">
-          Join us for workshops, networking events, speaker series, and more. 
+          Join us for workshops, networking events, speaker series, and more.
           Explore the intersection of law and technology with industry leaders and fellow students.
         </p>
 
         {/* Subscribe to All Events Button */}
-        <Tiltable
-          tiltOptions={{ maxTilt: 3, scale: 1.02 }}
-          className="inline-block"
+        <button
+          onClick={handleSubscribeToAll}
+          className="group inline-flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 hover:border-primary/50 rounded-full px-6 py-3 transition-all duration-300 font-rubik text-white"
+          aria-label="Subscribe to all events"
         >
-          <button
-            onClick={handleSubscribeToAll}
-            className="group inline-flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 hover:border-primary/50 rounded-full px-6 py-3 transition-all duration-300 font-rubik text-white"
-            aria-label="Subscribe to all events"
-          >
-            <CalendarPlus className="h-5 w-5 text-primary group-hover:scale-110 transition-transform duration-300" />
-            <span className="text-sm font-semibold">Subscribe to All Events</span>
-          </button>
-        </Tiltable>
+          <CalendarPlus className="h-5 w-5 text-primary group-hover:scale-110 transition-transform duration-300" />
+          <span className="text-sm font-semibold">Subscribe to All Events</span>
+        </button>
 
         {/* Calendar Subscription Modal */}
         <CalendarSubscriptionModal
@@ -374,107 +368,99 @@ const EventCard = memo(function EventCard({ event, isPrevious }) {
   }, [event]);
 
   return (
-    <Tiltable tiltOptions={{ maxTilt: 5, scale: 1.02 }} className="h-full">
-      <div className="group bg-white/5 rounded-3xl overflow-hidden border border-white/10 backdrop-blur-sm hover:border-primary/30 transition-all duration-200 hover:bg-white/10 h-full flex flex-col">
-        {/* Event Image */}
-        <div className="relative h-48 overflow-hidden">
-          <img
-            src={event.image}
-            alt={event.title}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 will-change-transform"
-            loading="lazy"
-            decoding="async"
-            onError={(e) => {
-              e.currentTarget.src = "/lits-slideshow-5.jpg"; // Fallback image
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-          
-          {/* Category Badge */}
-          <div className="absolute top-4 left-4">
-            <div className={`flex items-center gap-2 ${category.bgColor} backdrop-blur-md rounded-full px-3 py-1.5 border ${category.borderColor}`}>
-              <CategoryIcon className="h-3.5 w-3.5 text-white" />
-              <span className="text-xs font-semibold text-white font-rubik">
-                {category.label}
-              </span>
-            </div>
-          </div>
-
-          {/* Add to Calendar Icon */}
-          <div className="absolute top-4 right-4">
-            <Tiltable
-              tiltOptions={{ maxTilt: 3, scale: 1.1 }}
-              className="inline-block"
-            >
-              <button
-                onClick={handleAddToCalendar}
-                className="group bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 hover:border-primary/50 rounded-full p-2.5 transition-all duration-200 inline-block"
-                aria-label={`Add ${event.title} to calendar`}
-                title="Add to calendar"
-              >
-                <CalendarPlus className="h-4 w-4 text-white group-hover:text-primary transition-colors duration-300" />
-              </button>
-            </Tiltable>
-          </div>
-
-        </div>
-
-        {/* Event Content */}
-        <div className="p-6 flex-1 flex flex-col">
-          <h3 className="text-2xl font-bold text-white mb-4 font-tomorrow group-hover:text-primary transition-colors duration-200">
-            {event.title}
-          </h3>
-          
-          <p className="text-white/80 font-montserrat mb-6 leading-relaxed flex-1">
-            {event.description}
-          </p>
-
-          {/* Event Details */}
-          <div className="space-y-3 mb-6">
-            <div className="flex items-center gap-3 text-white/70">
-              <Calendar className="h-4 w-4 text-primary" />
-              <span className="font-montserrat text-sm">{formattedDate}</span>
-            </div>
-            <div className="flex items-center gap-3 text-white/70">
-              <Clock className="h-4 w-4 text-primary" />
-              <span className="font-montserrat text-sm">{event.time}</span>
-            </div>
-            <div className="flex items-center gap-3 text-white/70">
-              <MapPin className="h-4 w-4 text-primary" />
-              <span className="font-montserrat text-sm">{event.location}</span>
-            </div>
-          </div>
-
-          {/* CTA Button */}
-          {!isPrevious && (
-            event.registrationLink && event.registrationLink !== "#" ? (
-              <TiltableAnchor
-                href={event.registrationLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-purple text-white px-6 py-3 rounded-xl font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 shadow-lg hover:shadow-primary/25 font-rubik"
-                tiltOptions={{ maxTilt: 4, scale: 1.02 }}
-              >
-                Register Now
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-              </TiltableAnchor>
-            ) : (
-              <div className="inline-flex items-center justify-center gap-2 bg-white/10 text-white/60 px-6 py-3 rounded-xl font-semibold font-rubik cursor-not-allowed">
-                Registration Coming Soon
-              </div>
-            )
-          )}
-        </div>
-
-        {/* Calendar Subscription Modal */}
-        <CalendarSubscriptionModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          onDownload={handleDownload}
-          eventTitle={event.title}
+    <div className="group bg-white/5 rounded-3xl overflow-hidden border border-white/10 backdrop-blur-sm hover:border-primary/30 transition-all duration-200 hover:bg-white/10 h-full flex flex-col">
+      {/* Event Image */}
+      <div className="relative h-48 overflow-hidden">
+        <img
+          src={event.image}
+          alt={event.title}
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 will-change-transform"
+          loading="lazy"
+          decoding="async"
+          onError={(e) => {
+            e.currentTarget.src = "/lits-slideshow-5.jpg"; // Fallback image
+          }}
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+
+        {/* Category Badge */}
+        <div className="absolute top-4 left-4">
+          <div className={`flex items-center gap-2 ${category.bgColor} backdrop-blur-md rounded-full px-3 py-1.5 border ${category.borderColor}`}>
+            <CategoryIcon className="h-3.5 w-3.5 text-white" />
+            <span className="text-xs font-semibold text-white font-rubik">
+              {category.label}
+            </span>
+          </div>
+        </div>
+
+        {/* Add to Calendar Icon */}
+        <div className="absolute top-4 right-4">
+          <button
+            onClick={handleAddToCalendar}
+            className="group bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 hover:border-primary/50 rounded-full p-2.5 transition-all duration-200 inline-block"
+            aria-label={`Add ${event.title} to calendar`}
+            title="Add to calendar"
+          >
+            <CalendarPlus className="h-4 w-4 text-white group-hover:text-primary transition-colors duration-300" />
+          </button>
+        </div>
+
       </div>
-    </Tiltable>
+
+      {/* Event Content */}
+      <div className="p-6 flex-1 flex flex-col">
+        <h3 className="text-2xl font-bold text-white mb-4 font-tomorrow group-hover:text-primary transition-colors duration-200">
+          {event.title}
+        </h3>
+
+        <p className="text-white/80 font-montserrat mb-6 leading-relaxed flex-1">
+          {event.description}
+        </p>
+
+        {/* Event Details */}
+        <div className="space-y-3 mb-6">
+          <div className="flex items-center gap-3 text-white/70">
+            <Calendar className="h-4 w-4 text-primary" />
+            <span className="font-montserrat text-sm">{formattedDate}</span>
+          </div>
+          <div className="flex items-center gap-3 text-white/70">
+            <Clock className="h-4 w-4 text-primary" />
+            <span className="font-montserrat text-sm">{event.time}</span>
+          </div>
+          <div className="flex items-center gap-3 text-white/70">
+            <MapPin className="h-4 w-4 text-primary" />
+            <span className="font-montserrat text-sm">{event.location}</span>
+          </div>
+        </div>
+
+        {/* CTA Button */}
+        {!isPrevious && (
+          event.registrationLink && event.registrationLink !== "#" ? (
+            <a
+              href={event.registrationLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-purple text-white px-6 py-3 rounded-xl font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 shadow-lg hover:shadow-primary/25 font-rubik"
+            >
+              Register Now
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+            </a>
+          ) : (
+            <div className="inline-flex items-center justify-center gap-2 bg-white/10 text-white/60 px-6 py-3 rounded-xl font-semibold font-rubik cursor-not-allowed">
+              Registration Coming Soon
+            </div>
+          )
+        )}
+      </div>
+
+      {/* Calendar Subscription Modal */}
+      <CalendarSubscriptionModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onDownload={handleDownload}
+        eventTitle={event.title}
+      />
+    </div>
   );
 });
 
@@ -606,7 +592,7 @@ function EventsSection() {
 // CTASection imported from shared Footer component - uses custom title/description
 function EventsCTASection() {
   return (
-    <CTASection 
+    <CTASection
       title="Stay Updated"
       description="Follow us on social media to stay up to date with all our upcoming events, workshops, and networking opportunities."
       secondaryCTA={{ text: "Contact Us", to: "/contact" }}

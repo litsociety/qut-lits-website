@@ -70,17 +70,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-    <!-- GitHub Pages SPA: restore path from ?/ redirect -->
-    <script>
-      (function(l) {
-        if (l.search[1] === '/') {
-          var decoded = l.search.slice(1).split('&').map(function(s) {
-            return s.replace(/~and~/g, '&');
-          }).join('?');
-          window.history.replaceState(null, null, l.pathname.slice(0, -1) + decoded + l.hash);
-        }
-      }(window.location));
-    </script>
   </head>
   <body class="bg-dark">
     <div id="root"></div>

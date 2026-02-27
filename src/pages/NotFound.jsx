@@ -1,10 +1,8 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Home, ArrowLeft, HelpCircle } from "lucide-react";
 import Navigation from "../components/Navigation";
 import AnimatedBackground from "../components/AnimatedBackground";
-import { TiltableLink, TiltableButton } from "../components/Tiltable";
-import { ANIMATION } from "../constants";
 
 function NotFound() {
   const navigate = useNavigate();
@@ -29,67 +27,49 @@ function NotFound() {
           <h1 className="text-8xl md:text-9xl font-bold text-white mb-6 font-tomorrow leading-tight">
             404
           </h1>
-          
+
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 font-tomorrow">
             Oops! Page Not Found
           </h2>
-          
+
           <p className="text-xl text-white/80 font-montserrat max-w-2xl mx-auto leading-relaxed mb-12">
-            The page you're looking for doesn't exist or has been moved. 
+            The page you're looking for doesn't exist or has been moved.
             Let's get you back on track!
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <TiltableLink
+            <Link
               to="/"
               className="group inline-flex items-center gap-3 bg-gradient-to-r from-primary to-purple text-white px-8 py-4 rounded-2xl text-lg font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 shadow-2xl hover:shadow-primary/10 font-rubik"
-              tiltOptions={ANIMATION.tilt.interactive}
             >
               <Home className="h-5 w-5" />
               Go Home
-            </TiltableLink>
-            
-            <TiltableButton
+            </Link>
+
+            <button
               onClick={() => navigate(-1)}
               className="group inline-flex items-center gap-3 border-2 border-white/30 text-white px-8 py-4 rounded-2xl text-lg font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm font-rubik"
-              tiltOptions={ANIMATION.tilt.interactive}
             >
               <ArrowLeft className="h-5 w-5" />
               Go Back
-            </TiltableButton>
+            </button>
           </div>
 
           <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10 max-w-2xl mx-auto">
             <h3 className="text-xl font-bold text-white mb-4 font-rubik">Popular Pages</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <TiltableLink
-                to="/"
-                className="text-white/80 hover:text-white hover:bg-white/10 p-3 rounded-xl transition-all duration-300 font-rubik text-sm"
-                tiltOptions={ANIMATION.tilt.default}
-              >
+              <Link to="/" className="text-white/80 hover:text-white hover:bg-white/10 p-3 rounded-xl transition-all duration-300 font-rubik text-sm">
                 Home
-              </TiltableLink>
-              <TiltableLink
-                to="/about"
-                className="text-white/80 hover:text-white hover:bg-white/10 p-3 rounded-xl transition-all duration-300 font-rubik text-sm"
-                tiltOptions={ANIMATION.tilt.default}
-              >
+              </Link>
+              <Link to="/about" className="text-white/80 hover:text-white hover:bg-white/10 p-3 rounded-xl transition-all duration-300 font-rubik text-sm">
                 About
-              </TiltableLink>
-              <TiltableLink
-                to="/sponsors"
-                className="text-white/80 hover:text-white hover:bg-white/10 p-3 rounded-xl transition-all duration-300 font-rubik text-sm"
-                tiltOptions={ANIMATION.tilt.default}
-              >
+              </Link>
+              <Link to="/sponsors" className="text-white/80 hover:text-white hover:bg-white/10 p-3 rounded-xl transition-all duration-300 font-rubik text-sm">
                 Sponsors
-              </TiltableLink>
-              <TiltableLink
-                to="/contact"
-                className="text-white/80 hover:text-white hover:bg-white/10 p-3 rounded-xl transition-all duration-300 font-rubik text-sm"
-                tiltOptions={ANIMATION.tilt.default}
-              >
+              </Link>
+              <Link to="/contact" className="text-white/80 hover:text-white hover:bg-white/10 p-3 rounded-xl transition-all duration-300 font-rubik text-sm">
                 Contact
-              </TiltableLink>
+              </Link>
             </div>
           </div>
         </div>
@@ -100,4 +80,3 @@ function NotFound() {
 }
 
 export default NotFound;
-
