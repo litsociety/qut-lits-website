@@ -23,16 +23,22 @@ export default function AnnouncementBanner() {
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: "auto", opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+          initial={{ height: 0 }}
+          animate={{ height: "auto" }}
+          exit={{ height: 0 }}
+          transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
           className="overflow-hidden z-[60] relative"
-          style={{
-            background: "#07011a",
-            borderBottom: "1px solid rgba(255,255,255,0.07)",
-          }}
         >
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.25, ease: "easeOut", delay: 0.08 }}
+            style={{
+              background: "#07011a",
+              borderBottom: "1px solid rgba(255,255,255,0.07)",
+            }}
+          >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between gap-4">
             {/* Left: live dot + text */}
             <div className="flex items-center gap-3 min-w-0">
@@ -102,6 +108,7 @@ export default function AnnouncementBanner() {
               </button>
             </div>
           </div>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
