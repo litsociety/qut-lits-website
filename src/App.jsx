@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect, Suspense, lazy } from 'react'
 import { LoadingSpinner } from './components/LoadingSpinner'
+import AnnouncementBanner from './components/AnnouncementBanner'
 
 // Lazy load pages for better initial load performance
 const Home = lazy(() => import('./pages/Home'))
@@ -54,6 +55,7 @@ function ScrollToTop() {
 export default function App() {
   return (
     <Router>
+      <AnnouncementBanner />
       <ScrollToTop />
       <Suspense fallback={<PageLoader />}>
         <Routes>
