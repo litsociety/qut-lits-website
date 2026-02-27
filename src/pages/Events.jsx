@@ -86,8 +86,8 @@ const EVENTS = [
     title: "Intro to Tech Law",
     category: "workshop",
     date: "2026-03-02",
-    time: "TBA",
-    location: "QUT Gardens Point Campus",
+    time: "4:00 PM – 5:00 PM",
+    location: "QUT Gardens Point Campus D-106",
     description: "An introductory workshop exploring the intersection of technology and law. Learn about key legal frameworks, regulations, and challenges in the tech industry. Perfect for students new to tech law.",
     image: "/lits-slideshow-7.jpg",
     icon: Code,
@@ -98,8 +98,8 @@ const EVENTS = [
     title: "Intro to Legal Tech",
     category: "workshop",
     date: "2026-03-09",
-    time: "TBA",
-    location: "QUT Gardens Point Campus",
+    time: "4:00 PM – 5:00 PM",
+    location: "QUT Gardens Point Campus D-106",
     description: "Discover how technology is transforming the legal profession. This workshop covers legal technology tools, automation, and innovation in legal practice. No prior experience required.",
     image: "/lits-slideshow-7.jpg",
     icon: Code,
@@ -109,9 +109,9 @@ const EVENTS = [
     id: 6,
     title: "Technology in Legal Investigations",
     category: "workshop",
-    date: "2026-03-16",
-    time: "TBA",
-    location: "QUT Gardens Point Campus",
+    date: "2026-03-23",
+    time: "4:00 PM – 5:00 PM",
+    location: "QUT Gardens Point Campus D-106",
     description: "Explore how technology is revolutionizing legal investigations. Learn about digital forensics, e-discovery, data analysis, and other tech tools used in modern legal investigations.",
     image: "/lits-slideshow-7.jpg",
     icon: Code,
@@ -158,9 +158,9 @@ const EVENTS = [
     title: "Legal Tech Challenge",
     category: "landmark",
     date: "2026-03-27",
-    time: "All Day",
-    location: "River City Labs, Fortitude Valley or QUT Gardens Point PBlock",
-    description: "An interactive workshop-style event that encourages students to design innovative technology-based solutions to real-world legal problems. Participants pitch their ideas to a panel of industry judges. No coding experience required - only a passion for creativity, problem-solving and innovation. This multi-day event runs from Friday 27 March to Sunday 29 March.",
+    time: "Fri 5–8PM · Sat 10AM–5PM · Sun 1–5PM",
+    location: "QUT Gardens Point Campus P Block Atrium",
+    description: "An interactive event that encourages students to design innovative technology-based solutions to real-world legal problems. Participants pitch their ideas to a panel of industry judges. No coding experience required — only a passion for creativity, problem-solving and innovation. Runs Friday 27 March (5–8PM), Saturday 28 March (10AM–5PM), and Sunday 29 March (1–5PM).",
     image: "/lits-slideshow-8.jpg",
     icon: Code,
     registrationLink: "#"
@@ -499,75 +499,101 @@ function EventLegend() {
 }
 
 function EventsSection() {
-  // Sort all events by date (chronological order - upcoming first)
-  const sortedEvents = useMemo(() => {
-    return [...EVENTS].sort((a, b) => {
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
-      
-      // Handle invalid dates - put them at the end
-      const isValidA = !isNaN(dateA.getTime()) && a.date !== "2026-12-31";
-      const isValidB = !isNaN(dateB.getTime()) && b.date !== "2026-12-31";
-      
-      if (!isValidA && !isValidB) return 0;
-      if (!isValidA) return 1;
-      if (!isValidB) return -1;
-      
-      // Primary sort: by date
-      const dateDiff = dateA.getTime() - dateB.getTime();
-      if (dateDiff !== 0) return dateDiff;
-      
-      // Secondary sort: by time (if dates are the same)
-      // Extract time from time string (e.g., "6:00 PM" or "TBA")
-      const timeA = a.time.toLowerCase();
-      const timeB = b.time.toLowerCase();
-      
-      // If both have "TBA" or similar, maintain original order
-      if (timeA.includes("tba") && timeB.includes("tba")) return 0;
-      if (timeA.includes("tba")) return 1;
-      if (timeB.includes("tba")) return -1;
-      
-      // Try to parse time (simple extraction of hour)
-      const hourA = parseInt(timeA.match(/\d+/)?.[0] || "0");
-      const hourB = parseInt(timeB.match(/\d+/)?.[0] || "0");
-      const isPMA = timeA.includes("pm");
-      const isPMB = timeB.includes("pm");
-      const hour24A = (hourA === 12 ? 0 : hourA) + (isPMA ? 12 : 0);
-      const hour24B = (hourB === 12 ? 0 : hourB) + (isPMB ? 12 : 0);
-      
-      return hour24A - hour24B;
+  const today = useMemo(() => new Date(), []);
+
+  const { previousEvents, sem1Events, sem2Events } = useMemo(() => {
+    const byDate = (a, b) => new Date(a.date) - new Date(b.date);
+    const sorted = [...EVENTS].sort(byDate);
+
+    const previous = [];
+    const sem1 = [];
+    const sem2 = [];
+
+    sorted.forEach(event => {
+      const eventDate = new Date(event.date);
+      if (eventDate < today) {
+        previous.unshift(event); // most recent first
+      } else {
+        const month = eventDate.getMonth() + 1; // 1–12
+        if (month <= 6) {
+          sem1.push(event);
+        } else {
+          sem2.push(event);
+        }
+      }
     });
-  }, []);
+
+    return { previousEvents: previous, sem1Events: sem1, sem2Events: sem2 };
+  }, [today]);
+
+  const renderGrid = (events, baseDelay = 0) => (
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {events.map((event, index) => (
+        <motion.div
+          key={event.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.3,
+            delay: Math.min((baseDelay + index) * 0.03, 0.4),
+            ease: [0.25, 0.46, 0.45, 0.94]
+          }}
+        >
+          <EventCard event={event} />
+        </motion.div>
+      ))}
+    </div>
+  );
 
   return (
     <section className="py-16 relative" aria-label="Events listing section">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {sortedEvents.map((event, index) => (
-            <motion.div
-              key={event.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ 
-                duration: 0.3, 
-                delay: Math.min(index * 0.03, 0.3),
-                ease: [0.25, 0.46, 0.45, 0.94]
-              }}
-            >
-              <EventCard event={event} />
-            </motion.div>
-          ))}
+      <div className="max-w-7xl mx-auto px-6 space-y-20">
+
+        {/* ── Upcoming Events ── */}
+        <div>
+          <h2 className="text-4xl font-bold text-white mb-10 font-tomorrow">
+            Upcoming Events
+          </h2>
+
+          {sem1Events.length === 0 && sem2Events.length === 0 && (
+            <div className="text-center py-16">
+              <Calendar className="h-16 w-16 text-white/30 mx-auto mb-4" />
+              <p className="text-xl text-white/60 font-montserrat">
+                No upcoming events scheduled. Check back soon!
+              </p>
+            </div>
+          )}
+
+          {sem1Events.length > 0 && (
+            <div className="mb-14">
+              <h3 className="text-xl font-semibold text-primary mb-6 font-rubik uppercase tracking-widest">
+                Semester 1
+              </h3>
+              {renderGrid(sem1Events, 0)}
+            </div>
+          )}
+
+          {sem2Events.length > 0 && (
+            <div>
+              <h3 className="text-xl font-semibold text-primary mb-6 font-rubik uppercase tracking-widest">
+                Semester 2
+              </h3>
+              {renderGrid(sem2Events, sem1Events.length)}
+            </div>
+          )}
         </div>
 
-        {/* No Events Message */}
-        {sortedEvents.length === 0 && (
-          <div className="text-center py-16">
-            <Calendar className="h-16 w-16 text-white/30 mx-auto mb-4" />
-            <p className="text-xl text-white/60 font-montserrat">
-              No events scheduled. Check back soon!
-            </p>
+        {/* ── Previous Events ── */}
+        {previousEvents.length > 0 && (
+          <div>
+            <h2 className="text-4xl font-bold text-white mb-10 font-tomorrow">
+              Previous Events
+            </h2>
+            {renderGrid(previousEvents, sem1Events.length + sem2Events.length)}
           </div>
         )}
+
+        <EventLegend />
       </div>
     </section>
   );
