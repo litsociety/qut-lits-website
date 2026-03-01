@@ -170,7 +170,7 @@ const EVENTS = [
     description: "An interactive event that encourages students to design innovative technology-based solutions to real-world legal problems. Participants pitch their ideas to a panel of industry judges. No coding experience required, only a passion for creativity, problem-solving and innovation. Runs Friday 2 October (5–8PM), Saturday 3 October (10AM–5PM), and Sunday 4 October (1–5PM).",
     image: "/lits-slideshow-8.jpg",
     icon: Code,
-    registrationLink: "https://campus.hellorubric.com/?eid=55497"
+    registrationLink: "#"
   },
 
   // APRIL
@@ -272,10 +272,11 @@ const EVENTS = [
     id: 19,
     title: "LITS x GRC",
     category: "collab",
-    date: "2026-12-31",
+    date: "2026-03-16",
+    displayDate: "Week 4, Semester 1",
     time: "TBA",
     location: "TBA",
-    description: "A collaborative event between QUT LITS and GRC. Details to be announced.",
+    description: "A collaborative event between QUT LITS and GRC. Taking place in Semester 1, Week 4. Details to be announced.",
     image: "/lits-slideshow-6.jpg",
     icon: Handshake,
     registrationLink: "#"
@@ -284,10 +285,11 @@ const EVENTS = [
     id: 20,
     title: "LITS x ESC",
     category: "collab",
-    date: "2026-12-31",
+    date: "2026-04-27",
+    displayDate: "Week 10, Semester 1",
     time: "TBA",
     location: "TBA",
-    description: "A collaborative event between QUT LITS and ESC. Details to be announced.",
+    description: "A collaborative event between QUT LITS and ESC. Taking place in Semester 1, Week 10. Details to be announced.",
     image: "/lits-slideshow-6.jpg",
     icon: Handshake,
     registrationLink: "#"
