@@ -81,7 +81,7 @@ const EVENTS = [
     time: "11:00 AM",
     location: "Merlo Coffee, Gardens Point",
     description: "Kick off the semester with a casual welcome coffee event at Merlo. Meet new members, reconnect with friends, and learn about upcoming events and opportunities.",
-    image: "/lits-slideshow-9.jpeg",
+    image: "/welcome-coffee.jpg",
     icon: Sparkles,
     registrationLink: "#"
   },
@@ -222,7 +222,7 @@ const EVENTS = [
     time: "TBA",
     location: "Merlo Coffee, Gardens Point",
     description: "Kick off Semester 2 with a casual welcome coffee event at Merlo. Meet new members, reconnect with friends, and learn about upcoming events.",
-    image: "/lits-slideshow-9.jpeg",
+    image: "/welcome-coffee.jpg",
     icon: Sparkles,
     registrationLink: "#"
   },
