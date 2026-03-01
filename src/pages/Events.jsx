@@ -1,6 +1,6 @@
 import React, { useMemo, useState, memo, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Calendar, Clock, MapPin, Users, ArrowRight, Code, Network, BookOpen, Award, Sparkles, Rocket, CalendarPlus } from "lucide-react";
+import { Calendar, Clock, MapPin, Users, ArrowRight, Code, Network, BookOpen, Award, Sparkles, Rocket, CalendarPlus, Handshake } from "lucide-react";
 import Navigation from "../components/Navigation";
 import AnimatedBackground from "../components/AnimatedBackground";
 import { CTASection } from "../components/Footer";
@@ -36,6 +36,13 @@ const EVENT_CATEGORIES = {
     color: "from-primary to-purple",
     bgColor: "bg-primary/20",
     borderColor: "border-primary/30"
+  },
+  collab: {
+    label: "Collaboration",
+    icon: Handshake,
+    color: "from-emerald-500 to-teal-500",
+    bgColor: "bg-emerald-500/20",
+    borderColor: "border-emerald-500/30"
   }
 };
 
@@ -143,7 +150,7 @@ const EVENTS = [
   {
     id: 9,
     title: "Mel Storey – Book Tour Event",
-    category: "workshop",
+    category: "collab",
     date: "2026-03-18",
     time: "6:15 PM",
     location: "QUT Gardens Point Campus Gibson Room",
@@ -156,11 +163,11 @@ const EVENTS = [
     id: 10,
     title: "Legal Tech Challenge",
     category: "landmark",
-    date: "2026-03-27",
-    displayDate: "27, 28 & 29 March 2026",
+    date: "2026-10-02",
+    displayDate: "2, 3 & 4 October 2026",
     time: "Fri 5–8PM · Sat 10AM–5PM · Sun 1–5PM",
     location: "QUT Gardens Point Campus P Block Atrium",
-    description: "An interactive event that encourages students to design innovative technology-based solutions to real-world legal problems. Participants pitch their ideas to a panel of industry judges. No coding experience required, only a passion for creativity, problem-solving and innovation. Runs Friday 27 March (5–8PM), Saturday 28 March (10AM–5PM), and Sunday 29 March (1–5PM). Early Bird tickets $15, General Admission from 13 March at $30.",
+    description: "An interactive event that encourages students to design innovative technology-based solutions to real-world legal problems. Participants pitch their ideas to a panel of industry judges. No coding experience required, only a passion for creativity, problem-solving and innovation. Runs Friday 2 October (5–8PM), Saturday 3 October (10AM–5PM), and Sunday 4 October (1–5PM).",
     image: "/lits-slideshow-8.jpg",
     icon: Code,
     registrationLink: "https://campus.hellorubric.com/?eid=55497"
@@ -236,7 +243,7 @@ const EVENTS = [
   {
     id: 16,
     title: "QUT Tech Industry Night",
-    category: "landmark",
+    category: "collab",
     date: "2026-08-14",
     time: "6:00 PM - 9:00 PM",
     location: "QUT Garden Theatre",
@@ -250,7 +257,7 @@ const EVENTS = [
   {
     id: 17,
     title: "Innovate & Regulate – Law & Technology Panel",
-    category: "landmark",
+    category: "collab",
     date: "2026-09-04",
     time: "TBA",
     location: "Queensland Law Society House",
@@ -261,6 +268,30 @@ const EVENTS = [
   },
 
   // OCTOBER
+  {
+    id: 19,
+    title: "LITS x GRC",
+    category: "collab",
+    date: "2026-12-31",
+    time: "TBA",
+    location: "TBA",
+    description: "A collaborative event between QUT LITS and GRC. Details to be announced.",
+    image: "/lits-slideshow-6.jpg",
+    icon: Handshake,
+    registrationLink: "#"
+  },
+  {
+    id: 20,
+    title: "LITS x ESC",
+    category: "collab",
+    date: "2026-12-31",
+    time: "TBA",
+    location: "TBA",
+    description: "A collaborative event between QUT LITS and ESC. Details to be announced.",
+    image: "/lits-slideshow-6.jpg",
+    icon: Handshake,
+    registrationLink: "#"
+  },
   {
     id: 18,
     title: "End-of-Semester 2 Social Drinks",

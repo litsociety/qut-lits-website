@@ -53,7 +53,7 @@ export default function AnnouncementBanner() {
                   Legal Tech Challenge
                 </span>
                 <span className="text-white/30 mx-2">·</span>
-                <span>27–29 March 2026</span>
+                <span>2–4 October 2026</span>
                 <span className="text-white/30 mx-2 hidden sm:inline">·</span>
                 <span className="hidden sm:inline">
                   P Block Atrium, QUT Gardens Point
