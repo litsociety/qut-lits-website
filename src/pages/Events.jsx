@@ -57,7 +57,7 @@ const EVENTS = [
     time: "All Day",
     location: "QUT Gardens Point Campus",
     description: "Join us at our O Week stall! Meet the team, learn about QUT LITS, and discover how you can get involved in the intersection of law and technology.",
-    image: "/lits-slideshow-9.jpeg",
+    image: "/lits-oweek.jpg",
     icon: Sparkles,
     registrationLink: "#"
   },
@@ -69,7 +69,7 @@ const EVENTS = [
     time: "All Day",
     location: "QUT Gardens Point Campus",
     description: "Continue the O Week celebrations! Visit our stall, participate in activities, and connect with fellow students interested in law and technology.",
-    image: "/lits-slideshow-9.jpeg",
+    image: "/lits-oweek.jpg",
     icon: Sparkles,
     registrationLink: "#"
   },
@@ -131,7 +131,7 @@ const EVENTS = [
     time: "11:00 AM – 3:00 PM",
     location: "QUT Gardens Point Campus",
     description: "Join us for the Faculty of Science Welcome and Connect event. Connect with students and faculty across science and law disciplines. This is a faculty-hosted event.",
-    image: "/lits-slideshow-7.jpg",
+    image: "/lits-oweek.jpg",
     icon: Users,
     registrationLink: "#"
   },
@@ -210,7 +210,7 @@ const EVENTS = [
     time: "All Day",
     location: "QUT Gardens Point Campus",
     description: "Join us at our Semester 2 O Week stall! Meet the team, learn about QUT LITS, and discover upcoming events for the second semester. O Week runs from Monday 13 July to Friday 17 July.",
-    image: "/lits-slideshow-9.jpeg",
+    image: "/lits-oweek.jpg",
     icon: Sparkles,
     registrationLink: "#"
   },
@@ -234,7 +234,7 @@ const EVENTS = [
     time: "All Day",
     location: "QUT Gardens Point Campus",
     description: "Join us at QUT Open Day to showcase QUT LITS to prospective students. Learn about our society and the opportunities we offer. Date is tentative.",
-    image: "/lits-slideshow-7.jpg",
+    image: "/lits-oweek.jpg",
     icon: Users,
     registrationLink: "#"
   },
