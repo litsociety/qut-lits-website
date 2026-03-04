@@ -131,7 +131,7 @@ const EVENTS = [
     time: "11:00 AM – 3:00 PM",
     location: "QUT Gardens Point Campus",
     description: "Join us for the Faculty of Science Welcome and Connect event. Connect with students and faculty across science and law disciplines. This is a faculty-hosted event.",
-    image: "/lits-oweek.jpg",
+    image: "/lits-faculty-science.jpg",
     icon: Users,
     registrationLink: "#"
   },
