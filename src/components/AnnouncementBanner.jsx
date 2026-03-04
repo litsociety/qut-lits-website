@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight } from "lucide-react";
 
-const STORAGE_KEY = "ltc-banner-dismissed-2026";
-const REGISTER_LINK = "https://campus.hellorubric.com/?eid=55497";
+const STORAGE_KEY = "intro-legal-tech-banner-dismissed-2026";
+const REGISTER_LINK = "https://campus.hellorubric.com/?eid=53722";
 
 export default function AnnouncementBanner() {
   const [visible, setVisible] = useState(false);
@@ -50,20 +50,20 @@ export default function AnnouncementBanner() {
 
               <p className="text-sm font-rubik leading-snug text-white/80 truncate">
                 <span className="font-semibold text-white tracking-tight">
-                  Legal Tech Challenge
+                  Intro to Legal Tech
                 </span>
                 <span className="text-white/30 mx-2">·</span>
-                <span>2–4 October 2026</span>
+                <span>9 March 2026 · 5:00–6:00 PM</span>
                 <span className="text-white/30 mx-2 hidden sm:inline">·</span>
                 <span className="hidden sm:inline">
-                  P Block Atrium, QUT Gardens Point
+                  D-106, QUT Gardens Point
                 </span>
               </p>
             </div>
 
             {/* Right: badge + CTA + dismiss */}
             <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-              {/* Early Bird badge */}
+              {/* Free badge */}
               <span
                 className="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold font-rubik tracking-wide"
                 style={{
@@ -72,7 +72,7 @@ export default function AnnouncementBanner() {
                   background: "rgba(0,194,203,0.08)",
                 }}
               >
-                Early Bird $15
+                Free
               </span>
 
               {/* Register CTA */}
