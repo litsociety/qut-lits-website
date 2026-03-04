@@ -95,7 +95,7 @@ const EVENTS = [
     time: "5:00 PM – 6:00 PM",
     location: "QUT Gardens Point Campus D-106",
     description: "An introduction to the major areas of tech law and how they connect back to traditional legal principles. This session is a great starting point for students interested in the Law & Tech Innovation minor.",
-    image: "/lits-slideshow-7.jpg",
+    image: "/lits-workshops.jpg",
     icon: Code,
     registrationLink: "https://campus.hellorubric.com/?eid=53721"
   },
@@ -107,7 +107,7 @@ const EVENTS = [
     time: "5:00 PM – 6:00 PM",
     location: "QUT Gardens Point Campus D-106",
     description: "Learn how lawyers use technology in practice, and how legal knowledge can be used to build and innovate new legal technologies.",
-    image: "/lits-slideshow-7.jpg",
+    image: "/lits-workshops.jpg",
     icon: Code,
     registrationLink: "https://campus.hellorubric.com/?eid=53722"
   },
@@ -119,7 +119,7 @@ const EVENTS = [
     time: "5:00 PM – 6:00 PM",
     location: "QUT Gardens Point Campus D-106",
     description: "A practical workshop exploring the intersection of law and technology through a mock legal investigation, demonstrating how technology assists in discovering and understanding facts when they aren't immediately clear.",
-    image: "/lits-slideshow-7.jpg",
+    image: "/lits-workshops.jpg",
     icon: Code,
     registrationLink: "https://campus.hellorubric.com/?eid=53724"
   },
@@ -143,7 +143,7 @@ const EVENTS = [
     time: "TBA",
     location: "QUT Gardens Point Campus",
     description: "Attend the QUTIES Mega Launch event. Connect with innovation and entrepreneurship communities at QUT. This event is hosted by other clubs.",
-    image: "/lits-slideshow-7.jpg",
+    image: "/lits-workshops.jpg",
     icon: Rocket,
     registrationLink: "#"
   },
