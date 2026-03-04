@@ -138,12 +138,12 @@ const EVENTS = [
   {
     id: 8,
     title: "QUTIES Mega Launch",
-    category: "workshop",
+    category: "collab",
     date: "2026-03-07",
     time: "TBA",
     location: "QUT Gardens Point Campus",
     description: "Attend the QUTIES Mega Launch event. Connect with innovation and entrepreneurship communities at QUT. This event is hosted by other clubs.",
-    image: "/lits-workshops.jpg",
+    image: "/lits-slideshow-7.jpg",
     icon: Rocket,
     registrationLink: "#"
   },
