@@ -196,7 +196,7 @@ const EVENTS = [
     time: "TBA",
     location: "Bot Bar",
     description: "Celebrate the end of Semester 1 with drinks at Bot Bar. Connect with fellow members, share your experiences, and unwind after a great semester of events.",
-    image: "/lits-slideshow-9.jpeg",
+    image: "/lits-social.jpg",
     icon: Sparkles,
     registrationLink: "#"
   },
@@ -302,7 +302,7 @@ const EVENTS = [
     time: "TBA",
     location: "Bot Bar",
     description: "Celebrate the end of Semester 2 with drinks at Bot Bar. Connect with fellow members, share your experiences, and unwind after a great year of events. This event takes place on Friday 16 October (Week 12).",
-    image: "/lits-slideshow-9.jpeg",
+    image: "/lits-social.jpg",
     icon: Sparkles,
     registrationLink: "#"
   }
