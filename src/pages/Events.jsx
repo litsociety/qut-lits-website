@@ -50,7 +50,7 @@ const SEMESTER_1 = [
     id: 3,
     title: "LITS x GRC",
     badge: "Collaboration",
-    image: "/lits-slideshow-6.jpg",
+    image: "/lits-workshops.jpg",
     description:
       "A collaborative event between QUT LITS and GRC. Taking place in Semester 1, Week 7. Details to be announced.",
     date: "Week 7, Semester 1",
@@ -77,7 +77,7 @@ const SEMESTER_1 = [
     id: 5,
     title: "LITS x ESC",
     badge: "Collaboration",
-    image: "/lits-slideshow-6.jpg",
+    image: "/lits-workshops.jpg",
     description:
       "A collaborative event between QUT LITS and ESC. Taking place in Semester 1, Week 10. Details to be announced.",
     date: "Week 10, Semester 1",
