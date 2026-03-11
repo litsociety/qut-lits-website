@@ -1,69 +1,62 @@
-import React, { useState } from "react";
-import { Linkedin, Users, Target, Lightbulb, Award, Building, BookOpen } from "lucide-react";
+import React from "react";
+import { Link } from "react-router-dom";
+import { Mail, Linkedin, Users, Target, Lightbulb, Award, ArrowRight, Instagram, Facebook } from "lucide-react";
 import Navigation from "../components/Navigation";
 import AnimatedBackground from "../components/AnimatedBackground";
-import { CTASection } from "../components/Footer";
+import { Tiltable, TiltableAnchor, TiltableLink } from "../components/Tiltable";
 
 const EXECUTIVE_TEAM = [
   {
-    name: "Kevin Flanagan",
-    role: "President",
-    image: "/kevin-flanagan.jpg",
-    bio: "",
-    email: "",
-    linkedin: "https://www.linkedin.com/in/kevin-flanagan-6043392b2/"
-  },
-  {
     name: "Lachlan Douglass",
-    role: "Vice President",
-    image: "/lachlan-douglass.jpg",
-    bio: "",
-    email: "",
+    role: "President",
+    image: null,
     linkedin: "https://www.linkedin.com/in/lachlan-douglass-383a7430a/"
   },
   {
     name: "John Wynter",
-    role: "Secretary",
+    role: "Vice President",
     image: "/john-wynter.jpg",
-    bio: "",
-    email: "",
     linkedin: "https://www.linkedin.com/in/john-wynter/"
+  },
+  {
+    name: "Gigi Douglass",
+    role: "Secretary",
+    image: null,
+    linkedin: "#"
   },
   {
     name: "Yiru Jones",
     role: "Treasurer",
-    image: "/yiru-jones.jpg",
-    bio: "",
-    email: "",
+    image: null,
     linkedin: "https://www.linkedin.com/in/yiru-jones-b7651256/"
-  }
+  },
 ];
 
 const PAST_PRESIDENTS = [
   {
+    name: "Kevin Flanagan",
+    role: "2026 President",
+    image: "/kevin-flanagan.jpg",
+    linkedin: "https://www.linkedin.com/in/kevin-flanagan-6043392b2/"
+  },
+  {
     name: "Vinesh Nangia",
     role: "2025 President & Chief Returning Officer",
     image: "/vinesh.jpg",
-    bio: "",
-    email: "",
     linkedin: "https://www.linkedin.com/in/vinesh-nangia/"
   },
   {
     name: "Nikhil Kaniyur",
     role: "2024 President & Executive Office",
     image: "/nikhil-kaniyur.jpg",
-    bio: "",
-    email: "",
     linkedin: "https://www.linkedin.com/in/nikhil-kaniyur/"
   },
   {
     name: "Sarah Deeb",
     role: "Founder & 2023 President",
     image: "/sarah.jpg",
-    bio: "",
-    email: "",
-    linkedin: "#"
-  }
+    linkedin: null
+  },
 ];
 
 const SOCIETY_VALUES = [
@@ -89,15 +82,6 @@ const SOCIETY_VALUES = [
   }
 ];
 
-const STATS = [
-  { number: "150+", label: "Active Members", icon: Users },
-  { number: "25+", label: "Industry Partners", icon: Building },
-  { number: "12+", label: "Annual Workshops", icon: BookOpen },
-  { number: "95%", label: "Member Satisfaction", icon: Award }
-];
-
-
-
 function HeroSection() {
   return (
     <section className="relative pt-32 pb-16 overflow-hidden" aria-label="About section">
@@ -107,7 +91,7 @@ function HeroSection() {
             About Us
           </h1>
           <p className="text-xl md:text-2xl text-white/80 max-w-4xl mx-auto font-montserrat leading-relaxed">
-            We are Queensland University of Technology's premier society for students
+            We are Queensland University of Technology's premier society for students 
             interested in the intersection of law, innovation, and technology.
           </p>
         </div>
@@ -116,25 +100,6 @@ function HeroSection() {
   );
 }
 
-function StatsSection() {
-  return (
-    <section className="py-12 relative">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {STATS.map((stat, index) => (
-            <div key={stat.label} className="text-center">
-              <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary/20 to-purple/20 border border-primary/30 flex items-center justify-center">
-                <stat.icon className="h-8 w-8 text-primary" />
-              </div>
-              <div className="text-3xl md:text-4xl font-bold text-white mb-2 font-tomorrow">{stat.number}</div>
-              <div className="text-white/80 font-montserrat">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function MissionSection() {
   return (
@@ -147,82 +112,38 @@ function MissionSection() {
             </h2>
             <div className="space-y-6 text-white/80 font-montserrat">
               <p className="text-lg leading-relaxed">
-                QUT LITS exists to bridge the gap between legal education and technological innovation.
-                We believe that the future of law lies in understanding and leveraging technology to
+                QUT LITS exists to bridge the gap between legal education and technological innovation. 
+                We believe that the future of law lies in understanding and leveraging technology to 
                 create more efficient, accessible, and just legal systems.
               </p>
               <p className="text-lg leading-relaxed">
-                Through workshops, networking events, and industry partnerships, we prepare our members
+                Through workshops, networking events, and industry partnerships, we prepare our members 
                 for the evolving landscape of legal technology and innovation.
               </p>
             </div>
           </div>
-
-          <div>
+          
+          <Tiltable tiltOptions={{ maxTilt: 1, scale: 1.002 }}>
             <div>
               <div className="liquid-glass-strong rounded-3xl p-10 border border-white/20 shadow-2xl">
                 <h3 className="text-2xl font-bold text-white mb-6 font-tomorrow text-center">Our Values</h3>
                 <div className="grid grid-cols-2 gap-6">
                   {SOCIETY_VALUES.map((value, index) => (
-                    <div key={value.title} className="text-center p-6 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm h-full flex flex-col">
-                      <value.icon className="h-12 w-12 text-primary mx-auto mb-4 flex-shrink-0" />
-                      <h4 className="text-lg font-semibold text-white mb-2 font-rubik flex-shrink-0">{value.title}</h4>
-                      <p className="text-sm text-white/70 font-montserrat flex-1">{value.description}</p>
-                    </div>
+                    <Tiltable key={value.title} tiltOptions={{ maxTilt: 4, scale: 1.02 }}>
+                      <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm">
+                        <value.icon className="h-12 w-12 text-primary mx-auto mb-4" />
+                        <h4 className="text-lg font-semibold text-white mb-2 font-rubik">{value.title}</h4>
+                        <p className="text-sm text-white/70 font-montserrat">{value.description}</p>
+                      </div>
+                    </Tiltable>
                   ))}
                 </div>
               </div>
             </div>
-          </div>
+          </Tiltable>
         </div>
       </div>
     </section>
-  );
-}
-
-function MemberCard({ member, index }) {
-  const [imageError, setImageError] = useState(false);
-
-  return (
-    <div className="group bg-white/5 rounded-3xl p-8 border border-white/10 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 hover:bg-white/10 h-full flex flex-col">
-      <div className="text-center mb-6">
-        <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden bg-gradient-to-br from-primary to-purple border-2 border-primary/30 group-hover:border-primary transition-all duration-300 flex items-center justify-center">
-          {!imageError ? (
-            <img
-              src={member.image}
-              alt={`${member.name} - ${member.role}`}
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-              loading="lazy"
-              decoding="async"
-              onError={() => setImageError(true)}
-            />
-          ) : (
-            <Users className="h-12 w-12 text-primary/50" />
-          )}
-        </div>
-        <h3 className="text-xl font-bold text-white mb-1 font-rubik group-hover:text-primary transition-colors duration-300">{member.name}</h3>
-        <p className="text-primary font-semibold font-montserrat">{member.role}</p>
-      </div>
-
-      {member.bio && member.bio !== "placeholder" && (
-        <p className="text-white/80 text-center mb-6 font-montserrat leading-relaxed flex-1">{member.bio}</p>
-      )}
-
-      <div className="flex justify-center gap-3 mt-auto">
-        {member.linkedin && member.linkedin !== "#" && (
-          <a
-            href={member.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-3 rounded-xl bg-primary/20 text-primary hover:bg-primary/30 transition-all duration-300 group/link"
-            title={`Connect with ${member.name} on LinkedIn`}
-            aria-label={`${member.name}'s LinkedIn profile`}
-          >
-            <Linkedin className="h-5 w-5 group-hover/link:scale-110 transition-transform duration-300" />
-          </a>
-        )}
-      </div>
-    </div>
   );
 }
 
@@ -237,9 +158,37 @@ function ExecutiveTeamSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {EXECUTIVE_TEAM.map((member, index) => (
-            <MemberCard key={`${member.name}-${index}`} member={member} index={index} />
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {EXECUTIVE_TEAM.map((member) => (
+            <Tiltable key={member.name} tiltOptions={{ maxTilt: 10, scale: 1.05 }}>
+              <div className="group bg-white/5 rounded-3xl p-6 border border-white/10 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 hover:bg-white/10 flex flex-col items-center text-center">
+                <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden bg-gradient-to-br from-primary/30 to-purple/30 border border-white/20 flex items-center justify-center">
+                  {member.image ? (
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <Users className="h-10 w-10 text-white/30" />
+                  )}
+                </div>
+                <h3 className="text-lg font-bold text-white mb-1 font-rubik">{member.name}</h3>
+                <p className="text-primary font-semibold font-montserrat text-sm mb-4">{member.role}</p>
+                <TiltableAnchor
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-xl bg-primary/20 text-primary hover:bg-primary/30 transition-all duration-300"
+                  title={`Connect with ${member.name} on LinkedIn`}
+                  tiltOptions={{ maxTilt: 5, scale: 1.03 }}
+                >
+                  <Linkedin className="h-4 w-4" />
+                </TiltableAnchor>
+              </div>
+            </Tiltable>
           ))}
         </div>
       </div>
@@ -258,9 +207,43 @@ function PastPresidentsSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {PAST_PRESIDENTS.map((member, index) => (
-            <MemberCard key={`${member.name}-${index}`} member={member} index={index} />
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {PAST_PRESIDENTS.map((member) => (
+            <Tiltable key={member.name} tiltOptions={{ maxTilt: 10, scale: 1.05 }}>
+              <div className="group bg-white/5 rounded-3xl p-6 border border-white/10 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 hover:bg-white/10 flex flex-col items-center text-center h-full">
+                <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden bg-gradient-to-br from-primary/30 to-purple/30 border border-white/20 flex items-center justify-center">
+                  {member.image ? (
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <Users className="h-10 w-10 text-white/30" />
+                  )}
+                </div>
+                <h3 className="text-lg font-bold text-white mb-1 font-rubik">{member.name}</h3>
+                <p className="text-primary font-semibold font-montserrat text-sm mb-4">{member.role}</p>
+                <div className="mt-auto">
+                  {member.linkedin ? (
+                    <TiltableAnchor
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2.5 rounded-xl bg-primary/20 text-primary hover:bg-primary/30 transition-all duration-300 inline-flex"
+                      title={`Connect with ${member.name} on LinkedIn`}
+                      tiltOptions={{ maxTilt: 5, scale: 1.03 }}
+                    >
+                      <Linkedin className="h-4 w-4" />
+                    </TiltableAnchor>
+                  ) : (
+                    <div className="h-9 w-9" />
+                  )}
+                </div>
+              </div>
+            </Tiltable>
           ))}
         </div>
       </div>
@@ -268,12 +251,85 @@ function PastPresidentsSection() {
   );
 }
 
-// CTASection imported from shared Footer component - uses custom secondary CTA
-function AboutCTASection() {
+function CTASection() {
   return (
-    <CTASection
-      secondaryCTA={{ text: "Contact Us", to: "/contact" }}
-    />
+    <section className="pt-16 pb-24 relative" aria-label="Call to action section">
+      <div className="max-w-4xl mx-auto px-6 text-center">
+        <Tiltable tiltOptions={{ maxTilt: 3, scale: 1.01 }}>
+          <div className="liquid-glass-strong rounded-3xl p-16 border border-white/20 shadow-2xl">
+          <h2 className="text-4xl font-bold text-white mb-6 font-tomorrow">
+            Ready to Shape the Future?
+          </h2>
+          <p className="text-xl text-white/80 mb-10 font-montserrat max-w-2xl mx-auto leading-relaxed">
+            Join us today and become part of a community that's driving innovation 
+            at the intersection of law and technology.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-10">
+            <TiltableAnchor
+              href="https://campus.hellorubric.com/?tab=memberships&s=6719"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center bg-gradient-to-r from-primary to-purple text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 shadow-2xl hover:shadow-primary/25 font-rubik overflow-hidden"
+              tiltOptions={{ maxTilt: 4, scale: 1.02 }}
+            >
+              <span className="relative z-10">Join Now</span>
+            </TiltableAnchor>
+            <TiltableLink
+              to="/contact"
+              className="group inline-flex items-center gap-3 border-2 border-white/30 text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm font-rubik"
+              tiltOptions={{ maxTilt: 4, scale: 1.02 }}
+            >
+              Contact Us
+              <ArrowRight className="h-5 w-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
+            </TiltableLink>
+          </div>
+
+          {/* Social Links */}
+          <div className="flex justify-center items-center gap-6 pt-6 border-t border-white/10">
+            <TiltableAnchor
+              href="https://www.facebook.com/lawinnovationandtechsociety/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all duration-300"
+              aria-label="Facebook"
+              tiltOptions={{ maxTilt: 5, scale: 1.03 }}
+            >
+              <Facebook className="h-5 w-5 text-white/70 group-hover:text-primary transition-colors duration-300" />
+            </TiltableAnchor>
+            <TiltableAnchor
+              href="https://www.instagram.com/qutlitsociety/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all duration-300"
+              aria-label="Instagram"
+              tiltOptions={{ maxTilt: 5, scale: 1.03 }}
+            >
+              <Instagram className="h-5 w-5 text-white/70 group-hover:text-primary transition-colors duration-300" />
+            </TiltableAnchor>
+            <TiltableAnchor
+              href="https://www.linkedin.com/company/law-innovation-and-technology-society/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all duration-300"
+              aria-label="LinkedIn"
+              tiltOptions={{ maxTilt: 5, scale: 1.03 }}
+            >
+              <Linkedin className="h-5 w-5 text-white/70 group-hover:text-primary transition-colors duration-300" />
+            </TiltableAnchor>
+            <TiltableAnchor
+              href="mailto:litsociety@qut.edu.au"
+              className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all duration-300"
+              aria-label="Email"
+              tiltOptions={{ maxTilt: 5, scale: 1.03 }}
+            >
+              <Mail className="h-5 w-5 text-white/70 group-hover:text-primary transition-colors duration-300" />
+            </TiltableAnchor>
+          </div>
+          </div>
+        </Tiltable>
+      </div>
+    </section>
   );
 }
 
@@ -287,11 +343,10 @@ function About() {
       <Navigation />
       <main id="main-content">
         <HeroSection />
-        <StatsSection />
         <MissionSection />
         <ExecutiveTeamSection />
         <PastPresidentsSection />
-        <AboutCTASection />
+        <CTASection />
       </main>
     </div>
   );

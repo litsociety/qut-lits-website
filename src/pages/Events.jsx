@@ -1,639 +1,444 @@
-import React, { useMemo, useState, memo, useCallback } from "react";
-import { motion } from "framer-motion";
-import { Calendar, Clock, MapPin, Users, ArrowRight, Code, Network, BookOpen, Award, Sparkles, Rocket, CalendarPlus, Handshake } from "lucide-react";
+import React, { useState } from "react";
+import { ArrowRight, Calendar, Clock, MapPin, CalendarPlus } from "lucide-react";
 import Navigation from "../components/Navigation";
 import AnimatedBackground from "../components/AnimatedBackground";
-import { CTASection } from "../components/Footer";
-import { generateICS, generateICSForAllEvents, downloadICS } from "../utils/calendar";
-import CalendarSubscriptionModal from "../components/CalendarSubscriptionModal";
+import { Tiltable, TiltableAnchor } from "../components/Tiltable";
+import CalendarModal from "../components/CalendarModal";
+import { generateICS, downloadICS } from "../utils/generateICS";
 
-// Event category definitions
-const EVENT_CATEGORIES = {
-  workshop: {
-    label: "Workshop",
-    icon: Code,
-    color: "from-blue-500 to-cyan-500",
-    bgColor: "bg-blue-500/20",
-    borderColor: "border-blue-500/30"
-  },
-  networking: {
-    label: "Networking",
-    icon: Network,
-    color: "from-purple-500 to-pink-500",
-    bgColor: "bg-purple-500/20",
-    borderColor: "border-purple-500/30"
-  },
-  social: {
-    label: "Social Event",
-    icon: Sparkles,
-    color: "from-yellow-500 to-orange-500",
-    bgColor: "bg-yellow-500/20",
-    borderColor: "border-yellow-500/30"
-  },
-  landmark: {
-    label: "Landmark Event",
-    icon: Award,
-    color: "from-primary to-purple",
-    bgColor: "bg-primary/20",
-    borderColor: "border-primary/30"
-  },
-  collab: {
-    label: "Collaboration",
-    icon: Handshake,
-    color: "from-emerald-500 to-teal-500",
-    bgColor: "bg-emerald-500/20",
-    borderColor: "border-emerald-500/30"
-  }
+// Badge style map
+const BADGE_STYLES = {
+  "Workshop":       "bg-white/10 text-white/70 border-white/20",
+  "Collaboration":  "bg-white/10 text-white/70 border-white/20",
+  "Landmark Event": "bg-white/15 text-white/80 border-white/25",
+  "Social Event":   "bg-white/10 text-white/70 border-white/20",
 };
 
-// Events data from QUTLITS 2026 Prospectus
-const EVENTS = [
-  // FEBRUARY - SEMESTER 1
+// All events with optional ICS date data (dtstart/dtend as YYYYMMDDTHHMMSS or YYYYMMDD)
+const SEMESTER_1 = [
   {
     id: 1,
-    title: "O Week Day 1",
-    category: "social",
-    date: "2026-02-17",
-    time: "All Day",
-    location: "QUT Gardens Point Campus",
-    description: "Join us at our O Week stall! Meet the team, learn about QUT LITS, and discover how you can get involved in the intersection of law and technology.",
-    image: "/lits-oweek.jpg",
-    icon: Sparkles,
-    registrationLink: "#"
+    title: "Mel Storey – Book Tour Event",
+    badge: "Collaboration",
+    image: "/lits-slideshow-7.jpg",
+    description:
+      "Join us for Mel Storey's book tour event. An opportunity to engage with thought leadership in law and technology. This event requires co-operation with QUTLS and possibly QLS.",
+    date: "18 March 2026",
+    time: "6:15 PM",
+    location: "QUT Gardens Point Campus Gibson Room",
+    link: "https://campus.hellorubric.com/?eid=53921",
+    linkLabel: "Register Now",
+    dtstart: "20260318T181500",
+    dtend:   "20260318T193000",
   },
   {
     id: 2,
-    title: "O Week Day 2",
-    category: "social",
-    date: "2026-02-18",
-    time: "All Day",
-    location: "QUT Gardens Point Campus",
-    description: "Continue the O Week celebrations! Visit our stall, participate in activities, and connect with fellow students interested in law and technology.",
-    image: "/lits-oweek.jpg",
-    icon: Sparkles,
-    registrationLink: "#"
+    title: "Technology in Legal Investigations",
+    badge: "Workshop",
+    image: "/lits-workshops.jpg",
+    description:
+      "A practical workshop exploring the intersection of law and technology through a mock legal investigation, demonstrating how technology assists in discovering and understanding facts when they aren't immediately clear.",
+    date: "23 March 2026",
+    time: "5:00 PM – 6:00 PM",
+    location: "QUT Gardens Point Campus D-106",
+    link: "https://campus.hellorubric.com/?eid=53722",
+    linkLabel: "Register Now",
+    dtstart: "20260323T170000",
+    dtend:   "20260323T180000",
   },
   {
     id: 3,
-    title: "Welcome Coffee (Semester 1)",
-    category: "social",
-    date: "2026-02-26",
-    time: "11:00 AM",
-    location: "Merlo Coffee, Gardens Point",
-    description: "Kick off the semester with a casual welcome coffee event at Merlo. Meet new members, reconnect with friends, and learn about upcoming events and opportunities.",
-    image: "/welcome-coffee.jpg",
-    icon: Sparkles,
-    registrationLink: "#"
+    title: "LITS x GRC",
+    badge: "Collaboration",
+    image: "/lits-slideshow-6.jpg",
+    description:
+      "A collaborative event between QUT LITS and GRC. Taking place in Semester 1, Week 7. Details to be announced.",
+    date: "Week 7, Semester 1",
+    time: "TBA",
+    location: "TBA",
+    link: null,
   },
-
-  // MARCH
   {
     id: 4,
-    title: "Intro to Tech Law",
-    category: "workshop",
-    date: "2026-03-02",
-    time: "5:00 PM – 6:00 PM",
-    location: "QUT Gardens Point Campus D-106",
-    description: "An introduction to the major areas of tech law and how they connect back to traditional legal principles. This session is a great starting point for students interested in the Law & Tech Innovation minor.",
-    image: "/lits-workshops.jpg",
-    icon: Code,
-    registrationLink: "https://campus.hellorubric.com/?eid=53721"
+    title: "Law & Tech Networking Night",
+    badge: "Landmark Event",
+    image: "/lits-slideshow-6.jpg",
+    description:
+      "Our premier event connecting students with professionals working at the intersection of law and technology. From privacy and cybersecurity to AI governance and digital innovation, this event highlights how technology is reshaping the legal landscape. Features panel discussions and networking sessions.",
+    date: "16 April 2026",
+    time: "6:00 PM – 9:00 PM",
+    location: "Clayton Utz",
+    link: "https://campus.hellorubric.com/?eid=53724",
+    linkLabel: "Book Now",
+    dtstart: "20260416T180000",
+    dtend:   "20260416T210000",
   },
   {
     id: 5,
-    title: "Intro to Legal Tech",
-    category: "workshop",
-    date: "2026-03-09",
-    time: "5:00 PM – 6:00 PM",
-    location: "QUT Gardens Point Campus D-106",
-    description: "Learn how lawyers use technology in practice, and how legal knowledge can be used to build and innovate new legal technologies.",
-    image: "/lits-workshops.jpg",
-    icon: Code,
-    registrationLink: "https://campus.hellorubric.com/?eid=53722"
+    title: "LITS x ESC",
+    badge: "Collaboration",
+    image: "/lits-slideshow-6.jpg",
+    description:
+      "A collaborative event between QUT LITS and ESC. Taking place in Semester 1, Week 10. Details to be announced.",
+    date: "Week 10, Semester 1",
+    time: "TBA",
+    location: "TBA",
+    link: null,
   },
   {
     id: 6,
-    title: "Technology in Legal Investigations",
-    category: "workshop",
-    date: "2026-03-23",
-    time: "5:00 PM – 6:00 PM",
-    location: "QUT Gardens Point Campus D-106",
-    description: "A practical workshop exploring the intersection of law and technology through a mock legal investigation, demonstrating how technology assists in discovering and understanding facts when they aren't immediately clear.",
-    image: "/lits-workshops.jpg",
-    icon: Code,
-    registrationLink: "https://campus.hellorubric.com/?eid=53724"
+    title: "End-of-Semester 1 Social Drinks",
+    badge: "Social Event",
+    image: "/lits-social.jpg",
+    description:
+      "Celebrate the end of Semester 1 with drinks at Bot Bar. Connect with fellow members, share your experiences, and unwind after a great semester of events.",
+    date: "22 May 2026",
+    time: "TBA",
+    location: "Bot Bar",
+    link: null,
+    dtstart: "20260522",
+    allDay: true,
   },
+];
+
+const SEMESTER_2 = [
   {
     id: 7,
-    title: "Faculty of Science – Welcome & Connect Event",
-    category: "workshop",
-    date: "2026-03-04",
-    time: "11:00 AM – 3:00 PM",
+    title: "Semester 2 Orientation Week",
+    badge: "Social Event",
+    image: "/lits-oweek.jpg",
+    description:
+      "Join us at our Semester 2 O Week stall! Meet the team, learn about QUT LITS, and discover upcoming events for the second semester. O Week runs from Monday 13 July to Friday 17 July.",
+    date: "13 July 2026",
+    time: "All Day",
     location: "QUT Gardens Point Campus",
-    description: "Join us for the Faculty of Science Welcome and Connect event. Connect with students and faculty across science and law disciplines. This is a faculty-hosted event.",
-    image: "/lits-faculty-science.jpg",
-    icon: Users,
-    registrationLink: "#"
+    link: null,
+    dtstart: "20260713",
+    allDay: true,
   },
   {
     id: 8,
-    title: "QUTIES Mega Launch",
-    category: "collab",
-    date: "2026-03-07",
+    title: "Welcome Coffee (Semester 2)",
+    badge: "Social Event",
+    image: "/welcome-coffee.jpg",
+    description:
+      "Kick off Semester 2 with a casual welcome coffee event at Merlo. Meet new members, reconnect with friends, and learn about upcoming events.",
+    date: "14 July 2026",
     time: "TBA",
-    location: "QUT Gardens Point Campus",
-    description: "Attend the QUTIES Mega Launch event. Connect with innovation and entrepreneurship communities at QUT. This event is hosted by other clubs.",
-    image: "/lits-slideshow-7.jpg",
-    icon: Rocket,
-    registrationLink: "#"
+    location: "Merlo Coffee, Gardens Point",
+    link: null,
+    dtstart: "20260714",
+    allDay: true,
   },
   {
     id: 9,
-    title: "Mel Storey – Book Tour Event",
-    category: "collab",
-    date: "2026-03-18",
-    time: "6:15 PM",
-    location: "QUT Gardens Point Campus Gibson Room",
-    description: "Join us for Mel Storey's book tour event. An opportunity to engage with thought leadership in law and technology. This event requires co-operation with QUTLS and possibly QLS.",
-    image: "/lits-slideshow-7.jpg",
-    icon: BookOpen,
-    registrationLink: "https://campus.hellorubric.com/?eid=53921"
+    title: "QUT Open Day",
+    badge: "Workshop",
+    image: "/lits-oweek.jpg",
+    description:
+      "Join us at QUT Open Day to showcase QUT LITS to prospective students. Learn about our society and the opportunities we offer.",
+    date: "27 July 2026",
+    time: "All Day",
+    location: "QUT Gardens Point Campus",
+    link: null,
+    dtstart: "20260727",
+    allDay: true,
   },
   {
     id: 10,
-    title: "Legal Tech Challenge",
-    category: "landmark",
-    date: "2026-10-02",
-    displayDate: "2, 3 & 4 October 2026",
-    time: "Fri 5–8PM · Sat 10AM–5PM · Sun 1–5PM",
-    location: "QUT Gardens Point Campus P Block Atrium",
-    description: "An interactive event that encourages students to design innovative technology-based solutions to real-world legal problems. Participants pitch their ideas to a panel of industry judges. No coding experience required, only a passion for creativity, problem-solving and innovation. Runs Friday 2 October (5–8PM), Saturday 3 October (10AM–5PM), and Sunday 4 October (1–5PM).",
-    image: "/lits-slideshow-8.jpg",
-    icon: Code,
-    registrationLink: "#"
+    title: "QUT Tech Industry Night",
+    badge: "Collaboration",
+    image: "/lits-slideshow-6.jpg",
+    description:
+      "The largest networking event for technology-focused students at QUT, hosted in collaboration with other leading tech societies. This flagship event brings together over 200 attendees from diverse disciplines to engage directly with professionals shaping the future of technology and innovation.",
+    date: "14 August 2026",
+    time: "6:00 PM – 9:00 PM",
+    location: "QUT Garden Theatre",
+    link: null,
+    dtstart: "20260814T180000",
+    dtend:   "20260814T210000",
   },
-
-  // APRIL
   {
     id: 11,
-    title: "Law & Tech Networking Night",
-    category: "landmark",
-    date: "2026-04-16",
-    time: "6:00 PM - 9:00 PM",
-    location: "Clayton Utz",
-    description: "Our premier event connecting students with professionals working at the intersection of law and technology. From privacy and cybersecurity to AI governance and digital innovation, this event highlights how technology is reshaping the legal landscape. Features panel discussions and networking sessions. Preferred date: Thursday 16 April (Week 7).",
-    image: "/lits-slideshow-6.jpg",
-    icon: Network,
-    registrationLink: "#"
+    title: "Innovate & Regulate – Law & Technology Panel",
+    badge: "Collaboration",
+    image: "/lits-slideshow-7.jpg",
+    description:
+      "Our flagship thought-leadership event, bringing together leading professionals, academics and students to explore how innovation challenges traditional legal frameworks and what the future of regulation might look like. A collaboration with QLS taking place on Friday 4 September (Week 7).",
+    date: "4 September 2026",
+    time: "TBA",
+    location: "Queensland Law Society House",
+    link: null,
+    dtstart: "20260904",
+    allDay: true,
   },
-
-  // MAY
   {
     id: 12,
-    title: "End-of-Semester 1 Social Drinks",
-    category: "social",
-    date: "2026-05-22",
-    time: "TBA",
-    location: "Bot Bar",
-    description: "Celebrate the end of Semester 1 with drinks at Bot Bar. Connect with fellow members, share your experiences, and unwind after a great semester of events.",
-    image: "/lits-social.jpg",
-    icon: Sparkles,
-    registrationLink: "#"
+    title: "Legal Tech Challenge",
+    badge: "Landmark Event",
+    image: "/lits-slideshow-8.jpg",
+    description:
+      "An interactive event that encourages students to design innovative technology-based solutions to real-world legal problems. Participants pitch their ideas to a panel of industry judges. No coding experience required — only a passion for creativity, problem-solving and innovation.",
+    date: "2–4 October 2026",
+    time: "Fri 5–8PM · Sat 10AM–5PM · Sun 1–5PM",
+    location: "QUT Gardens Point Campus P Block Atrium",
+    link: null,
+    dtstart: "20261002T170000",
+    dtend:   "20261004T170000",
   },
-
-  // JULY - SEMESTER 2
   {
     id: 13,
-    title: "Semester 2 Orientation Week",
-    category: "social",
-    date: "2026-07-13",
-    time: "All Day",
-    location: "QUT Gardens Point Campus",
-    description: "Join us at our Semester 2 O Week stall! Meet the team, learn about QUT LITS, and discover upcoming events for the second semester. O Week runs from Monday 13 July to Friday 17 July.",
-    image: "/lits-oweek.jpg",
-    icon: Sparkles,
-    registrationLink: "#"
+    title: "End-of-Semester 2 Social Drinks",
+    badge: "Social Event",
+    image: "/lits-social.jpg",
+    description:
+      "Celebrate the end of Semester 2 with drinks at Bot Bar. Connect with fellow members, share your experiences, and unwind after a great year of events.",
+    date: "16 October 2026",
+    time: "TBA",
+    location: "Bot Bar",
+    link: null,
+    dtstart: "20261016",
+    allDay: true,
   },
+];
+
+const PREVIOUS_EVENTS = [
   {
     id: 14,
-    title: "Welcome Coffee (Semester 2)",
-    category: "social",
-    date: "2026-07-14",
-    time: "TBA",
-    location: "Merlo Coffee, Gardens Point",
-    description: "Kick off Semester 2 with a casual welcome coffee event at Merlo. Meet new members, reconnect with friends, and learn about upcoming events.",
-    image: "/welcome-coffee.jpg",
-    icon: Sparkles,
-    registrationLink: "#"
+    title: "Intro to Legal Tech",
+    badge: "Workshop",
+    image: "/lits-workshops.jpg",
+    description:
+      "Learn how lawyers use technology in practice, and how legal knowledge can be used to build and innovate new legal technologies.",
+    date: "9 March 2026",
+    time: "5:00 PM – 6:00 PM",
+    location: "QUT Gardens Point Campus D-106",
+    link: null,
+    past: true,
   },
   {
     id: 15,
-    title: "QUT Open Day",
-    category: "workshop",
-    date: "2026-07-27",
-    time: "All Day",
+    title: "QUTIES Mega Launch",
+    badge: "Collaboration",
+    image: "/lits-slideshow-7.jpg",
+    description:
+      "Attend the QUTIES Mega Launch event. Connect with innovation and entrepreneurship communities at QUT. This event is hosted by other clubs.",
+    date: "7 March 2026",
+    time: "TBA",
     location: "QUT Gardens Point Campus",
-    description: "Join us at QUT Open Day to showcase QUT LITS to prospective students. Learn about our society and the opportunities we offer. Date is tentative.",
-    image: "/lits-oweek.jpg",
-    icon: Users,
-    registrationLink: "#"
+    link: null,
+    past: true,
   },
-
-  // AUGUST
   {
     id: 16,
-    title: "QUT Tech Industry Night",
-    category: "collab",
-    date: "2026-08-14",
-    time: "6:00 PM - 9:00 PM",
-    location: "QUT Garden Theatre",
-    description: "The largest networking event for technology-focused students at QUT, hosted in collaboration with other leading tech societies. This flagship event brings together over 200 attendees from diverse disciplines to engage directly with professionals shaping the future of technology and innovation.",
-    image: "/lits-slideshow-6.jpg",
-    icon: Network,
-    registrationLink: "#"
+    title: "Faculty of Science – Welcome & Connect Event",
+    badge: "Workshop",
+    image: "/lits-faculty-science.jpg",
+    description:
+      "Join us for the Faculty of Science Welcome and Connect event. Connect with students and faculty across science and law disciplines. This is a faculty-hosted event.",
+    date: "4 March 2026",
+    time: "11:00 AM – 3:00 PM",
+    location: "QUT Gardens Point Campus",
+    link: null,
+    past: true,
   },
-
-  // SEPTEMBER
   {
     id: 17,
-    title: "Innovate & Regulate – Law & Technology Panel",
-    category: "collab",
-    date: "2026-09-04",
-    time: "TBA",
-    location: "Queensland Law Society House",
-    description: "Our flagship thought-leadership event, bringing together leading professionals, academics and students to explore how innovation challenges traditional legal frameworks and what the future of regulation might look like. Encourages critical discussion on how emerging technologies can be governed responsibly and ethically. This event is a collaboration with QLS and takes place on Friday 4 September (Week 7).",
-    image: "/lits-slideshow-7.jpg",
-    icon: Users,
-    registrationLink: "#"
-  },
-
-  // OCTOBER
-  {
-    id: 19,
-    title: "LITS x GRC",
-    category: "collab",
-    date: "2026-03-16",
-    displayDate: "Week 4, Semester 1",
-    time: "TBA",
-    location: "TBA",
-    description: "A collaborative event between QUT LITS and GRC. Taking place in Semester 1, Week 4. Details to be announced.",
-    image: "/lits-slideshow-6.jpg",
-    icon: Handshake,
-    registrationLink: "#"
-  },
-  {
-    id: 20,
-    title: "LITS x ESC",
-    category: "collab",
-    date: "2026-04-27",
-    displayDate: "Week 10, Semester 1",
-    time: "TBA",
-    location: "TBA",
-    description: "A collaborative event between QUT LITS and ESC. Taking place in Semester 1, Week 10. Details to be announced.",
-    image: "/lits-slideshow-6.jpg",
-    icon: Handshake,
-    registrationLink: "#"
+    title: "Intro to Tech Law",
+    badge: "Workshop",
+    image: "/lits-workshops.jpg",
+    description:
+      "An introduction to the major areas of tech law and how they connect back to traditional legal principles. This session is a great starting point for students interested in the Law & Tech Innovation minor.",
+    date: "2 March 2026",
+    time: "5:00 PM – 6:00 PM",
+    location: "QUT Gardens Point Campus D-106",
+    link: null,
+    past: true,
   },
   {
     id: 18,
-    title: "End-of-Semester 2 Social Drinks",
-    category: "social",
-    date: "2026-10-16",
-    time: "TBA",
-    location: "Bot Bar",
-    description: "Celebrate the end of Semester 2 with drinks at Bot Bar. Connect with fellow members, share your experiences, and unwind after a great year of events. This event takes place on Friday 16 October (Week 12).",
-    image: "/lits-social.jpg",
-    icon: Sparkles,
-    registrationLink: "#"
-  }
+    title: "Welcome Coffee (Semester 1)",
+    badge: "Social Event",
+    image: "/welcome-coffee.jpg",
+    description:
+      "Kick off the semester with a casual welcome coffee event at Merlo. Meet new members, reconnect with friends, and learn about upcoming events and opportunities.",
+    date: "26 February 2026",
+    time: "11:00 AM",
+    location: "Merlo Coffee, Gardens Point",
+    link: null,
+    past: true,
+  },
+  {
+    id: 19,
+    title: "O Week Day 2",
+    badge: "Social Event",
+    image: "/lits-oweek.jpg",
+    description:
+      "Continue the O Week celebrations! Visit our stall, participate in activities, and connect with fellow students interested in law and technology.",
+    date: "18 February 2026",
+    time: "All Day",
+    location: "QUT Gardens Point Campus",
+    link: null,
+    past: true,
+  },
+  {
+    id: 20,
+    title: "O Week Day 1",
+    badge: "Social Event",
+    image: "/lits-oweek.jpg",
+    description:
+      "Join us at our O Week stall! Meet the team, learn about QUT LITS, and discover how you can get involved in the intersection of law and technology.",
+    date: "17 February 2026",
+    time: "All Day",
+    location: "QUT Gardens Point Campus",
+    link: null,
+    past: true,
+  },
 ];
 
-const HeroSection = memo(function HeroSection() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const ALL_EVENTS = [...SEMESTER_1, ...SEMESTER_2, ...PREVIOUS_EVENTS];
 
-  const handleSubscribeToAll = useCallback(() => {
-    setIsModalOpen(true);
-  }, []);
+// ─── Components ──────────────────────────────────────────────────────────────
 
-  const handleCloseModal = useCallback(() => {
-    setIsModalOpen(false);
-  }, []);
-
-  const handleDownloadAll = useCallback(() => {
-    const icsContent = generateICSForAllEvents(EVENTS);
-    downloadICS(icsContent, 'qut-lits-events-2026.ics');
-  }, []);
-
+function HeroSection({ onSubscribe }) {
   return (
-    <section className="relative pt-32 pb-16 overflow-hidden" aria-label="Events section">
+    <section className="relative pt-32 pb-16 overflow-hidden" aria-label="Events hero">
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20 mb-6">
-            <Calendar className="h-4 w-4 text-primary" />
-            <span className="text-sm font-rubik text-white/90">Upcoming Events</span>
-          </div>
-        </div>
-
-        <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 font-tomorrow leading-tight">
+        <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 font-tomorrow">
           Our Events
         </h1>
-
-        <p className="text-xl md:text-2xl text-white/80 font-montserrat max-w-4xl mx-auto leading-relaxed mb-8">
+        <p className="text-xl md:text-2xl text-white/80 max-w-4xl mx-auto font-montserrat leading-relaxed mb-8">
           Join us for workshops, networking events, speaker series, and more.
           Explore the intersection of law and technology with industry leaders and fellow students.
         </p>
-
-        {/* Subscribe to All Events Button */}
         <button
-          onClick={handleSubscribeToAll}
-          className="group inline-flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 hover:border-primary/50 rounded-full px-6 py-3 transition-all duration-300 font-rubik text-white"
+          onClick={onSubscribe}
+          className="inline-flex items-center gap-2.5 bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/20 hover:border-white/30 rounded-full px-6 py-3 transition-all duration-300 font-rubik text-white text-sm"
           aria-label="Subscribe to all events"
         >
-          <CalendarPlus className="h-5 w-5 text-primary group-hover:scale-110 transition-transform duration-300" />
-          <span className="text-sm font-semibold">Subscribe to All Events</span>
+          <CalendarPlus className="h-4 w-4" />
+          Subscribe to All Events
         </button>
-
-        {/* Calendar Subscription Modal */}
-        <CalendarSubscriptionModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          onDownload={handleDownloadAll}
-          eventTitle={null}
-        />
       </div>
     </section>
   );
-});
+}
 
-const EventCard = memo(function EventCard({ event, isPrevious }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const formattedDate = useMemo(() => {
-    if (event.displayDate) return event.displayDate;
-    const eventDate = new Date(event.date);
-    const isValidDate = !isNaN(eventDate.getTime()) && event.date !== "2026-12-31";
-    return isValidDate
-      ? eventDate.toLocaleDateString('en-AU', {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric'
-        })
-      : "Date TBA";
-  }, [event.date, event.displayDate]);
-
-  const category = useMemo(() => EVENT_CATEGORIES[event.category] || EVENT_CATEGORIES.workshop, [event.category]);
-  const CategoryIcon = category.icon;
-
-  const handleAddToCalendar = useCallback((e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsModalOpen(true);
-  }, []);
-
-  const handleCloseModal = useCallback(() => {
-    setIsModalOpen(false);
-  }, []);
-
-  const handleDownload = useCallback(() => {
-    const icsContent = generateICS(event);
-    const filename = `${event.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.ics`;
-    downloadICS(icsContent, filename);
-  }, [event]);
+function EventCard({ event, onAddToCalendar }) {
+  const badgeStyle = BADGE_STYLES[event.badge] || "bg-white/10 text-white/70 border-white/20";
 
   return (
-    <div className="group bg-white/5 rounded-3xl overflow-hidden border border-white/10 backdrop-blur-sm hover:border-primary/30 transition-all duration-200 hover:bg-white/10 h-full flex flex-col">
-      {/* Event Image */}
-      <div className="relative h-48 overflow-hidden">
-        <img
-          src={event.image}
-          alt={event.title}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300 will-change-transform"
-          loading="lazy"
-          decoding="async"
-          onError={(e) => {
-            e.currentTarget.src = "/lits-slideshow-5.jpg"; // Fallback image
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+    <Tiltable tiltOptions={{ maxTilt: 6, scale: 1.02 }}>
+      <div className={`group bg-white/5 rounded-3xl overflow-hidden border border-white/10 backdrop-blur-sm hover:border-white/25 transition-all duration-300 hover:bg-white/8 flex flex-col h-full ${event.past ? "opacity-55" : ""}`}>
+        {/* Image */}
+        <div className="relative h-44 overflow-hidden shrink-0">
+          <img
+            src={event.image}
+            alt={event.title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+            decoding="async"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+          <span className={`absolute top-3 left-3 text-xs font-semibold px-3 py-1 rounded-full border font-rubik ${badgeStyle}`}>
+            {event.badge}
+          </span>
+          {/* Per-event calendar button */}
+          {!event.past && event.dtstart && (
+            <button
+              onClick={() => onAddToCalendar(event)}
+              className="absolute top-3 right-3 p-1.5 rounded-lg bg-black/40 hover:bg-black/60 border border-white/20 transition-colors"
+              title="Add to calendar"
+              aria-label={`Add ${event.title} to calendar`}
+            >
+              <CalendarPlus className="h-3.5 w-3.5 text-white/70" />
+            </button>
+          )}
+          {event.past && (
+            <span className="absolute top-3 right-3 text-xs font-semibold px-3 py-1 rounded-full border font-rubik bg-white/10 text-white/50 border-white/15">
+              Past
+            </span>
+          )}
+        </div>
 
-        {/* Category Badge */}
-        <div className="absolute top-4 left-4">
-          <div className={`flex items-center gap-2 ${category.bgColor} backdrop-blur-md rounded-full px-3 py-1.5 border ${category.borderColor}`}>
-            <CategoryIcon className="h-3.5 w-3.5 text-white" />
-            <span className="text-xs font-semibold text-white font-rubik">
-              {category.label}
+        {/* Content */}
+        <div className="p-6 flex flex-col flex-1">
+          <h3 className="text-xl font-bold text-white mb-3 font-tomorrow leading-tight">
+            {event.title}
+          </h3>
+          <p className="text-white/65 font-montserrat text-sm leading-relaxed mb-4 flex-1">
+            {event.description}
+          </p>
+
+          <div className="space-y-1.5 text-white/50 text-sm font-montserrat mb-4">
+            <span className="flex items-center gap-2">
+              <Calendar className="h-3.5 w-3.5 shrink-0" /> {event.date}
+            </span>
+            <span className="flex items-center gap-2">
+              <Clock className="h-3.5 w-3.5 shrink-0" /> {event.time}
+            </span>
+            <span className="flex items-center gap-2">
+              <MapPin className="h-3.5 w-3.5 shrink-0" /> {event.location}
             </span>
           </div>
-        </div>
 
-        {/* Add to Calendar Icon */}
-        <div className="absolute top-4 right-4">
-          <button
-            onClick={handleAddToCalendar}
-            className="group bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 hover:border-primary/50 rounded-full p-2.5 transition-all duration-200 inline-block"
-            aria-label={`Add ${event.title} to calendar`}
-            title="Add to calendar"
-          >
-            <CalendarPlus className="h-4 w-4 text-white group-hover:text-primary transition-colors duration-300" />
-          </button>
-        </div>
-
-      </div>
-
-      {/* Event Content */}
-      <div className="p-6 flex-1 flex flex-col">
-        <h3 className="text-2xl font-bold text-white mb-4 font-tomorrow group-hover:text-primary transition-colors duration-200">
-          {event.title}
-        </h3>
-
-        <p className="text-white/80 font-montserrat mb-6 leading-relaxed flex-1">
-          {event.description}
-        </p>
-
-        {/* Event Details */}
-        <div className="space-y-3 mb-6">
-          <div className="flex items-center gap-3 text-white/70">
-            <Calendar className="h-4 w-4 text-primary" />
-            <span className="font-montserrat text-sm">{formattedDate}</span>
-          </div>
-          <div className="flex items-center gap-3 text-white/70">
-            <Clock className="h-4 w-4 text-primary" />
-            <span className="font-montserrat text-sm">{event.time}</span>
-          </div>
-          <div className="flex items-center gap-3 text-white/70">
-            <MapPin className="h-4 w-4 text-primary" />
-            <span className="font-montserrat text-sm">{event.location}</span>
-          </div>
-        </div>
-
-        {/* CTA Button */}
-        {!isPrevious && (
-          event.registrationLink && event.registrationLink !== "#" ? (
-            <a
-              href={event.registrationLink}
+          {event.link ? (
+            <TiltableAnchor
+              href={event.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-purple text-white px-6 py-3 rounded-xl font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 shadow-lg hover:shadow-primary/25 font-rubik"
+              className="inline-flex items-center justify-center gap-2 bg-white text-black px-5 py-2.5 rounded-xl font-semibold transition-all duration-300 font-rubik text-sm hover:bg-white/90"
+              tiltOptions={{ maxTilt: 4, scale: 1.02 }}
             >
-              Register Now
-              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-            </a>
-          ) : (
-            <div className="inline-flex items-center justify-center gap-2 bg-white/10 text-white/60 px-6 py-3 rounded-xl font-semibold font-rubik cursor-not-allowed">
+              {event.linkLabel || "Register"} <ArrowRight className="h-4 w-4" />
+            </TiltableAnchor>
+          ) : !event.past ? (
+            <div className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl font-rubik text-sm text-white/35 border border-white/10 cursor-not-allowed select-none">
               Registration Coming Soon
             </div>
-          )
-        )}
-      </div>
-
-      {/* Calendar Subscription Modal */}
-      <CalendarSubscriptionModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onDownload={handleDownload}
-        eventTitle={event.title}
-      />
-    </div>
-  );
-});
-
-function EventLegend() {
-  return (
-    <div className="mt-12 pt-8 border-t border-white/10">
-      <div className="text-center">
-        <p className="text-sm text-white/60 font-montserrat mb-4">Event Categories</p>
-        <div className="flex flex-wrap justify-center gap-3">
-          {Object.entries(EVENT_CATEGORIES).map(([key, category]) => {
-            const CategoryIcon = category.icon;
-            return (
-              <div
-                key={key}
-                className={`flex items-center gap-2 ${category.bgColor} backdrop-blur-md rounded-full px-3 py-1.5 border ${category.borderColor}`}
-              >
-                <CategoryIcon className="h-3.5 w-3.5 text-white" />
-                <span className="text-xs font-semibold text-white font-rubik">{category.label}</span>
-              </div>
-            );
-          })}
+          ) : null}
         </div>
       </div>
-    </div>
+    </Tiltable>
   );
 }
 
-function EventsSection() {
-  const today = useMemo(() => new Date(), []);
-
-  const { previousEvents, sem1Events, sem2Events } = useMemo(() => {
-    const byDate = (a, b) => new Date(a.date) - new Date(b.date);
-    const sorted = [...EVENTS].sort(byDate);
-
-    const previous = [];
-    const sem1 = [];
-    const sem2 = [];
-
-    sorted.forEach(event => {
-      const eventDate = new Date(event.date);
-      if (eventDate < today) {
-        previous.unshift(event); // most recent first
-      } else {
-        const month = eventDate.getMonth() + 1; // 1–12
-        if (month <= 6) {
-          sem1.push(event);
-        } else {
-          sem2.push(event);
-        }
-      }
-    });
-
-    return { previousEvents: previous, sem1Events: sem1, sem2Events: sem2 };
-  }, [today]);
-
-  const renderGrid = (events, baseDelay = 0, isPrevious = false) => (
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {events.map((event, index) => (
-        <motion.div
-          key={event.id}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.3,
-            delay: Math.min((baseDelay + index) * 0.03, 0.4),
-            ease: [0.25, 0.46, 0.45, 0.94]
-          }}
-        >
-          <EventCard event={event} isPrevious={isPrevious} />
-        </motion.div>
-      ))}
-    </div>
-  );
-
+function EventsSection({ title, events, onAddToCalendar }) {
   return (
-    <section className="py-16 relative" aria-label="Events listing section">
-      <div className="max-w-7xl mx-auto px-6 space-y-20">
-
-        {/* ── Upcoming Events ── */}
-        <div>
-          <h2 className="text-4xl font-bold text-white mb-10 font-tomorrow">
-            Upcoming Events
-          </h2>
-
-          {sem1Events.length === 0 && sem2Events.length === 0 && (
-            <div className="text-center py-16">
-              <Calendar className="h-16 w-16 text-white/30 mx-auto mb-4" />
-              <p className="text-xl text-white/60 font-montserrat">
-                No upcoming events scheduled. Check back soon!
-              </p>
-            </div>
-          )}
-
-          {sem1Events.length > 0 && (
-            <div className="mb-14">
-              <h3 className="text-xl font-semibold text-primary mb-6 font-rubik uppercase tracking-widest">
-                Semester 1
-              </h3>
-              {renderGrid(sem1Events, 0)}
-            </div>
-          )}
-
-          {sem2Events.length > 0 && (
-            <div>
-              <h3 className="text-xl font-semibold text-primary mb-6 font-rubik uppercase tracking-widest">
-                Semester 2
-              </h3>
-              {renderGrid(sem2Events, sem1Events.length)}
-            </div>
-          )}
+    <section className="py-10 relative" aria-label={`${title} events`}>
+      <div className="max-w-7xl mx-auto px-6">
+        <h2 className="text-xs font-bold tracking-widest text-white/40 uppercase font-rubik mb-8">
+          {title}
+        </h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {events.map((event) => (
+            <EventCard key={event.id} event={event} onAddToCalendar={onAddToCalendar} />
+          ))}
         </div>
-
-        {/* ── Previous Events ── */}
-        {previousEvents.length > 0 && (
-          <div>
-            <h2 className="text-4xl font-bold text-white mb-10 font-tomorrow">
-              Previous Events
-            </h2>
-            {renderGrid(previousEvents, sem1Events.length + sem2Events.length, true)}
-          </div>
-        )}
-
-        <EventLegend />
       </div>
     </section>
   );
 }
 
-// CTASection imported from shared Footer component - uses custom title/description
-function EventsCTASection() {
-  return (
-    <CTASection
-      title="Stay Updated"
-      description="Follow us on social media to stay up to date with all our upcoming events, workshops, and networking opportunities."
-      secondaryCTA={{ text: "Contact Us", to: "/contact" }}
-    />
-  );
-}
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 function Events() {
+  const [showModal, setShowModal]         = useState(false);
+  const [singleEvent, setSingleEvent]     = useState(null);
+
+  const handleSubscribeAll = () => {
+    setSingleEvent(null);
+    setShowModal(true);
+  };
+
+  const handleAddSingle = (event) => {
+    setSingleEvent(event);
+    setShowModal(true);
+  };
+
+  // For a single-event download, pass only that event to the modal
+  const modalEvents = singleEvent ? [singleEvent] : ALL_EVENTS;
+
   return (
     <div className="min-h-screen relative overflow-hidden">
       <a href="#main-content" className="skip-to-main focus:top-0">
@@ -642,10 +447,20 @@ function Events() {
       <AnimatedBackground />
       <Navigation />
       <main id="main-content">
-        <HeroSection />
-        <EventsSection />
-        <EventsCTASection />
+        <HeroSection onSubscribe={handleSubscribeAll} />
+        <div className="pb-24">
+          <EventsSection title="Semester 1" events={SEMESTER_1} onAddToCalendar={handleAddSingle} />
+          <EventsSection title="Semester 2" events={SEMESTER_2} onAddToCalendar={handleAddSingle} />
+          <EventsSection title="Previous Events" events={PREVIOUS_EVENTS} onAddToCalendar={handleAddSingle} />
+        </div>
       </main>
+
+      {showModal && (
+        <CalendarModal
+          events={modalEvents}
+          onClose={() => { setShowModal(false); setSingleEvent(null); }}
+        />
+      )}
     </div>
   );
 }
