@@ -12,35 +12,16 @@ const SPONSOR_TIERS = [
     name: "Ruby",
     color: "ruby",
     icon: Gem,
-    description: "Strategic partners supporting our mission",
-    sponsors: [
-      // {
-      //   name: "Sponsor Name",
-      //   logo: "/headshot.png",
-      //   description: "Empowering the next generation of legal professionals"
-      // },
-      // {
-      //   name: "Sponsor Name",
-      //   logo: "/headshot.png",
-      //   description: "Advancing legal tech education"
-      // },
-      // {
-      //   name: "Sponsor Name",
-      //   logo: "/headshot.png",
-      //   description: "Building the future of law"
-      // }
-    ]
+    sponsors: []
   },
   {
     name: "Sapphire",
     color: "sapphire",
     icon: Gem,
-    description: "Valued partners in our journey",
     sponsors: [
       {
         name: "Dundas Lawyers",
         logo: "/dundas-lawyers-logo.png",
-        description: "Supporting student innovation in legal technology"
       }
     ]
   },
@@ -48,19 +29,7 @@ const SPONSOR_TIERS = [
     name: "Emerald",
     color: "emerald",
     icon: Gem,
-    description: "Our premium partners driving innovation",
-    sponsors: [
-      // {
-      //   name: "Sponsor Name",
-      //   logo: "/headshot.png",
-      //   description: "Leading the future of legal technology"
-      // },
-      // {
-      //   name: "Sponsor Name",
-      //   logo: "/headshot.png",
-      //   description: "Innovating at the intersection of law and tech"
-      // }
-    ]
+    sponsors: []
   }
 ];
 
@@ -90,56 +59,50 @@ function HeroSection() {
 
 function SponsorsSection() {
   return (
-    <section className="py-24 relative" aria-label="Sponsors section">
-      <div className="max-w-7xl mx-auto px-6">
-        {SPONSOR_TIERS.map((tier, tierIndex) => (
-          <Tiltable key={tier.name} tiltOptions={{ maxTilt: 3, scale: 1.01 }}>
-            <div className="mb-20 last:mb-0">
+    <section className="py-16 relative" aria-label="Sponsors section">
+      <div className="max-w-5xl mx-auto px-6">
+        {SPONSOR_TIERS.map((tier) => (
+          <div key={tier.name} className="mb-16 last:mb-0">
             {/* Tier Header */}
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-3 mb-4">
-                <tier.icon 
-                  className="h-8 w-8"
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-3">
+                <tier.icon
+                  className="h-7 w-7"
                   style={{ color: tier.color === 'emerald' ? '#50C878' : tier.color === 'ruby' ? '#E0115F' : '#0F52BA' }}
                 />
-                <h2 
-                  className="text-4xl md:text-5xl font-bold font-tomorrow"
+                <h2
+                  className="text-3xl md:text-4xl font-bold font-tomorrow"
                   style={{ color: tier.color === 'emerald' ? '#50C878' : tier.color === 'ruby' ? '#E0115F' : '#0F52BA' }}
                 >
                   {tier.name} Tier
                 </h2>
               </div>
-              <p className="text-lg text-white/80 font-montserrat">
-                {tier.description}
-              </p>
             </div>
 
-            {/* Sponsors Grid */}
+            {/* Sponsors */}
             {tier.sponsors.length > 0 ? (
               <div className="flex flex-wrap justify-center gap-8">
                 {tier.sponsors.map((sponsor) => (
                   <Tiltable key={sponsor.name} tiltOptions={{ maxTilt: 8, scale: 1.04 }}>
-                    <div className="bg-white/5 rounded-2xl p-8 border border-white/10 backdrop-blur-sm hover:border-white/30 transition-all duration-300 hover:bg-white/10 flex flex-col items-center gap-4 min-w-[220px]">
+                    <div className="flex items-center justify-center px-10 py-8">
                       <img
                         src={sponsor.logo}
                         alt={`${sponsor.name} logo`}
-                        className="max-h-16 max-w-[180px] object-contain filter brightness-0 invert"
+                        className="max-h-20 max-w-[240px] w-auto object-contain filter brightness-0 invert"
                         loading="lazy"
                       />
-                      <p className="text-white/60 font-montserrat text-sm text-center">{sponsor.description}</p>
                     </div>
                   </Tiltable>
                 ))}
               </div>
             ) : (
               <div className="text-center">
-                <p className="text-white/60 font-montserrat italic text-lg">
+                <p className="text-white/40 font-montserrat italic text-base">
                   Sponsor announcements coming soon
                 </p>
               </div>
             )}
-            </div>
-          </Tiltable>
+          </div>
         ))}
       </div>
     </section>

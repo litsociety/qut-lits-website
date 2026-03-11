@@ -10,28 +10,24 @@ const EXECUTIVE_TEAM = [
     name: "Lachlan Douglass",
     role: "President",
     image: null,
-    bio: "Leading QUT LITS in 2026, driving our mission to connect students with the future of law and technology.",
     linkedin: "https://www.linkedin.com/in/lachlan-douglass-383a7430a/"
   },
   {
     name: "John Wynter",
     role: "Vice President",
     image: "/john-wynter.jpg",
-    bio: "Keeping QUT LITS organised and ensuring our community stays connected and informed.",
     linkedin: "https://www.linkedin.com/in/john-wynter/"
   },
   {
     name: "Gigi Douglass",
     role: "Secretary",
     image: null,
-    bio: "Supporting the society's operations and helping members navigate opportunities in legal tech.",
     linkedin: "#"
   },
   {
     name: "Yiru Jones",
     role: "Treasurer",
     image: null,
-    bio: "Managing QUT LITS finances and ensuring the society runs smoothly throughout the year.",
     linkedin: "https://www.linkedin.com/in/yiru-jones-b7651256/"
   },
 ];
@@ -162,42 +158,35 @@ function ExecutiveTeamSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {EXECUTIVE_TEAM.map((member, index) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {EXECUTIVE_TEAM.map((member) => (
             <Tiltable key={member.name} tiltOptions={{ maxTilt: 10, scale: 1.05 }}>
-              <div className="group bg-white/5 rounded-3xl p-8 border border-white/10 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 hover:bg-white/10">
-                <div className="text-center mb-6">
-                  <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden bg-gradient-to-br from-primary/30 to-purple/30 border border-white/20 flex items-center justify-center">
-                    {member.image ? (
-                      <img
-                        src={member.image}
-                        alt={member.name}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    ) : (
-                      <Users className="h-10 w-10 text-white/30" />
-                    )}
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-1 font-rubik">{member.name}</h3>
-                  <p className="text-primary font-semibold font-montserrat">{member.role}</p>
+              <div className="group bg-white/5 rounded-3xl p-6 border border-white/10 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 hover:bg-white/10 flex flex-col items-center text-center">
+                <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden bg-gradient-to-br from-primary/30 to-purple/30 border border-white/20 flex items-center justify-center">
+                  {member.image ? (
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <Users className="h-10 w-10 text-white/30" />
+                  )}
                 </div>
-                
-                <p className="text-white/80 text-center mb-6 font-montserrat leading-relaxed">{member.bio}</p>
-                
-                <div className="flex justify-center gap-3">
-                  <TiltableAnchor
-                    href={member.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-3 rounded-xl bg-primary/20 text-primary hover:bg-primary/30 transition-all duration-300"
-                    title={`Connect with ${member.name} on LinkedIn`}
-                    tiltOptions={{ maxTilt: 5, scale: 1.03 }}
-                  >
-                    <Linkedin className="h-4 w-4" />
-                  </TiltableAnchor>
-                </div>
+                <h3 className="text-lg font-bold text-white mb-1 font-rubik">{member.name}</h3>
+                <p className="text-primary font-semibold font-montserrat text-sm mb-4">{member.role}</p>
+                <TiltableAnchor
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-xl bg-primary/20 text-primary hover:bg-primary/30 transition-all duration-300"
+                  title={`Connect with ${member.name} on LinkedIn`}
+                  tiltOptions={{ maxTilt: 5, scale: 1.03 }}
+                >
+                  <Linkedin className="h-4 w-4" />
+                </TiltableAnchor>
               </div>
             </Tiltable>
           ))}
@@ -218,42 +207,41 @@ function PastPresidentsSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {PAST_PRESIDENTS.map((member) => (
             <Tiltable key={member.name} tiltOptions={{ maxTilt: 10, scale: 1.05 }}>
-              <div className="group bg-white/5 rounded-3xl p-8 border border-white/10 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 hover:bg-white/10">
-                <div className="text-center mb-4">
-                  <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden bg-gradient-to-br from-primary/30 to-purple/30 border border-white/20 flex items-center justify-center">
-                    {member.image ? (
-                      <img
-                        src={member.image}
-                        alt={member.name}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    ) : (
-                      <span className="text-white/40 text-3xl">👤</span>
-                    )}
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-1 font-rubik">{member.name}</h3>
-                  <p className="text-primary font-semibold font-montserrat text-sm">{member.role}</p>
+              <div className="group bg-white/5 rounded-3xl p-6 border border-white/10 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 hover:bg-white/10 flex flex-col items-center text-center h-full">
+                <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden bg-gradient-to-br from-primary/30 to-purple/30 border border-white/20 flex items-center justify-center">
+                  {member.image ? (
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <Users className="h-10 w-10 text-white/30" />
+                  )}
                 </div>
-
-                {member.linkedin && (
-                  <div className="flex justify-center mt-4">
+                <h3 className="text-lg font-bold text-white mb-1 font-rubik">{member.name}</h3>
+                <p className="text-primary font-semibold font-montserrat text-sm mb-4">{member.role}</p>
+                <div className="mt-auto">
+                  {member.linkedin ? (
                     <TiltableAnchor
                       href={member.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-3 rounded-xl bg-primary/20 text-primary hover:bg-primary/30 transition-all duration-300"
+                      className="p-2.5 rounded-xl bg-primary/20 text-primary hover:bg-primary/30 transition-all duration-300 inline-flex"
                       title={`Connect with ${member.name} on LinkedIn`}
                       tiltOptions={{ maxTilt: 5, scale: 1.03 }}
                     >
                       <Linkedin className="h-4 w-4" />
                     </TiltableAnchor>
-                  </div>
-                )}
+                  ) : (
+                    <div className="h-9 w-9" />
+                  )}
+                </div>
               </div>
             </Tiltable>
           ))}
