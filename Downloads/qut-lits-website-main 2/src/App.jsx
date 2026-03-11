@@ -5,6 +5,7 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Sponsors from './pages/Sponsors'
 import NotFound from './pages/NotFound'
+import AnnouncementBanner from './components/AnnouncementBanner'
 
 // Component to scroll to top on route/hash/history changes
 function ScrollToTop() {
@@ -41,6 +42,7 @@ function ScrollToTop() {
 export default function App() {
   return (
     <Router>
+      <AnnouncementBanner />
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />

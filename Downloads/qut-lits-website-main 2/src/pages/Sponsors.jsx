@@ -37,26 +37,11 @@ const SPONSOR_TIERS = [
     icon: Gem,
     description: "Valued partners in our journey",
     sponsors: [
-      // {
-      //   name: "Sponsor Name",
-      //   logo: "/headshot.png",
-      //   description: "Supporting student innovation"
-      // },
-      // {
-      //   name: "Sponsor Name",
-      //   logo: "/headshot.png",
-      //   description: "Fostering tech law excellence"
-      // },
-      // {
-      //   name: "Sponsor Name",
-      //   logo: "/headshot.png",
-      //   description: "Championing legal innovation"
-      // },
-      // {
-      //   name: "Sponsor Name",
-      //   logo: "/headshot.png",
-      //   description: "Investing in tomorrow's leaders"
-      // }
+      {
+        name: "Dundas Lawyers",
+        logo: "/dundas-lawyers-logo.png",
+        description: "Supporting student innovation in legal technology"
+      }
     ]
   },
   {
