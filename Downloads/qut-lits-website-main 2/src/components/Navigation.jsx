@@ -49,10 +49,10 @@ const Navigation = memo(function Navigation() {
             aria-label="QUT LITS Home"
           >
             <div className="relative">
-              <img 
-                src="./apple-touch-logo.png" 
-                alt="QUT LITS Logo" 
-                className="h-10 w-10 rounded-xl transition-transform duration-300" 
+              <img
+                src="./lits-logo.png"
+                alt="QUT LITS Logo"
+                className="h-10 w-10 rounded-xl transition-transform duration-300"
                 loading="eager"
                 width="40"
                 height="40"
@@ -85,7 +85,7 @@ const Navigation = memo(function Navigation() {
             <button
               ref={joinNowTiltRef}
               onClick={handleJoinClick}
-              className="bg-gradient-to-r from-primary to-purple text-white px-6 py-3 rounded-xl font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 font-rubik shadow-lg hover:shadow-xl focus:outline-none"
+              className="bg-gradient-to-r from-white/20 to-white/10 text-white px-6 py-3 rounded-xl font-semibold hover:from-white/30 hover:to-white/20 border border-white/30 transition-all duration-300 font-rubik shadow-lg hover:shadow-xl focus:outline-none"
               aria-label="Join QUT LITS - Opens in new tab"
             >
               Join Now

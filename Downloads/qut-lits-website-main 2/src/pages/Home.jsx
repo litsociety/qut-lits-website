@@ -219,7 +219,7 @@ function BannerSlideshow() {
             <div className="max-w-6xl mx-auto px-6 text-center">
               <div className="mb-6">
                 <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20 mb-6">
-                  <Zap className="h-4 w-4 text-primary" />
+                  <Zap className="h-4 w-4 text-white/80" />
                   <span className="text-sm font-rubik text-white/90">QUT's Premier Society for Law and Technology</span>
                 </div>
               </div>
@@ -239,7 +239,7 @@ function BannerSlideshow() {
             key={index}
             onClick={() => setCurrentSlide(index)}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              index === currentSlide ? 'bg-primary w-8' : 'bg-white/50'
+              index === currentSlide ? 'bg-white w-8' : 'bg-white/40'
             }`}
             tiltOptions={{ maxTilt: 2, scale: 1.05 }}
           />
@@ -262,7 +262,7 @@ function HeroSection() {
             href={HERO_DATA.ctaLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-primary to-purple text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 shadow-2xl hover:shadow-primary/10 font-rubik overflow-hidden"
+            className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-white/20 to-white/10 text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:from-white/30 hover:to-white/20 border border-white/30 transition-all duration-300 shadow-2xl font-rubik overflow-hidden"
             tiltOptions={{ maxTilt: 4, scale: 1.02 }}
           >
             <span className="relative z-10">{HERO_DATA.cta}</span>
@@ -337,7 +337,7 @@ function CTASection() {
               href="https://campus.hellorubric.com/?tab=memberships&s=6719"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center bg-gradient-to-r from-primary to-purple text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 shadow-2xl hover:shadow-primary/25 font-rubik overflow-hidden"
+              className="group relative inline-flex items-center bg-gradient-to-r from-white/20 to-white/10 text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:from-white/30 hover:to-white/20 border border-white/30 transition-all duration-300 shadow-2xl font-rubik overflow-hidden"
               tiltOptions={{ maxTilt: 4, scale: 1.02 }}
             >
               <span className="relative z-10">Join Now</span>
@@ -358,39 +358,39 @@ function CTASection() {
               href="https://www.facebook.com/lawinnovationandtechsociety/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all duration-300"
+              className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/50 transition-all duration-300"
               aria-label="Facebook"
               tiltOptions={{ maxTilt: 5, scale: 1.03 }}
             >
-              <Facebook className="h-5 w-5 text-white/70 group-hover:text-primary transition-colors duration-300" />
+              <Facebook className="h-5 w-5 text-white/70 group-hover:text-white transition-colors duration-300" />
             </TiltableAnchor>
             <TiltableAnchor
               href="https://www.instagram.com/qutlitsociety/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all duration-300"
+              className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/50 transition-all duration-300"
               aria-label="Instagram"
               tiltOptions={{ maxTilt: 5, scale: 1.03 }}
             >
-              <Instagram className="h-5 w-5 text-white/70 group-hover:text-primary transition-colors duration-300" />
+              <Instagram className="h-5 w-5 text-white/70 group-hover:text-white transition-colors duration-300" />
             </TiltableAnchor>
             <TiltableAnchor
               href="https://www.linkedin.com/company/law-innovation-and-technology-society/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all duration-300"
+              className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/50 transition-all duration-300"
               aria-label="LinkedIn"
               tiltOptions={{ maxTilt: 5, scale: 1.03 }}
             >
-              <Linkedin className="h-5 w-5 text-white/70 group-hover:text-primary transition-colors duration-300" />
+              <Linkedin className="h-5 w-5 text-white/70 group-hover:text-white transition-colors duration-300" />
             </TiltableAnchor>
             <TiltableAnchor
               href="mailto:litsociety@qut.edu.au"
-              className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all duration-300"
+              className="group flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/50 transition-all duration-300"
               aria-label="Email"
               tiltOptions={{ maxTilt: 5, scale: 1.03 }}
             >
-              <Mail className="h-5 w-5 text-white/70 group-hover:text-primary transition-colors duration-300" />
+              <Mail className="h-5 w-5 text-white/70 group-hover:text-white transition-colors duration-300" />
             </TiltableAnchor>
           </div>
           </div>

@@ -119,29 +119,29 @@
 
 :root {
   /* Primary Brand Colors */
-  --color-primary-50: #e6fffe;
-  --color-primary-100: #b3fffd;
-  --color-primary-200: #80fffc;
-  --color-primary-300: #4dfffb;
-  --color-primary-400: #1afffa;
-  --color-primary-500: #00e6e6;
-  --color-primary-600: #00c2cb;
-  --color-primary-700: #0099a3;
-  --color-primary-800: #00707a;
-  --color-primary-900: #004752;
-  
+  --color-primary-50: #f5f5f5;
+  --color-primary-100: #e8e8e8;
+  --color-primary-200: #d4d4d4;
+  --color-primary-300: #c0c0c0;
+  --color-primary-400: #adadad;
+  --color-primary-500: #999999;
+  --color-primary-600: #c8c8c8;
+  --color-primary-700: #888888;
+  --color-primary-800: #555555;
+  --color-primary-900: #333333;
+
   /* Secondary Brand Colors */
-  --color-secondary-50: #e6fff0;
-  --color-secondary-100: #b3ffd1;
-  --color-secondary-200: #80ffb2;
-  --color-secondary-300: #4dff93;
-  --color-secondary-400: #1aff74;
-  --color-secondary-500: #00e655;
-  --color-secondary-600: #04d150;
-  --color-secondary-700: #00a83e;
-  --color-secondary-800: #007f2c;
-  --color-secondary-900: #00561a;
-  
+  --color-secondary-50: #f0f0f0;
+  --color-secondary-100: #e0e0e0;
+  --color-secondary-200: #cccccc;
+  --color-secondary-300: #b8b8b8;
+  --color-secondary-400: #a0a0a0;
+  --color-secondary-500: #888888;
+  --color-secondary-600: #888888;
+  --color-secondary-700: #666666;
+  --color-secondary-800: #444444;
+  --color-secondary-900: #222222;
+
   /* Neutral Colors */
   --color-neutral-50: #f8f9fa;
   --color-neutral-100: #f1f3f4;
@@ -153,22 +153,22 @@
   --color-neutral-700: #5f6368;
   --color-neutral-800: #3c4043;
   --color-neutral-900: #202124;
-  
+
   /* Semantic Colors */
   --color-success: var(--color-secondary-600);
-  --color-warning: #ffa300;
+  --color-warning: #cccccc;
   --color-error: #dc3545;
   --color-info: var(--color-primary-600);
-  
+
   /* Background Colors */
-  --color-bg-primary: #120458;
-  --color-bg-secondary: #230329;
-  --color-bg-tertiary: #1a0a3a;
-  
+  --color-bg-primary: #0a0a0a;
+  --color-bg-secondary: #161616;
+  --color-bg-tertiary: #1a1a1a;
+
   /* Additional Brand Colors */
-  --color-purple: #c521e0;
-  --color-pink: #e859b8;
-  --color-orange: #ffa300;
+  --color-purple: #666666;
+  --color-pink: #999999;
+  --color-orange: #cccccc;
   
   /* Text Colors */
   --color-text-primary: #ffffff;
