@@ -7,7 +7,7 @@ const ANNOUNCEMENT = {
   time: "5:00–6:00 PM",
   location: "D-106, QUT Gardens Point",
   badge: "Free",
-  link: "https://campus.hellorubric.com/?eid=53722",
+  link: "https://campus.hellorubric.com/?eid=53724",
 };
 
 export default function AnnouncementBanner() {
