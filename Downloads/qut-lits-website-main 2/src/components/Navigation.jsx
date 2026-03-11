@@ -52,7 +52,7 @@ const Navigation = memo(function Navigation() {
               <img
                 src="./lits-logo.png"
                 alt="QUT LITS Logo"
-                className="h-10 w-auto object-contain rounded-xl transition-transform duration-300"
+                className="h-10 w-auto object-contain transition-transform duration-300"
                 loading="eager"
                 role="img"
               />
