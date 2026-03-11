@@ -24,6 +24,11 @@ export default function AnnouncementBanner() {
 
   return (
     <div className="relative z-50 w-full bg-black/80 backdrop-blur-sm border-b border-white/10 text-white text-sm px-4 py-2 flex items-center justify-between gap-4">
+      {/* Pulsing dot */}
+      <div className="shrink-0 relative flex items-center justify-center w-4 h-4">
+        <span className="absolute inline-flex h-3 w-3 rounded-full bg-primary opacity-75 animate-ping"></span>
+        <span className="relative inline-flex h-2 w-2 rounded-full bg-primary"></span>
+      </div>
       <div className="flex-1 flex items-center justify-center gap-2 flex-wrap">
         <span className="font-bold font-rubik">{ANNOUNCEMENT.title}</span>
         <span className="text-white/40">·</span>

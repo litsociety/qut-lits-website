@@ -15,7 +15,7 @@ const EXECUTIVE_TEAM = [
   },
   {
     name: "John Wynter",
-    role: "Secretary",
+    role: "Vice President",
     image: "/john-wynter.jpg",
     bio: "Keeping QUT LITS organised and ensuring our community stays connected and informed.",
     linkedin: "https://www.linkedin.com/in/john-wynter/"

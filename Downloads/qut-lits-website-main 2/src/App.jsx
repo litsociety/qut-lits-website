@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import Sponsors from './pages/Sponsors'
+import Events from './pages/Events'
 import NotFound from './pages/NotFound'
 import AnnouncementBanner from './components/AnnouncementBanner'
 
@@ -47,6 +48,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/events" element={<Events />} />
         <Route path="/sponsors" element={<Sponsors />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<NotFound />} />

@@ -115,11 +115,29 @@ function SponsorsSection() {
             </div>
 
             {/* Sponsors Grid */}
-            <div className="text-center">
-              <p className="text-white/60 font-montserrat italic text-lg">
-                2026 sponsors to come
-              </p>
-            </div>
+            {tier.sponsors.length > 0 ? (
+              <div className="flex flex-wrap justify-center gap-8">
+                {tier.sponsors.map((sponsor) => (
+                  <Tiltable key={sponsor.name} tiltOptions={{ maxTilt: 8, scale: 1.04 }}>
+                    <div className="bg-white/5 rounded-2xl p-8 border border-white/10 backdrop-blur-sm hover:border-white/30 transition-all duration-300 hover:bg-white/10 flex flex-col items-center gap-4 min-w-[220px]">
+                      <img
+                        src={sponsor.logo}
+                        alt={`${sponsor.name} logo`}
+                        className="max-h-16 max-w-[180px] object-contain filter brightness-0 invert"
+                        loading="lazy"
+                      />
+                      <p className="text-white/60 font-montserrat text-sm text-center">{sponsor.description}</p>
+                    </div>
+                  </Tiltable>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center">
+                <p className="text-white/60 font-montserrat italic text-lg">
+                  Sponsor announcements coming soon
+                </p>
+              </div>
+            )}
             </div>
           </Tiltable>
         ))}
