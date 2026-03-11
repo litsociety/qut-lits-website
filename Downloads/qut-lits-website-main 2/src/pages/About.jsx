@@ -1,67 +1,39 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Mail, Linkedin, Users, Target, Lightbulb, Award, Building, Globe, BookOpen, ArrowRight, Instagram, Facebook } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Mail, Linkedin, Users, Target, Lightbulb, Award, ArrowRight, Instagram, Facebook } from "lucide-react";
 import Navigation from "../components/Navigation";
 import AnimatedBackground from "../components/AnimatedBackground";
-import { useTilt } from "../hooks/useTilt";
 import { Tiltable, TiltableAnchor, TiltableLink } from "../components/Tiltable";
 
 const EXECUTIVE_TEAM = [
   {
-    name: "placeholder",
-    role: "placeholder",
+    name: "Lachlan",
+    role: "President",
     image: "/headshot.png",
-    bio: "placeholder",
-    email: "placeholder@qutlits.edu.au",
-    linkedin: "#",
-    github: "#"
+    bio: "Leading QUT LITS in 2026, driving our mission to connect students with the future of law and technology.",
+    linkedin: "#"
   },
   {
-    name: "placeholder",
-    role: "placeholder",
+    name: "John",
+    role: "Secretary",
     image: "/headshot.png",
-    bio: "placeholder",
-    email: "placeholder@qutlits.edu.au",
-    linkedin: "#",
-    github: "#"
+    bio: "Keeping QUT LITS organised and ensuring our community stays connected and informed.",
+    linkedin: "#"
   },
   {
-    name: "placeholder",
-    role: "placeholder",
+    name: "Gigi Douglass",
+    role: "Secretary",
     image: "/headshot.png",
-    bio: "placeholder",
-    email: "placeholder@qutlits.edu.au",
-    linkedin: "#",
-    github: "#"
+    bio: "Supporting the society's operations and helping members navigate opportunities in legal tech.",
+    linkedin: "#"
   },
   {
-    name: "placeholder",
-    role: "placeholder",
+    name: "Kevin",
+    role: "Past President (2026)",
     image: "/headshot.png",
-    bio: "placeholder",
-    email: "placeholder@qutlits.edu.au",
-    linkedin: "#",
-    github: "#"
+    bio: "Former President of QUT LITS, whose leadership helped establish the society as a leading voice in legal technology.",
+    linkedin: "#"
   },
-  {
-    name: "placeholder",
-    role: "placeholder",
-    image: "/headshot.png",
-    bio: "placeholder",
-    email: "placeholder@qutlits.edu.au",
-    linkedin: "#",
-    github: "#"
-  },
-  {
-    name: "placeholder",
-    role: "placeholder",
-    image: "/headshot.png",
-    bio: "placeholder",
-    email: "placeholder@qutlits.edu.au",
-    linkedin: "#",
-    github: "#"
-  }
 ];
 
 const SOCIETY_VALUES = [
@@ -87,15 +59,6 @@ const SOCIETY_VALUES = [
   }
 ];
 
-const STATS = [
-  { number: "150+", label: "Active Members", icon: Users },
-  { number: "25+", label: "Industry Partners", icon: Building },
-  { number: "12+", label: "Annual Workshops", icon: BookOpen },
-  { number: "95%", label: "Member Satisfaction", icon: Award }
-];
-
-
-
 function HeroSection() {
   return (
     <section className="relative pt-32 pb-16 overflow-hidden" aria-label="About section">
@@ -114,27 +77,6 @@ function HeroSection() {
   );
 }
 
-function StatsSection() {
-  return (
-    <section className="py-12 relative">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {STATS.map((stat, index) => (
-            <Tiltable key={stat.label} tiltOptions={{ maxTilt: 10, scale: 1.05 }}>
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary/20 to-purple/20 border border-primary/30 flex items-center justify-center">
-                  <stat.icon className="h-8 w-8 text-primary" />
-                </div>
-                <div className="text-3xl md:text-4xl font-bold text-white mb-2 font-tomorrow">{stat.number}</div>
-                <div className="text-white/80 font-montserrat">{stat.label}</div>
-              </div>
-            </Tiltable>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function MissionSection() {
   return (
@@ -328,7 +270,7 @@ function About() {
       <main id="main-content">
         <HeroSection />
         <MissionSection />
-        {/* <ExecutiveTeamSection /> */}
+        <ExecutiveTeamSection />
         <CTASection />
       </main>
     </div>
