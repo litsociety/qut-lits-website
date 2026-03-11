@@ -1,27 +1,32 @@
 import React, { useState } from "react";
-import { Send, MessageCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { ArrowRight, Send, MessageCircle } from "lucide-react";
 import Navigation from "../components/Navigation";
 import AnimatedBackground from "../components/AnimatedBackground";
-import { CONTACT, URLS, ANIMATION } from "../constants";
+import { useTilt } from "../hooks/useTilt";
+import { Tiltable, TiltableAnchor, TiltableButton } from "../components/Tiltable";
 
 function EmailButton() {
   return (
-    <a
-      href={URLS.email}
+    <TiltableAnchor
+      href="mailto:litsociety@qut.edu.au"
       className="inline-flex items-center gap-3 bg-gradient-to-r from-primary to-purple text-white px-8 py-4 rounded-xl font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 shadow-lg hover:shadow-primary/10 font-rubik"
+      tiltOptions={{ maxTilt: 4, scale: 1.02 }}
     >
       <Send className="h-5 w-5" />
-      {CONTACT.email}
-    </a>
+      litsociety@qut.edu.au
+    </TiltableAnchor>
   );
 }
 
 function SubmitButton({ isSubmitting = false }) {
   return (
-    <button
+    <TiltableButton
       type="submit"
       disabled={isSubmitting}
       className="w-full bg-gradient-to-r from-primary to-purple text-white px-8 py-4 rounded-xl font-semibold hover:from-primary/90 hover:to-purple/90 transition-all duration-300 shadow-lg hover:shadow-primary/10 font-rubik flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-transparent"
+      tiltOptions={{ maxTilt: 4, scale: 1.01 }}
       aria-busy={isSubmitting}
     >
       {isSubmitting ? (
@@ -35,13 +40,14 @@ function SubmitButton({ isSubmitting = false }) {
           Send Message
         </>
       )}
-    </button>
+    </TiltableButton>
   );
 }
 
 function FAQBox() {
   return (
-    <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
+    <Tiltable tiltOptions={{ maxTilt: 3, scale: 1.01 }}>
+      <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
       <h3 className="text-2xl font-bold text-white mb-6 font-rubik">Frequently Asked Questions</h3>
       <div className="space-y-4">
         <div>
@@ -57,7 +63,8 @@ function FAQBox() {
           <p className="text-white/70 font-montserrat text-sm">We host a wide variety of events from industry nights to workshops to social events. Follow us on the social media below to stay up to date with everything we have coming up.</p>
         </div>
       </div>
-    </div>
+      </div>
+    </Tiltable>
   );
 }
 
@@ -95,7 +102,7 @@ function ContactForm() {
       className="bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10"
     >
       <h3 className="text-2xl font-bold text-white mb-6 font-rubik">Send us a Message</h3>
-
+      
       <div className="grid md:grid-cols-2 gap-6 mb-6">
         <div>
           <label htmlFor="name" className="block text-white/80 font-rubik mb-2">Name *</label>
@@ -112,7 +119,7 @@ function ContactForm() {
             aria-describedby="name-error"
           />
         </div>
-
+        
         <div>
           <label htmlFor="email" className="block text-white/80 font-rubik mb-2">Email *</label>
           <input
@@ -131,7 +138,7 @@ function ContactForm() {
           />
         </div>
       </div>
-
+      
       <div className="mb-6">
         <label htmlFor="subject" className="block text-white/80 font-rubik mb-2">Subject *</label>
         <input
@@ -146,7 +153,7 @@ function ContactForm() {
             aria-required="true"
         />
       </div>
-
+      
       <div className="mb-6">
         <label htmlFor="message" className="block text-white/80 font-rubik mb-2">Message *</label>
         <textarea
@@ -161,7 +168,7 @@ function ContactForm() {
           aria-required="true"
         />
       </div>
-
+      
       <SubmitButton isSubmitting={isSubmitting} />
     </form>
   );
@@ -176,7 +183,7 @@ function Contact() {
       <AnimatedBackground />
       <Navigation />
       <main id="main-content">
-
+      
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden" aria-label="Contact section">
         <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
@@ -190,13 +197,13 @@ function Contact() {
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 font-tomorrow leading-tight">
             Contact Us
           </h1>
-
+          
           <p className="text-xl text-white/80 font-montserrat max-w-3xl mx-auto leading-relaxed">
             Have questions about QUT LITS? Want to get involved? We'd love to hear from you. Reach out and let's start a conversation.
           </p>
         </div>
       </section>
-
+      
       {/* Contact Information*/}
       <section className="pb-20">
 
@@ -207,7 +214,7 @@ function Contact() {
             <div className="flex justify-center items-center pb-16">
               <EmailButton />
             </div>
-
+            
             <div className="space-y-8">
               <FAQBox />
             </div>

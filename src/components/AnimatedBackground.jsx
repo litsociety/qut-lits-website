@@ -1,53 +1,50 @@
-import React, { useEffect, useState, memo, useMemo } from 'react';
+import React, { useEffect, useRef, useState, memo } from 'react';
 import { motion } from 'framer-motion';
 
 const AnimatedBackground = memo(function AnimatedBackground() {
-  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [particles, setParticles] = useState([]);
 
-  // Generate particles once on mount (memoized to prevent recreation)
-  const particles = useMemo(() => 
-    Array.from({ length: 6 }, (_, i) => ({
+  useEffect(() => {
+    // Generate random particles - reduced for better performance
+    const newParticles = Array.from({ length: 8 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 2 + 1.5,
-      duration: Math.random() * 15 + 12,
-      delay: Math.random() * 3,
-    })), []
-  );
+      size: Math.random() * 3 + 2,
+      duration: Math.random() * 20 + 10,
+      delay: Math.random() * 5,
+    }));
+    setParticles(newParticles);
+  }, []);
 
   useEffect(() => {
     let rafId = null;
-    let lastX = 50;
-    let lastY = 50;
-    let throttleTimeout = null;
+    let lastX = 0;
+    let lastY = 0;
 
     const handleMouseMove = (e) => {
-      if (throttleTimeout) return;
+      if (rafId) return;
       
-      throttleTimeout = setTimeout(() => {
-        rafId = requestAnimationFrame(() => {
-          const newX = (e.clientX / window.innerWidth) * 100;
-          const newY = (e.clientY / window.innerHeight) * 100;
-          
-          // Only update if change is significant (reduces updates)
-          if (Math.abs(newX - lastX) > 2 || Math.abs(newY - lastY) > 2) {
-            setMousePosition({ x: newX, y: newY });
-            lastX = newX;
-            lastY = newY;
-          }
-          
-          rafId = null;
-        });
-        throttleTimeout = null;
-      }, 50); // Throttle to 20fps max for mouse tracking
+      rafId = requestAnimationFrame(() => {
+        const newX = (e.clientX / window.innerWidth) * 100;
+        const newY = (e.clientY / window.innerHeight) * 100;
+        
+        // Only update if change is significant (reduces updates)
+        if (Math.abs(newX - lastX) > 1 || Math.abs(newY - lastY) > 1) {
+          setMousePosition({ x: newX, y: newY });
+          lastX = newX;
+          lastY = newY;
+        }
+        
+        rafId = null;
+      });
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       if (rafId) cancelAnimationFrame(rafId);
-      if (throttleTimeout) clearTimeout(throttleTimeout);
     };
   }, []);
 
@@ -166,8 +163,8 @@ const AnimatedBackground = memo(function AnimatedBackground() {
         className="fixed inset-0 -z-10 opacity-[0.02]"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(0, 194, 203, 0.3) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 194, 203, 0.3) 1px, transparent 1px)
+            linear-gradient(rgba(200, 200, 200, 0.15) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(200, 200, 200, 0.15) 1px, transparent 1px)
           `,
           backgroundSize: '50px 50px',
         }}
