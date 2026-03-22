@@ -28,6 +28,7 @@ const SPONSOR_TIERS = [
       {
         name: "Dundas Lawyers",
         logo: "/dundas-lawyers-logo.png",
+        url: "https://www.dundaslawyers.com.au/",
         whiteFilter: true,
       }
     ]
