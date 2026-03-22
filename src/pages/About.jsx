@@ -35,7 +35,7 @@ const EXECUTIVE_TEAM = [
 const PAST_PRESIDENTS = [
   {
     name: "Kevin Flanagan",
-    role: "2025/2026 President & Marketing Coordinator",
+    role: "2025/26 President & Marketing Coordinator",
     image: "/kevin-flanagan.jpg",
     linkedin: "https://www.linkedin.com/in/kevin-flanagan-6043392b2/"
   },
