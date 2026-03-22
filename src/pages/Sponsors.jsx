@@ -102,7 +102,7 @@ function SponsorsSection() {
                         <img
                           src={sponsor.logo}
                           alt={`${sponsor.name} logo`}
-                          className="max-h-20 max-w-[240px] w-auto object-contain filter brightness-0 invert"
+                          className="max-h-20 max-w-[240px] w-auto object-contain"
                           loading="lazy"
                         />
                       </div>
@@ -113,7 +113,7 @@ function SponsorsSection() {
                         <img
                           src={sponsor.logo}
                           alt={`${sponsor.name} logo`}
-                          className="max-h-20 max-w-[240px] w-auto object-contain filter brightness-0 invert"
+                          className="max-h-20 max-w-[240px] w-auto object-contain"
                           loading="lazy"
                         />
                       </div>
