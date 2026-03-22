@@ -35,7 +35,7 @@ const EXECUTIVE_TEAM = [
 const PAST_PRESIDENTS = [
   {
     name: "Kevin Flanagan",
-    role: "2026 President",
+    role: "2025/2026 President & Marketing Coordinator",
     image: "/kevin-flanagan.jpg",
     linkedin: "https://www.linkedin.com/in/kevin-flanagan-6043392b2/"
   },
@@ -47,7 +47,7 @@ const PAST_PRESIDENTS = [
   },
   {
     name: "Nikhil Kaniyur",
-    role: "2024 President & Executive Office",
+    role: "2024 President & Chief Returning Officer",
     image: "/nikhil-kaniyur.jpg",
     linkedin: "https://www.linkedin.com/in/nikhil-kaniyur/"
   },
