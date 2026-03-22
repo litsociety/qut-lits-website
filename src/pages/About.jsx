@@ -9,7 +9,7 @@ const EXECUTIVE_TEAM = [
   {
     name: "Lachlan Douglass",
     role: "President",
-    image: null,
+    image: "/lachlan-douglass.jpg",
     linkedin: "https://www.linkedin.com/in/lachlan-douglass-383a7430a/"
   },
   {
