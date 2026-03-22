@@ -17,21 +17,6 @@ const BADGE_STYLES = {
 // All events with optional ICS date data (dtstart/dtend as YYYYMMDDTHHMMSS or YYYYMMDD)
 const SEMESTER_1 = [
   {
-    id: 1,
-    title: "Mel Storey – Book Tour Event",
-    badge: "Collaboration",
-    image: "/lits-slideshow-7.jpg",
-    description:
-      "Join us for Mel Storey's book tour event. An opportunity to engage with thought leadership in law and technology. This event requires co-operation with QUTLS and possibly QLS.",
-    date: "18 March 2026",
-    time: "6:15 PM",
-    location: "QUT Gardens Point Campus Gibson Room",
-    link: "https://campus.hellorubric.com/?eid=53921",
-    linkLabel: "Register Now",
-    dtstart: "20260318T181500",
-    dtend:   "20260318T193000",
-  },
-  {
     id: 2,
     title: "Technology in Legal Investigations",
     badge: "Workshop",
@@ -203,6 +188,19 @@ const SEMESTER_2 = [
 ];
 
 const PREVIOUS_EVENTS = [
+  {
+    id: 1,
+    title: "Mel Storey – Book Tour Event",
+    badge: "Collaboration",
+    image: "/mel-storey-career-big-sis.jpg",
+    description:
+      "Join us for Mel Storey's book tour event. An opportunity to engage with thought leadership in law and technology. This event requires co-operation with QUTLS and possibly QLS.",
+    date: "18 March 2026",
+    time: "6:15 PM",
+    location: "QUT Gardens Point Campus Gibson Room",
+    link: null,
+    past: true,
+  },
   {
     id: 14,
     title: "Intro to Legal Tech",
