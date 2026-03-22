@@ -28,6 +28,7 @@ const SPONSOR_TIERS = [
       {
         name: "Dundas Lawyers",
         logo: "/dundas-lawyers-logo.png",
+        whiteFilter: true,
       }
     ]
   },
@@ -102,7 +103,7 @@ function SponsorsSection() {
                         <img
                           src={sponsor.logo}
                           alt={`${sponsor.name} logo`}
-                          className="max-h-20 max-w-[240px] w-auto object-contain"
+                          className={`max-h-20 max-w-[240px] w-auto object-contain${sponsor.whiteFilter ? " filter brightness-0 invert" : ""}`}
                           loading="lazy"
                         />
                       </div>
@@ -113,7 +114,7 @@ function SponsorsSection() {
                         <img
                           src={sponsor.logo}
                           alt={`${sponsor.name} logo`}
-                          className="max-h-20 max-w-[240px] w-auto object-contain"
+                          className={`max-h-20 max-w-[240px] w-auto object-contain${sponsor.whiteFilter ? " filter brightness-0 invert" : ""}`}
                           loading="lazy"
                         />
                       </div>
