@@ -19,10 +19,10 @@ const EXECUTIVE_TEAM = [
     linkedin: "https://www.linkedin.com/in/john-wynter/"
   },
   {
-    name: "Gigi Douglass",
+    name: "Genevieve Douglass",
     role: "Secretary",
-    image: null,
-    linkedin: "#"
+    image: "/genevieve-douglass.jpg",
+    linkedin: "https://www.linkedin.com/in/genevieve-d-775076293/"
   },
   {
     name: "Yiru Jones",
