@@ -12,7 +12,13 @@ const SPONSOR_TIERS = [
     name: "Ruby",
     color: "ruby",
     icon: Gem,
-    sponsors: []
+    sponsors: [
+      {
+        name: "Verlata Consulting",
+        logo: "/verlata-consulting-logo.png",
+        url: "https://www.verlata.com/",
+      }
+    ]
   },
   {
     name: "Sapphire",
@@ -82,18 +88,38 @@ function SponsorsSection() {
             {/* Sponsors */}
             {tier.sponsors.length > 0 ? (
               <div className="flex flex-wrap justify-center gap-8">
-                {tier.sponsors.map((sponsor) => (
-                  <Tiltable key={sponsor.name} tiltOptions={{ maxTilt: 8, scale: 1.04 }}>
-                    <div className="flex items-center justify-center px-10 py-8">
-                      <img
-                        src={sponsor.logo}
-                        alt={`${sponsor.name} logo`}
-                        className="max-h-20 max-w-[240px] w-auto object-contain filter brightness-0 invert"
-                        loading="lazy"
-                      />
-                    </div>
-                  </Tiltable>
-                ))}
+                {tier.sponsors.map((sponsor) =>
+                  sponsor.url ? (
+                    <TiltableAnchor
+                      key={sponsor.name}
+                      href={sponsor.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={sponsor.name}
+                      tiltOptions={{ maxTilt: 8, scale: 1.04 }}
+                    >
+                      <div className="flex items-center justify-center px-10 py-8">
+                        <img
+                          src={sponsor.logo}
+                          alt={`${sponsor.name} logo`}
+                          className="max-h-20 max-w-[240px] w-auto object-contain filter brightness-0 invert"
+                          loading="lazy"
+                        />
+                      </div>
+                    </TiltableAnchor>
+                  ) : (
+                    <Tiltable key={sponsor.name} tiltOptions={{ maxTilt: 8, scale: 1.04 }}>
+                      <div className="flex items-center justify-center px-10 py-8">
+                        <img
+                          src={sponsor.logo}
+                          alt={`${sponsor.name} logo`}
+                          className="max-h-20 max-w-[240px] w-auto object-contain filter brightness-0 invert"
+                          loading="lazy"
+                        />
+                      </div>
+                    </Tiltable>
+                  )
+                )}
               </div>
             ) : (
               <div className="text-center">
