@@ -17,21 +17,6 @@ const BADGE_STYLES = {
 // All events with optional ICS date data (dtstart/dtend as YYYYMMDDTHHMMSS or YYYYMMDD)
 const SEMESTER_1 = [
   {
-    id: 2,
-    title: "Technology in Legal Investigations",
-    badge: "Workshop",
-    image: "/lits-workshops.jpg",
-    description:
-      "A practical workshop exploring the intersection of law and technology through a mock legal investigation, demonstrating how technology assists in discovering and understanding facts when they aren't immediately clear.",
-    date: "23 March 2026",
-    time: "5:00 PM – 6:00 PM",
-    location: "QUT Gardens Point Campus D-106",
-    link: "https://campus.hellorubric.com/?eid=53724",
-    linkLabel: "Register Now",
-    dtstart: "20260323T170000",
-    dtend:   "20260323T180000",
-  },
-  {
     id: 3,
     title: "LITS x GRC",
     badge: "Collaboration",
@@ -188,6 +173,19 @@ const SEMESTER_2 = [
 ];
 
 const PREVIOUS_EVENTS = [
+  {
+    id: 2,
+    title: "Technology in Legal Investigations",
+    badge: "Workshop",
+    image: "/lits-workshops.jpg",
+    description:
+      "A practical workshop exploring the intersection of law and technology through a mock legal investigation, demonstrating how technology assists in discovering and understanding facts when they aren't immediately clear.",
+    date: "23 March 2026",
+    time: "5:00 PM – 6:00 PM",
+    location: "QUT Gardens Point Campus D-106",
+    link: null,
+    past: true,
+  },
   {
     id: 1,
     title: "Mel Storey – Book Tour Event",
