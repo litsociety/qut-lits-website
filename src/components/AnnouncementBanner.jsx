@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { X, ArrowRight, MapPin, Clock } from "lucide-react";
 
 const ANNOUNCEMENT = {
-  title: "Technology in Legal Investigations",
-  date: "9 March 2026",
-  time: "5:00–6:00 PM",
-  location: "D-106, QUT Gardens Point",
+  title: "Law & Tech Networking Night",
+  date: "16 April 2026",
+  time: "6:00–9:00 PM",
+  location: "Clayton Utz",
   badge: "Free",
-  link: "https://campus.hellorubric.com/?eid=53724",
+  link: "https://campus.hellorubric.com/?eid=57583",
 };
 
 export default function AnnouncementBanner() {
@@ -68,7 +68,7 @@ export default function AnnouncementBanner() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 bg-white text-black font-semibold px-3 py-1 rounded-full text-xs font-rubik hover:bg-white/90 transition-colors duration-200 whitespace-nowrap"
           >
-            Register <ArrowRight className="h-3 w-3" />
+            Book Now <ArrowRight className="h-3 w-3" />
           </a>
           <button
             onClick={handleDismiss}
