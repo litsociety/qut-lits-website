@@ -25,6 +25,17 @@ const HERO_DATA = {
 // Banner slideshow data
 const BANNER_SLIDES = [
   {
+    id: 0,
+    title: "Law & Tech Networking Night",
+    subtitle: "Landmark Event · 16 April 2026",
+    description: "Our premier event connecting students with professionals at the intersection of law and technology. From privacy and cybersecurity to AI governance, join us for panel discussions and networking at Clayton Utz.",
+    image: "/lits-slideshow-6.jpg",
+    cta: "Book Now",
+    link: "https://campus.hellorubric.com/?eid=57583",
+    techIcons: [Network, Scale, Briefcase],
+    isExternal: true,
+  },
+  {
     id: 1,
     title: "Welcome to Law, Innovation and Technology Society",
     subtitle: "Where Law Meets Innovation",
@@ -220,13 +231,37 @@ function BannerSlideshow() {
               <div className="mb-6">
                 <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20 mb-6">
                   <Zap className="h-4 w-4 text-white/80" />
-                  <span className="text-sm font-rubik text-white/90">QUT's Premier Society for Law and Technology</span>
+                  <span className="text-sm font-rubik text-white/90">{BANNER_SLIDES[currentSlide].subtitle}</span>
                 </div>
               </div>
 
-              <h1 className="text-5xl md:text-7xl font-bold text-white mb-8 font-tomorrow leading-tight">
-                {HERO_DATA.title}
+              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 font-tomorrow leading-tight">
+                {BANNER_SLIDES[currentSlide].title}
               </h1>
+
+              <p className="text-lg md:text-xl text-white/80 font-montserrat max-w-3xl mx-auto leading-relaxed mb-8">
+                {BANNER_SLIDES[currentSlide].description}
+              </p>
+
+              {BANNER_SLIDES[currentSlide].isExternal ? (
+                <TiltableAnchor
+                  href={BANNER_SLIDES[currentSlide].link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-white text-black px-8 py-3 rounded-xl font-semibold font-rubik hover:bg-white/90 transition-all duration-300"
+                  tiltOptions={{ maxTilt: 4, scale: 1.02 }}
+                >
+                  {BANNER_SLIDES[currentSlide].cta} <ArrowRight className="h-4 w-4" />
+                </TiltableAnchor>
+              ) : (
+                <TiltableLink
+                  to={BANNER_SLIDES[currentSlide].link}
+                  className="inline-flex items-center gap-2 bg-white text-black px-8 py-3 rounded-xl font-semibold font-rubik hover:bg-white/90 transition-all duration-300"
+                  tiltOptions={{ maxTilt: 4, scale: 1.02 }}
+                >
+                  {BANNER_SLIDES[currentSlide].cta} <ArrowRight className="h-4 w-4" />
+                </TiltableLink>
+              )}
             </div>
           </div>
         </motion.div>
