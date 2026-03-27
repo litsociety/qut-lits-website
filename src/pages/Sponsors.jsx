@@ -17,6 +17,7 @@ const SPONSOR_TIERS = [
         name: "Ashurst",
         logo: "/ashurst-logo.png",
         url: "https://www.ashurst.com/",
+        logoHeight: "80px",
       },
       {
         name: "Verlata Consulting",
@@ -110,6 +111,7 @@ function SponsorsSection() {
                           src={sponsor.logo}
                           alt={`${sponsor.name} logo`}
                           className={`max-h-20 max-w-[240px] w-auto object-contain${sponsor.whiteFilter ? " filter brightness-0 invert" : ""}`}
+                          style={sponsor.logoHeight ? { height: sponsor.logoHeight } : undefined}
                           loading="lazy"
                         />
                       </div>
@@ -121,6 +123,7 @@ function SponsorsSection() {
                           src={sponsor.logo}
                           alt={`${sponsor.name} logo`}
                           className={`max-h-20 max-w-[240px] w-auto object-contain${sponsor.whiteFilter ? " filter brightness-0 invert" : ""}`}
+                          style={sponsor.logoHeight ? { height: sponsor.logoHeight } : undefined}
                           loading="lazy"
                         />
                       </div>
