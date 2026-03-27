@@ -44,7 +44,7 @@ const SPONSOR_TIERS = [
     sponsors: [
       {
         name: "PwC",
-        logo: "/pwc-logo.png",
+        logo: "/2218a457-c3df-4a2b-b98e-c45b60e56fb7.png",
         url: "https://www.pwc.com.au/",
       }
     ]
