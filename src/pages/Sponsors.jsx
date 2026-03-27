@@ -17,8 +17,8 @@ const SPONSOR_TIERS = [
         name: "Ashurst",
         logo: "/ashurst-logo.png",
         url: "https://www.ashurst.com/",
-        logoHeight: "60px",
-        logoMaxWidth: "300px",
+        logoHeight: "50px",
+        logoMaxWidth: "250px",
       },
       {
         name: "Verlata Consulting",
