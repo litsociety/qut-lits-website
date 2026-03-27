@@ -17,8 +17,8 @@ const SPONSOR_TIERS = [
         name: "Ashurst",
         logo: "/ashurst-logo.png",
         url: "https://www.ashurst.com/",
-        logoHeight: "56px",
-        logoMaxWidth: "280px",
+        logoHeight: "72px",
+        logoMaxWidth: "400px",
       },
       {
         name: "Verlata Consulting",
@@ -111,8 +111,8 @@ function SponsorsSection() {
                         <img
                           src={sponsor.logo}
                           alt={`${sponsor.name} logo`}
-                          className={`max-h-20 max-w-[240px] w-auto object-contain${sponsor.whiteFilter ? " filter brightness-0 invert" : ""}`}
-                          style={sponsor.logoHeight ? { height: sponsor.logoHeight, maxWidth: sponsor.logoMaxWidth || "240px" } : undefined}
+                          className={`w-auto object-contain${sponsor.whiteFilter ? " filter brightness-0 invert" : ""}`}
+                          style={sponsor.logoHeight ? { height: sponsor.logoHeight, maxWidth: sponsor.logoMaxWidth } : { maxHeight: "80px", maxWidth: "240px" }}
                           loading="lazy"
                         />
                       </div>
@@ -123,8 +123,8 @@ function SponsorsSection() {
                         <img
                           src={sponsor.logo}
                           alt={`${sponsor.name} logo`}
-                          className={`max-h-20 max-w-[240px] w-auto object-contain${sponsor.whiteFilter ? " filter brightness-0 invert" : ""}`}
-                          style={sponsor.logoHeight ? { height: sponsor.logoHeight, maxWidth: sponsor.logoMaxWidth || "240px" } : undefined}
+                          className={`w-auto object-contain${sponsor.whiteFilter ? " filter brightness-0 invert" : ""}`}
+                          style={sponsor.logoHeight ? { height: sponsor.logoHeight, maxWidth: sponsor.logoMaxWidth } : { maxHeight: "80px", maxWidth: "240px" }}
                           loading="lazy"
                         />
                       </div>
