@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Award, Gem, Heart, Instagram, Facebook, Linkedin, Mail, Download } from "lucide-react";
+import { Heart, Instagram, Facebook, Linkedin, Mail, Download } from "lucide-react";
 import Navigation from "../components/Navigation";
 import AnimatedBackground from "../components/AnimatedBackground";
 import { useTilt } from "../hooks/useTilt";
@@ -10,8 +10,7 @@ import { Tiltable, TiltableAnchor } from "../components/Tiltable";
 const SPONSOR_TIERS = [
   {
     name: "Ruby",
-    color: "ruby",
-    icon: Gem,
+    color: "#E8475F",
     sponsors: [
       {
         name: "Ashurst",
@@ -29,8 +28,7 @@ const SPONSOR_TIERS = [
   },
   {
     name: "Sapphire",
-    color: "sapphire",
-    icon: Gem,
+    color: "#3B82F6",
     sponsors: [
       {
         name: "Dundas Lawyers",
@@ -42,9 +40,14 @@ const SPONSOR_TIERS = [
   },
   {
     name: "Emerald",
-    color: "emerald",
-    icon: Gem,
-    sponsors: []
+    color: "#10B981",
+    sponsors: [
+      {
+        name: "PwC",
+        logo: "/pwc-logo.png",
+        url: "https://www.pwc.com.au/",
+      }
+    ]
   }
 ];
 
@@ -80,18 +83,12 @@ function SponsorsSection() {
           <div key={tier.name} className="mb-16 last:mb-0">
             {/* Tier Header */}
             <div className="text-center mb-10">
-              <div className="inline-flex items-center gap-3">
-                <tier.icon
-                  className="h-7 w-7"
-                  style={{ color: tier.color === 'emerald' ? '#50C878' : tier.color === 'ruby' ? '#E0115F' : '#0F52BA' }}
-                />
-                <h2
-                  className="text-3xl md:text-4xl font-bold font-tomorrow"
-                  style={{ color: tier.color === 'emerald' ? '#50C878' : tier.color === 'ruby' ? '#E0115F' : '#0F52BA' }}
-                >
-                  {tier.name} Tier
-                </h2>
-              </div>
+              <h2
+                className="text-3xl md:text-4xl font-bold font-tomorrow"
+                style={{ color: tier.color }}
+              >
+                {tier.name} Tier
+              </h2>
             </div>
 
             {/* Sponsors */}
