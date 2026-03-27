@@ -22,8 +22,8 @@ const SEMESTER_1 = [
     badge: "Collaboration",
     image: "/lits-workshops.jpg",
     description:
-      "A collaborative event between QUT LITS and GRC. Taking place in Semester 1, Week 7. Details to be announced.",
-    date: "Week 7, Semester 1",
+      "A collaborative event between QUT LITS and GRC. Taking place in Semester 1, Week 8. Details to be announced.",
+    date: "Week 8, Semester 1",
     time: "TBA",
     location: "TBA",
     link: null,
