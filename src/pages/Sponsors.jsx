@@ -14,6 +14,11 @@ const SPONSOR_TIERS = [
     icon: Gem,
     sponsors: [
       {
+        name: "Ashurst",
+        logo: "/ashurst-logo.png",
+        url: "https://www.ashurst.com/",
+      },
+      {
         name: "Verlata Consulting",
         logo: "/verlata-consulting-logo.png",
         url: "https://www.verlata.com/",
