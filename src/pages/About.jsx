@@ -55,6 +55,12 @@ const EXECUTIVE_TEAM = [
     image: "/michelle-huang.jpg",
     linkedin: "https://www.linkedin.com/in/michelle-huang-185937245/"
   },
+  {
+    name: "Felix Thomason",
+    role: "Executive Officer",
+    image: "/felix-thomason.jpg",
+    linkedin: "https://www.linkedin.com/in/felix-thomason/"
+  },
 ];
 
 const PAST_PRESIDENTS = [
