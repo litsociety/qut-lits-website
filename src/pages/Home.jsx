@@ -284,30 +284,40 @@ function HeroSection() {
 }
 
 const SPONSORS = [
-  { name: "Ashurst", logo: "/ashurst-logo.png" },
-  { name: "Verlata Consulting", logo: "/verlata-consulting-logo.png" },
-  { name: "Dundas Lawyers", logo: "/dundas-lawyers-logo.png" },
-  { name: "PwC", logo: "/pwc-logo.png" },
+  { name: "Ashurst", logo: "/ashurst-logo.png", url: "https://www.ashurst.com/" },
+  { name: "Verlata Consulting", logo: "/verlata-consulting-logo.png", url: "https://www.verlata.com/" },
+  { name: "Dundas Lawyers", logo: "/dundas-lawyers-logo.png", url: "https://www.dundaslawyers.com.au/", white: true },
+  { name: "PwC", logo: "/2218a457-c3df-4a2b-b98e-c45b60e56fb7.png", url: "https://www.pwc.com.au/" },
 ];
 
 function SponsorsStrip() {
-  const repeated = [...SPONSORS, ...SPONSORS, ...SPONSORS];
+  // Duplicate once — animate -50% for a perfect seamless loop
+  const items = [...SPONSORS, ...SPONSORS];
   return (
-    <section className="py-10 relative overflow-hidden" aria-label="Sponsors">
-      <div className="max-w-7xl mx-auto px-6 mb-6 text-center">
-        <p className="text-sm font-montserrat text-white/40 uppercase tracking-widest">Proudly supported by</p>
+    <section className="py-8 relative overflow-hidden" aria-label="Sponsors">
+      <div className="mb-6 text-center">
+        <p className="text-xs font-montserrat text-white/40 uppercase tracking-widest">Proudly supported by</p>
       </div>
       <div className="relative">
-        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-black/80 to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-black/80 to-transparent z-10 pointer-events-none" />
-        <div className="flex gap-16 items-center animate-marquee whitespace-nowrap">
-          {repeated.map((sponsor, i) => (
-            <img
+        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-black/60 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-black/60 to-transparent z-10 pointer-events-none" />
+        <div className="flex gap-20 items-center animate-marquee">
+          {items.map((sponsor, i) => (
+            <a
               key={i}
-              src={sponsor.logo}
-              alt={sponsor.name}
-              className="h-8 object-contain opacity-40 hover:opacity-70 transition-opacity duration-300 flex-shrink-0"
-            />
+              href={sponsor.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={sponsor.name}
+              className="flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity duration-300"
+            >
+              <img
+                src={sponsor.logo}
+                alt={sponsor.name}
+                className={`h-8 w-auto object-contain${sponsor.white ? " brightness-0 invert" : ""}`}
+                loading="lazy"
+              />
+            </a>
           ))}
         </div>
       </div>
@@ -442,8 +452,8 @@ function Home() {
       <Navigation />
       <main id="main-content">
         <BannerSlideshow />
-        <HeroSection />
         <SponsorsStrip />
+        <HeroSection />
         <BenefitsSection />
         <CTASection />
       </main>
