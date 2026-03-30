@@ -283,6 +283,38 @@ function HeroSection() {
   );
 }
 
+const SPONSORS = [
+  { name: "Ashurst", logo: "/ashurst-logo.png" },
+  { name: "Verlata Consulting", logo: "/verlata-consulting-logo.png" },
+  { name: "Dundas Lawyers", logo: "/dundas-lawyers-logo.png" },
+  { name: "PwC", logo: "/pwc-logo.png" },
+];
+
+function SponsorsStrip() {
+  const repeated = [...SPONSORS, ...SPONSORS, ...SPONSORS];
+  return (
+    <section className="py-10 relative overflow-hidden" aria-label="Sponsors">
+      <div className="max-w-7xl mx-auto px-6 mb-6 text-center">
+        <p className="text-sm font-montserrat text-white/40 uppercase tracking-widest">Proudly supported by</p>
+      </div>
+      <div className="relative">
+        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-black/80 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-black/80 to-transparent z-10 pointer-events-none" />
+        <div className="flex gap-16 items-center animate-marquee whitespace-nowrap">
+          {repeated.map((sponsor, i) => (
+            <img
+              key={i}
+              src={sponsor.logo}
+              alt={sponsor.name}
+              className="h-8 object-contain opacity-40 hover:opacity-70 transition-opacity duration-300 flex-shrink-0"
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function BenefitsSection() {
   return (
     <section className="py-16 relative">
@@ -411,6 +443,7 @@ function Home() {
       <main id="main-content">
         <BannerSlideshow />
         <HeroSection />
+        <SponsorsStrip />
         <BenefitsSection />
         <CTASection />
       </main>

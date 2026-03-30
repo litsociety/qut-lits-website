@@ -9,6 +9,15 @@ export default {
         'tomorrow': ['Tomorrow', 'sans-serif'],
         'montserrat': ['Montserrat', 'sans-serif'],
       },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-33.333%)' },
+        },
+      },
+      animation: {
+        marquee: 'marquee 20s linear infinite',
+      },
       colors: {
         'primary': '#c8c8c8',
         'secondary': '#888888',
