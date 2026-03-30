@@ -401,7 +401,7 @@ function EventCard({ event, onAddToCalendar }) {
 
 function EventsSection({ title, events, onAddToCalendar }) {
   return (
-    <section className="py-10 relative" aria-label={`${title} events`}>
+    <section className="py-16 relative" aria-label={`${title} events`}>
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="text-xs font-bold tracking-widest text-white/40 uppercase font-rubik mb-8">
           {title}

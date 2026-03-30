@@ -145,7 +145,7 @@ function SponsorsSection() {
 
 function BecomeASponsorSection() {
   return (
-    <section className="py-24 relative" aria-label="Become a sponsor section">
+    <section className="py-20 relative" aria-label="Become a sponsor section">
       <div className="max-w-4xl mx-auto px-6 text-center">
         <Tiltable tiltOptions={{ maxTilt: 3, scale: 1.01 }}>
           <div className="liquid-glass-strong rounded-3xl p-16 border border-white/20 shadow-2xl">

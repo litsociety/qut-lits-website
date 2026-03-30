@@ -134,7 +134,7 @@ function HeroSection() {
 
 function MissionSection() {
   return (
-    <section className="pt-16 pb-16 relative" aria-label="Mission and vision section">
+    <section className="py-16 relative" aria-label="Mission and vision section">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           <div>
@@ -180,7 +180,7 @@ function MissionSection() {
 
 function ExecutiveTeamSection() {
   return (
-    <section className="py-24 relative" aria-label="Executive team section">
+    <section className="py-16 relative" aria-label="Executive team section">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-tomorrow">Executive Team</h2>
@@ -267,7 +267,7 @@ function ExecutiveTeamSection() {
 
 function PastPresidentsSection() {
   return (
-    <section className="py-24 relative" aria-label="Past presidents section">
+    <section className="py-16 relative" aria-label="Past presidents section">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-tomorrow">Past Presidents</h2>
@@ -322,7 +322,7 @@ function PastPresidentsSection() {
 
 function CTASection() {
   return (
-    <section className="pt-16 pb-24 relative" aria-label="Call to action section">
+    <section className="py-20 relative" aria-label="Call to action section">
       <div className="max-w-4xl mx-auto px-6 text-center">
         <Tiltable tiltOptions={{ maxTilt: 3, scale: 1.01 }}>
           <div className="liquid-glass-strong rounded-3xl p-16 border border-white/20 shadow-2xl">

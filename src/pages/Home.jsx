@@ -251,7 +251,7 @@ function BannerSlideshow() {
 
 function HeroSection() {
   return (
-    <section className="relative py-16 flex items-center justify-center overflow-hidden">
+    <section className="relative pt-0 pb-16 flex items-center justify-center overflow-hidden">
       <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
         <p className="text-lg md:text-xl mb-8 text-white/90 font-montserrat max-w-3xl mx-auto leading-relaxed">
           {HERO_DATA.description}
@@ -294,14 +294,14 @@ function SponsorsStrip() {
   // Duplicate once — animate -50% for a perfect seamless loop
   const items = [...SPONSORS, ...SPONSORS];
   return (
-    <section className="py-8 relative overflow-hidden" aria-label="Sponsors">
-      <div className="mb-6 text-center">
+    <section className="py-12 relative overflow-hidden border-t border-white/10" aria-label="Sponsors">
+      <div className="mb-8 text-center">
         <p className="text-xs font-montserrat text-white/40 uppercase tracking-widest">Proudly supported by</p>
       </div>
       <div className="relative">
         <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-black/60 to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-black/60 to-transparent z-10 pointer-events-none" />
-        <div className="flex gap-20 items-center animate-marquee">
+        <div className="w-max flex gap-20 items-center animate-marquee">
           {items.map((sponsor, i) => (
             <a
               key={i}
@@ -327,7 +327,7 @@ function SponsorsStrip() {
 
 function BenefitsSection() {
   return (
-    <section className="py-16 relative">
+    <section className="py-20 relative">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-tomorrow">
@@ -362,7 +362,7 @@ function BenefitsSection() {
 
 function CTASection() {
   return (
-    <section className="py-24 relative" aria-label="Call to action section">
+    <section className="py-20 relative" aria-label="Call to action section">
       <div className="max-w-4xl mx-auto px-6 text-center">
         <Tiltable tiltOptions={{ maxTilt: 3, scale: 1.01 }}>
           <div className="liquid-glass-strong rounded-3xl p-16 border border-white/20 shadow-2xl">
