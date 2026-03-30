@@ -34,6 +34,7 @@ const EXECUTIVE_TEAM = [
     name: "Tingyu Zhang",
     role: "Events Coordinator",
     image: "/tingyu-zhang.jpg",
+    objectPosition: "center 30%",
     linkedin: "https://www.linkedin.com/in/tingyu-zhang-906844355"
   },
   {
@@ -192,6 +193,7 @@ function ExecutiveTeamSection() {
                       src={member.image}
                       alt={member.name}
                       className="w-full h-full object-cover"
+                      style={member.objectPosition ? { objectPosition: member.objectPosition } : undefined}
                       loading="lazy"
                       decoding="async"
                     />
