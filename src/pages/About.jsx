@@ -184,7 +184,44 @@ function ExecutiveTeamSection() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {EXECUTIVE_TEAM.map((member) => (
+          {EXECUTIVE_TEAM.slice(0, 4).map((member) => (
+            <Tiltable key={member.name} tiltOptions={{ maxTilt: 10, scale: 1.05 }}>
+              <div className="group bg-white/5 rounded-3xl p-6 border border-white/10 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 hover:bg-white/10 flex flex-col items-center text-center">
+                <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden bg-gradient-to-br from-primary/30 to-purple/30 border border-white/20 flex items-center justify-center">
+                  {member.image ? (
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                      style={member.objectPosition ? { objectPosition: member.objectPosition } : undefined}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <Users className="h-10 w-10 text-white/30" />
+                  )}
+                </div>
+                <h3 className="text-lg font-bold text-white mb-1 font-rubik">{member.name}</h3>
+                <p className="text-primary font-semibold font-montserrat text-sm mb-4">{member.role}</p>
+                <TiltableAnchor
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-xl bg-primary/20 text-primary hover:bg-primary/30 transition-all duration-300"
+                  title={`Connect with ${member.name} on LinkedIn`}
+                  tiltOptions={{ maxTilt: 5, scale: 1.03 }}
+                >
+                  <Linkedin className="h-4 w-4" />
+                </TiltableAnchor>
+              </div>
+            </Tiltable>
+          ))}
+        </div>
+
+        <div className="my-10 border-t border-white/10" />
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {EXECUTIVE_TEAM.slice(4).map((member) => (
             <Tiltable key={member.name} tiltOptions={{ maxTilt: 10, scale: 1.05 }}>
               <div className="group bg-white/5 rounded-3xl p-6 border border-white/10 backdrop-blur-sm hover:border-primary/30 transition-all duration-300 hover:bg-white/10 flex flex-col items-center text-center">
                 <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden bg-gradient-to-br from-primary/30 to-purple/30 border border-white/20 flex items-center justify-center">
