@@ -34,7 +34,7 @@ const EXECUTIVE_TEAM = [
     name: "Tingyu Zhang",
     role: "Events Coordinator",
     image: "/tingyu-zhang.jpg",
-    objectPosition: "center bottom",
+    objectPosition: "center top",
     linkedin: "https://www.linkedin.com/in/tingyu-zhang-906844355"
   },
   {
