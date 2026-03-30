@@ -30,6 +30,30 @@ const EXECUTIVE_TEAM = [
     image: null,
     linkedin: "https://www.linkedin.com/in/yiru-jones-b7651256/"
   },
+  {
+    name: "Tingyu Zhang",
+    role: "Events Coordinator",
+    image: "/tingyu-zhang.jpg",
+    linkedin: "https://www.linkedin.com/in/tingyu-zhang-906844355"
+  },
+  {
+    name: "Hope Burke",
+    role: "Industry Coordinator",
+    image: "/hope-burke.jpg",
+    linkedin: "https://www.linkedin.com/in/hope-burke-bb80813b9/"
+  },
+  {
+    name: "Lyla Kost",
+    role: "Industry Coordinator",
+    image: "/lyla-kost.jpg",
+    linkedin: "https://www.linkedin.com/in/lyla-kost-7375152ba/"
+  },
+  {
+    name: "Michelle Huang",
+    role: "Events Executive",
+    image: "/michelle-huang.jpg",
+    linkedin: "https://www.linkedin.com/in/michelle-huang-185937245/"
+  },
 ];
 
 const PAST_PRESIDENTS = [
