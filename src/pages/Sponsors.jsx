@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Heart, Instagram, Facebook, Linkedin, Mail, Download, FileText, ExternalLink } from "lucide-react";
+import { Heart, Instagram, Facebook, Linkedin, Mail, Download, FileText, ExternalLink, BookOpen, ChevronUp } from "lucide-react";
 import { Document, Page, pdfjs } from "react-pdf";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -154,8 +154,11 @@ function SponsorsSection() {
 
 function ProspectusViewer({ pdfUrl }) {
   const [numPages, setNumPages] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const [containerWidth, setContainerWidth] = useState(800);
   const containerRef = useRef(null);
+  const scrollRef = useRef(null);
+  const pageRefs = useRef([]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -167,6 +170,20 @@ function ProspectusViewer({ pdfUrl }) {
     return () => observer.disconnect();
   }, []);
 
+  // Track which page is visible as user scrolls
+  useEffect(() => {
+    if (!scrollRef.current || !numPages) return;
+    const el = scrollRef.current;
+    const onScroll = () => {
+      const scrollTop = el.scrollTop;
+      const pageHeight = el.scrollHeight / numPages;
+      const page = Math.min(numPages, Math.floor(scrollTop / pageHeight) + 1);
+      setCurrentPage(page);
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, [numPages]);
+
   const onDocumentLoadSuccess = useCallback(({ numPages }) => {
     setNumPages(numPages);
   }, []);
@@ -174,42 +191,53 @@ function ProspectusViewer({ pdfUrl }) {
   const pageWidth = Math.min(containerWidth - 32, 900);
 
   return (
-    <div
-      ref={containerRef}
-      className="w-full overflow-y-auto"
-      style={{ maxHeight: "80vh" }}
-    >
-      <Document
-        file={pdfUrl}
-        onLoadSuccess={onDocumentLoadSuccess}
-        loading={
-          <div className="flex items-center justify-center py-24">
-            <div className="w-8 h-8 border-2 border-white/20 border-t-white/70 rounded-full animate-spin" />
-          </div>
-        }
-        error={
-          <div className="flex flex-col items-center justify-center py-16 text-white/50 font-montserrat text-sm">
-            <FileText className="h-10 w-10 mb-3 opacity-40" />
-            <p>Unable to load PDF.</p>
-          </div>
-        }
+    <div ref={containerRef} className="w-full relative">
+      {/* Page indicator */}
+      {numPages && (
+        <div className="absolute top-3 right-3 z-10 bg-black/60 backdrop-blur-sm text-white/70 text-xs font-montserrat px-3 py-1.5 rounded-full border border-white/10">
+          {currentPage} / {numPages}
+        </div>
+      )}
+
+      {/* Scrollable PDF container — custom scrollbar */}
+      <div
+        ref={scrollRef}
+        className="pdf-scroll w-full overflow-y-scroll"
+        style={{ maxHeight: "80vh" }}
       >
-        {numPages && Array.from({ length: numPages }, (_, i) => (
-          <div key={i} className="flex justify-center mb-2 last:mb-0">
-            <Page
-              pageNumber={i + 1}
-              width={pageWidth}
-              renderAnnotationLayer={false}
-              renderTextLayer={false}
-            />
-          </div>
-        ))}
-      </Document>
+        <Document
+          file={pdfUrl}
+          onLoadSuccess={onDocumentLoadSuccess}
+          loading={
+            <div className="flex items-center justify-center py-24">
+              <div className="w-8 h-8 border-2 border-white/20 border-t-white/70 rounded-full animate-spin" />
+            </div>
+          }
+          error={
+            <div className="flex flex-col items-center justify-center py-16 text-white/50 font-montserrat text-sm">
+              <FileText className="h-10 w-10 mb-3 opacity-40" />
+              <p>Unable to load PDF.</p>
+            </div>
+          }
+        >
+          {numPages && Array.from({ length: numPages }, (_, i) => (
+            <div key={i} ref={el => pageRefs.current[i] = el} className="flex justify-center mb-2 last:mb-0">
+              <Page
+                pageNumber={i + 1}
+                width={pageWidth}
+                renderAnnotationLayer={false}
+                renderTextLayer={false}
+              />
+            </div>
+          ))}
+        </Document>
+      </div>
     </div>
   );
 }
 
 function ProspectusSection() {
+  const [open, setOpen] = useState(false);
   const pdfUrl = "/LITS 2026 Prospectus.pdf";
 
   return (
@@ -220,28 +248,39 @@ function ProspectusSection() {
             <FileText className="h-4 w-4 text-primary" />
             <span className="text-sm font-rubik text-white/90">2026 Sponsorship Prospectus</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-white font-tomorrow">
+          <h2 className="text-3xl md:text-4xl font-bold text-white font-tomorrow mb-8">
             Partnership Opportunities
           </h2>
+
+          {/* Buttons */}
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+            <Tiltable tiltOptions={{ maxTilt: 4, scale: 1.02 }}>
+              <button
+                onClick={() => setOpen(o => !o)}
+                className="inline-flex items-center gap-3 bg-gradient-to-r from-primary to-purple text-white px-8 py-4 rounded-2xl text-lg font-semibold hover:opacity-90 transition-all duration-300 shadow-xl font-rubik"
+              >
+                {open ? <ChevronUp className="h-5 w-5" /> : <BookOpen className="h-5 w-5" />}
+                <span>{open ? "Close Prospectus" : "View Prospectus"}</span>
+              </button>
+            </Tiltable>
+            <TiltableAnchor
+              href={pdfUrl}
+              download="LITS 2026 Prospectus.pdf"
+              className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md text-white px-8 py-4 rounded-2xl text-lg font-semibold hover:bg-white/20 transition-all duration-300 border border-white/20 hover:border-primary/50 font-rubik"
+              tiltOptions={{ maxTilt: 4, scale: 1.02 }}
+            >
+              <Download className="h-5 w-5" />
+              <span>Download Prospectus</span>
+            </TiltableAnchor>
+          </div>
         </div>
 
-        {/* PDF Viewer — react-pdf (canvas-based, all pages scrollable) */}
-        <div className="rounded-3xl overflow-hidden border border-white/20 shadow-2xl bg-zinc-900 p-4">
-          <ProspectusViewer pdfUrl={pdfUrl} />
-        </div>
-
-        {/* Download button below viewer */}
-        <div className="text-center mt-6">
-          <TiltableAnchor
-            href={pdfUrl}
-            download="LITS 2026 Prospectus.pdf"
-            className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md text-white px-8 py-4 rounded-2xl text-lg font-semibold hover:bg-white/20 transition-all duration-300 border border-white/20 hover:border-primary/50 font-rubik"
-            tiltOptions={{ maxTilt: 4, scale: 1.02 }}
-          >
-            <Download className="h-5 w-5" />
-            <span>Download Prospectus</span>
-          </TiltableAnchor>
-        </div>
+        {/* PDF Viewer — collapses/expands */}
+        {open && (
+          <div className="rounded-3xl overflow-hidden border border-white/20 shadow-2xl bg-zinc-900 p-4 mt-2">
+            <ProspectusViewer pdfUrl={pdfUrl} />
+          </div>
+        )}
       </div>
     </section>
   );
