@@ -25,7 +25,7 @@ export const CTASection = memo(function CTASection({
   return (
     <section className="py-24 relative" aria-label="Call to action section">
       <div className="max-w-4xl mx-auto px-6 text-center">
-        <div className="liquid-glass-strong rounded-3xl p-16 border border-white/20 shadow-2xl">
+        <div className="liquid-glass-strong rounded-3xl p-8 sm:p-16 border border-white/20 shadow-2xl">
           <h2 className="text-4xl font-bold text-white mb-6 font-tomorrow">
             {title}
           </h2>
@@ -75,7 +75,7 @@ export const CTASection = memo(function CTASection({
  */
 export const SocialLinks = memo(function SocialLinks({ className = '' }) {
   return (
-    <div className={`flex justify-center items-center gap-6 pt-6 border-t border-white/10 ${className}`}>
+    <div className={`flex justify-center items-center gap-4 sm:gap-6 pt-6 border-t border-white/10 ${className}`}>
       {SOCIAL_LINKS.map((link) => {
         const Icon = SOCIAL_ICONS[link.name];
         return (

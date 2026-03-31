@@ -224,7 +224,7 @@ function BannerSlideshow() {
                 </div>
               </div>
 
-              <h1 className="text-5xl md:text-7xl font-bold text-white mb-8 font-tomorrow leading-tight">
+              <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-white mb-8 font-tomorrow leading-tight">
                 {HERO_DATA.title}
               </h1>
             </div>
@@ -251,7 +251,7 @@ function BannerSlideshow() {
 
 function HeroSection() {
   return (
-    <section className="relative pt-0 pb-16 flex items-center justify-center overflow-hidden">
+    <section className="relative pt-10 pb-12 flex items-center justify-center overflow-hidden">
       <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
         <p className="text-lg md:text-xl mb-8 text-white/90 font-montserrat max-w-3xl mx-auto leading-relaxed">
           {HERO_DATA.description}
@@ -284,24 +284,24 @@ function HeroSection() {
 }
 
 const SPONSORS = [
-  { name: "Ashurst", logo: "/ashurst-logo.png", url: "https://www.ashurst.com/" },
-  { name: "Verlata Consulting", logo: "/verlata-consulting-logo.png", url: "https://www.verlata.com/" },
-  { name: "Dundas Lawyers", logo: "/dundas-lawyers-logo.png", url: "https://www.dundaslawyers.com.au/", white: true },
-  { name: "PwC", logo: "/2218a457-c3df-4a2b-b98e-c45b60e56fb7.png", url: "https://www.pwc.com.au/" },
+  { name: "Ashurst",            logo: "/ashurst-logo.png",                             url: "https://www.ashurst.com/",               maxWidth: 80  },
+  { name: "Verlata Consulting", logo: "/verlata-consulting-logo.png",                  url: "https://www.verlata.com/",               maxWidth: 130 },
+  { name: "Dundas Lawyers",     logo: "/dundas-lawyers-logo.png",                      url: "https://www.dundaslawyers.com.au/",      maxWidth: 120, white: true },
+  { name: "Clayton Utz",        logo: "/clayton-utz-logo.png",                         url: "https://www.claytonutz.com/",            maxWidth: 130, white: true },
+  { name: "PwC",                logo: "/2218a457-c3df-4a2b-b98e-c45b60e56fb7.png",    url: "https://www.pwc.com.au/",               maxWidth: 60  },
 ];
 
 function SponsorsStrip() {
-  // Duplicate once — animate -50% for a perfect seamless loop
   const items = [...SPONSORS, ...SPONSORS];
   return (
-    <section className="py-12 relative overflow-hidden border-t border-white/10" aria-label="Sponsors">
-      <div className="mb-8 text-center">
+    <section className="py-10 relative border-t border-white/10" aria-label="Sponsors">
+      <div className="mb-7 text-center">
         <p className="text-xs font-montserrat text-white/40 uppercase tracking-widest">Proudly supported by</p>
       </div>
-      <div className="relative">
-        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-black/60 to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-black/60 to-transparent z-10 pointer-events-none" />
-        <div className="w-max flex gap-20 items-center animate-marquee">
+      <div className="relative overflow-hidden">
+        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-black/70 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-black/70 to-transparent z-10 pointer-events-none" />
+        <div className="w-max flex gap-24 items-center will-change-transform animate-marquee">
           {items.map((sponsor, i) => (
             <a
               key={i}
@@ -309,13 +309,15 @@ function SponsorsStrip() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={sponsor.name}
-              className="flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity duration-300"
+              className="flex-shrink-0 opacity-75 hover:opacity-100 transition-opacity duration-300"
             >
               <img
                 src={sponsor.logo}
                 alt={sponsor.name}
-                className={`h-8 w-auto object-contain${sponsor.white ? " brightness-0 invert" : ""}`}
+                className={`h-7 w-auto object-contain${sponsor.white ? " brightness-0 invert" : ""}`}
+                style={{ maxWidth: sponsor.maxWidth }}
                 loading="lazy"
+                draggable={false}
               />
             </a>
           ))}
@@ -327,9 +329,9 @@ function SponsorsStrip() {
 
 function BenefitsSection() {
   return (
-    <section className="py-20 relative">
+    <section className="pt-12 pb-10 relative">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-tomorrow">
             Why Join Us?
           </h2>
@@ -362,10 +364,10 @@ function BenefitsSection() {
 
 function CTASection() {
   return (
-    <section className="py-20 relative" aria-label="Call to action section">
+    <section className="py-16 relative" aria-label="Call to action section">
       <div className="max-w-4xl mx-auto px-6 text-center">
         <Tiltable tiltOptions={{ maxTilt: 3, scale: 1.01 }}>
-          <div className="liquid-glass-strong rounded-3xl p-16 border border-white/20 shadow-2xl">
+          <div className="liquid-glass-strong rounded-3xl p-8 sm:p-16 border border-white/20 shadow-2xl">
           <h2 className="text-4xl font-bold text-white mb-6 font-tomorrow">
             Ready to Shape the Future?
           </h2>
@@ -395,7 +397,7 @@ function CTASection() {
           </div>
 
           {/* Social Links */}
-          <div className="flex justify-center items-center gap-6 pt-6 border-t border-white/10">
+          <div className="flex justify-center items-center gap-4 sm:gap-6 pt-6 border-t border-white/10">
             <TiltableAnchor
               href="https://www.facebook.com/lawinnovationandtechsociety/"
               target="_blank"

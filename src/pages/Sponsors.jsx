@@ -35,6 +35,12 @@ const SPONSOR_TIERS = [
         logo: "/dundas-lawyers-logo.png",
         url: "https://www.dundaslawyers.com.au/",
         whiteFilter: true,
+      },
+      {
+        name: "Clayton Utz",
+        logo: "/clayton-utz-logo.png",
+        url: "https://www.claytonutz.com/",
+        whiteFilter: true,
       }
     ]
   },
@@ -53,7 +59,7 @@ const SPONSOR_TIERS = [
 
 function HeroSection() {
   return (
-    <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-32" aria-label="Sponsors section">
+    <section className="relative flex items-center justify-center overflow-hidden pt-32 pb-10" aria-label="Sponsors section">
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
         <div className="mb-8">
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20 mb-6">
@@ -77,7 +83,7 @@ function HeroSection() {
 
 function SponsorsSection() {
   return (
-    <section className="py-16 relative" aria-label="Sponsors section">
+    <section className="pt-0 pb-16 relative" aria-label="Sponsors section">
       <div className="max-w-5xl mx-auto px-6">
         {SPONSOR_TIERS.map((tier) => (
           <div key={tier.name} className="mb-16 last:mb-0">
@@ -148,7 +154,7 @@ function BecomeASponsorSection() {
     <section className="py-20 relative" aria-label="Become a sponsor section">
       <div className="max-w-4xl mx-auto px-6 text-center">
         <Tiltable tiltOptions={{ maxTilt: 3, scale: 1.01 }}>
-          <div className="liquid-glass-strong rounded-3xl p-16 border border-white/20 shadow-2xl">
+          <div className="liquid-glass-strong rounded-3xl p-8 sm:p-16 border border-white/20 shadow-2xl">
           <h2 className="text-4xl font-bold text-white mb-6 font-tomorrow">
             Become a Sponsor
           </h2>
@@ -177,7 +183,7 @@ function BecomeASponsorSection() {
           </div>
 
           {/* Social Links */}
-          <div className="flex justify-center items-center gap-6 pt-6 border-t border-white/10">
+          <div className="flex justify-center items-center gap-4 sm:gap-6 pt-6 border-t border-white/10">
             <TiltableAnchor
               href="https://www.facebook.com/lawinnovationandtechsociety/"
               target="_blank"

@@ -298,7 +298,7 @@ const ALL_EVENTS = [...SEMESTER_1, ...SEMESTER_2, ...PREVIOUS_EVENTS];
 
 function HeroSection({ onSubscribe }) {
   return (
-    <section className="relative pt-32 pb-16 overflow-hidden" aria-label="Events hero">
+    <section className="relative pt-32 pb-10 overflow-hidden" aria-label="Events hero">
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
         <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 font-tomorrow">
           Our Events
@@ -401,7 +401,7 @@ function EventCard({ event, onAddToCalendar }) {
 
 function EventsSection({ title, events, onAddToCalendar }) {
   return (
-    <section className="py-16 relative" aria-label={`${title} events`}>
+    <section className="pt-0 pb-16 relative" aria-label={`${title} events`}>
       <div className="max-w-7xl mx-auto px-6">
         <h2 className="text-xs font-bold tracking-widest text-white/40 uppercase font-rubik mb-8">
           {title}

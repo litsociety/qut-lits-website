@@ -22,6 +22,7 @@ const Navigation = memo(function Navigation() {
 
   const handleNavigationClick = () => {
     setTimeout(() => {
+      document.getElementById('root')?.scrollTo(0, 0);
       window.scrollTo(0, 0);
     }, 50);
   };

@@ -185,7 +185,7 @@ function Contact() {
       <main id="main-content">
       
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden" aria-label="Contact section">
+      <section className="relative pt-32 pb-10 overflow-hidden" aria-label="Contact section">
         <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20 mb-6">
@@ -205,13 +205,13 @@ function Contact() {
       </section>
       
       {/* Contact Information*/}
-      <section className="pb-20">
+      <section className="pb-16">
 
         <div className="max-w-7xl mx-auto px-6">
           {/* Contact Form and Additional Info */}
           <div className="grid lg:grid-cols-2 gap-12">
             {/* <ContactForm /> */}
-            <div className="flex justify-center items-center pb-16">
+            <div className="flex justify-center items-center">
               <EmailButton />
             </div>
             

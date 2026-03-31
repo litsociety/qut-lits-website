@@ -18,9 +18,16 @@ export const TiltableButton = memo(function TiltableButton({ children, className
   );
 });
 
-export const TiltableLink = memo(function TiltableLink({ children, className, tiltOptions, to, ...props }) {
+export const TiltableLink = memo(function TiltableLink({ children, className, tiltOptions, to, onClick, ...props }) {
+  const handleClick = (e) => {
+    setTimeout(() => {
+      document.getElementById('root')?.scrollTo(0, 0);
+      window.scrollTo(0, 0);
+    }, 50);
+    onClick?.(e);
+  };
   return (
-    <Link to={to} className={className} {...props}>
+    <Link to={to} className={className} onClick={handleClick} {...props}>
       {children}
     </Link>
   );

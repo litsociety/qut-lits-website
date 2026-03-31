@@ -115,7 +115,7 @@ const SOCIETY_VALUES = [
 
 function HeroSection() {
   return (
-    <section className="relative pt-32 pb-16 overflow-hidden" aria-label="About section">
+    <section className="relative pt-32 pb-10 overflow-hidden" aria-label="About section">
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
         <div>
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 font-tomorrow">
@@ -134,7 +134,7 @@ function HeroSection() {
 
 function MissionSection() {
   return (
-    <section className="py-16 relative" aria-label="Mission and vision section">
+    <section className="pt-0 pb-16 relative" aria-label="Mission and vision section">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           <div>
@@ -156,12 +156,12 @@ function MissionSection() {
           
           <Tiltable tiltOptions={{ maxTilt: 1, scale: 1.002 }}>
             <div>
-              <div className="liquid-glass-strong rounded-3xl p-10 border border-white/20 shadow-2xl">
+              <div className="liquid-glass-strong rounded-3xl p-6 sm:p-10 border border-white/20 shadow-2xl">
                 <h3 className="text-2xl font-bold text-white mb-6 font-tomorrow text-center">Our Values</h3>
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-3 sm:gap-6">
                   {SOCIETY_VALUES.map((value, index) => (
                     <Tiltable key={value.title} tiltOptions={{ maxTilt: 4, scale: 1.02 }}>
-                      <div className="text-center p-6 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm">
+                      <div className="text-center p-3 sm:p-6 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm">
                         <value.icon className="h-12 w-12 text-primary mx-auto mb-4" />
                         <h4 className="text-lg font-semibold text-white mb-2 font-rubik">{value.title}</h4>
                         <p className="text-sm text-white/70 font-montserrat">{value.description}</p>
@@ -182,7 +182,7 @@ function ExecutiveTeamSection() {
   return (
     <section className="py-16 relative" aria-label="Executive team section">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-tomorrow">Executive Team</h2>
           <p className="text-xl text-white/80 font-montserrat max-w-3xl mx-auto">
             Meet the dedicated students leading QUT LITS and driving our mission forward
@@ -224,7 +224,7 @@ function ExecutiveTeamSection() {
           ))}
         </div>
 
-        <div className="my-10 border-t border-white/10" />
+        <div className="my-8 border-t border-white/10" />
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {EXECUTIVE_TEAM.slice(4).map((member) => (
@@ -269,7 +269,7 @@ function PastPresidentsSection() {
   return (
     <section className="py-16 relative" aria-label="Past presidents section">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-tomorrow">Past Presidents</h2>
           <p className="text-xl text-white/80 font-montserrat max-w-3xl mx-auto">
             Honoring the leaders who have shaped QUT LITS from its founding
@@ -325,7 +325,7 @@ function CTASection() {
     <section className="py-20 relative" aria-label="Call to action section">
       <div className="max-w-4xl mx-auto px-6 text-center">
         <Tiltable tiltOptions={{ maxTilt: 3, scale: 1.01 }}>
-          <div className="liquid-glass-strong rounded-3xl p-16 border border-white/20 shadow-2xl">
+          <div className="liquid-glass-strong rounded-3xl p-8 sm:p-16 border border-white/20 shadow-2xl">
           <h2 className="text-4xl font-bold text-white mb-6 font-tomorrow">
             Ready to Shape the Future?
           </h2>
@@ -355,7 +355,7 @@ function CTASection() {
           </div>
 
           {/* Social Links */}
-          <div className="flex justify-center items-center gap-6 pt-6 border-t border-white/10">
+          <div className="flex justify-center items-center gap-4 sm:gap-6 pt-6 border-t border-white/10">
             <TiltableAnchor
               href="https://www.facebook.com/lawinnovationandtechsociety/"
               target="_blank"
