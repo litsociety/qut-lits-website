@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Heart, Instagram, Facebook, Linkedin, Mail, Download, FileText, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { Heart, Instagram, Facebook, Linkedin, Mail, Download, FileText, ExternalLink } from "lucide-react";
 import { Document, Page, pdfjs } from "react-pdf";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -154,7 +154,6 @@ function SponsorsSection() {
 
 function ProspectusViewer({ pdfUrl }) {
   const [numPages, setNumPages] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
   const [containerWidth, setContainerWidth] = useState(800);
   const containerRef = useRef(null);
 
@@ -172,35 +171,14 @@ function ProspectusViewer({ pdfUrl }) {
     setNumPages(numPages);
   }, []);
 
-  const pageWidth = Math.min(containerWidth, 900);
+  const pageWidth = Math.min(containerWidth - 32, 900);
 
   return (
-    <div ref={containerRef} className="w-full">
-      {/* Page controls */}
-      {numPages && (
-        <div className="flex items-center justify-center gap-4 mb-4">
-          <button
-            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-            disabled={currentPage <= 1}
-            className="flex items-center justify-center w-9 h-9 rounded-xl bg-white/10 border border-white/20 text-white disabled:opacity-30 hover:bg-white/20 transition-all duration-200"
-            aria-label="Previous page"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </button>
-          <span className="text-white/70 font-montserrat text-sm">
-            Page {currentPage} of {numPages}
-          </span>
-          <button
-            onClick={() => setCurrentPage(p => Math.min(numPages, p + 1))}
-            disabled={currentPage >= numPages}
-            className="flex items-center justify-center w-9 h-9 rounded-xl bg-white/10 border border-white/20 text-white disabled:opacity-30 hover:bg-white/20 transition-all duration-200"
-            aria-label="Next page"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </button>
-        </div>
-      )}
-
+    <div
+      ref={containerRef}
+      className="w-full overflow-y-auto"
+      style={{ maxHeight: "80vh" }}
+    >
       <Document
         file={pdfUrl}
         onLoadSuccess={onDocumentLoadSuccess}
@@ -216,17 +194,16 @@ function ProspectusViewer({ pdfUrl }) {
           </div>
         }
       >
-        <Page
-          pageNumber={currentPage}
-          width={pageWidth}
-          renderAnnotationLayer={false}
-          renderTextLayer={false}
-          loading={
-            <div className="flex items-center justify-center py-24">
-              <div className="w-8 h-8 border-2 border-white/20 border-t-white/70 rounded-full animate-spin" />
-            </div>
-          }
-        />
+        {numPages && Array.from({ length: numPages }, (_, i) => (
+          <div key={i} className="flex justify-center mb-2 last:mb-0">
+            <Page
+              pageNumber={i + 1}
+              width={pageWidth}
+              renderAnnotationLayer={false}
+              renderTextLayer={false}
+            />
+          </div>
+        ))}
       </Document>
     </div>
   );
@@ -248,8 +225,8 @@ function ProspectusSection() {
           </h2>
         </div>
 
-        {/* PDF Viewer — react-pdf (canvas-based, no iframe lag) */}
-        <div className="rounded-3xl overflow-hidden border border-white/20 shadow-2xl bg-white flex justify-center">
+        {/* PDF Viewer — react-pdf (canvas-based, all pages scrollable) */}
+        <div className="rounded-3xl overflow-hidden border border-white/20 shadow-2xl bg-zinc-900 p-4">
           <ProspectusViewer pdfUrl={pdfUrl} />
         </div>
 
