@@ -10,6 +10,15 @@
 @import "react-pdf/dist/Page/AnnotationLayer.css";
 @import "react-pdf/dist/Page/TextLayer.css";
 
+/* PDF page canvas — transparent so dark container shows through before render */
+.react-pdf__Page {
+  background: transparent !important;
+}
+.react-pdf__Page canvas {
+  background: transparent !important;
+  display: block;
+}
+
 /* PDF viewer custom scrollbar — override global hide-scrollbar rules */
 .pdf-scroll {
   scrollbar-width: thin !important;

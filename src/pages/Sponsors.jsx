@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Heart, Instagram, Facebook, Linkedin, Mail, Download, FileText, ExternalLink, BookOpen, ChevronUp } from "lucide-react";
 import { Document, Page, pdfjs } from "react-pdf";
 
@@ -209,8 +209,14 @@ function ProspectusViewer({ pdfUrl }) {
           file={pdfUrl}
           onLoadSuccess={onDocumentLoadSuccess}
           loading={
-            <div className="flex items-center justify-center py-24">
-              <div className="w-8 h-8 border-2 border-white/20 border-t-white/70 rounded-full animate-spin" />
+            <div className="space-y-2">
+              {Array.from({ length: 3 }, (_, i) => (
+                <div
+                  key={i}
+                  className="w-full rounded-lg bg-white/5 animate-pulse"
+                  style={{ height: `${pageWidth * 0.707}px` }}
+                />
+              ))}
             </div>
           }
           error={
@@ -275,12 +281,20 @@ function ProspectusSection() {
           </div>
         </div>
 
-        {/* PDF Viewer — collapses/expands */}
-        {open && (
-          <div className="rounded-3xl overflow-hidden border border-white/20 shadow-2xl bg-zinc-900 p-4 mt-2">
-            <ProspectusViewer pdfUrl={pdfUrl} />
-          </div>
-        )}
+        {/* PDF Viewer — animated open/close */}
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="rounded-3xl overflow-hidden border border-white/20 shadow-2xl bg-zinc-900 p-4 mt-2"
+            >
+              <ProspectusViewer pdfUrl={pdfUrl} />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
