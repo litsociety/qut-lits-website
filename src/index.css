@@ -6,6 +6,10 @@
 @import url('./ui/tokens/design-tokens.css');
 @import url('./ui/styles/utilities.css');
 
+/* react-pdf layer styles */
+@import "react-pdf/dist/Page/AnnotationLayer.css";
+@import "react-pdf/dist/Page/TextLayer.css";
+
 /* Import Google Fonts with display=swap for better performance */
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Tomorrow:wght@300;400;500;600;700&display=swap');
