@@ -36,8 +36,8 @@ const Navigation = memo(function Navigation() {
   ];
 
   return (
-    <motion.nav
-      className={"sticky top-0 z-50 transition-all duration-300 bg-white/10 backdrop-blur-xl border-b border-white/20 shadow-lg h-16 sm:h-20"}
+    <nav
+      className="sticky top-0 z-50 transition-all duration-300 bg-white/10 backdrop-blur-xl border-b border-white/20 shadow-lg h-16 sm:h-20"
       role="navigation"
       aria-label="Main navigation"
     >
@@ -148,7 +148,7 @@ const Navigation = memo(function Navigation() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </nav>
   );
 });
 

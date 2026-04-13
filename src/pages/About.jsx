@@ -158,13 +158,13 @@ function MissionSection() {
             <div>
               <div className="liquid-glass-strong rounded-3xl p-6 sm:p-10 border border-white/20 shadow-2xl">
                 <h3 className="text-2xl font-bold text-white mb-6 font-tomorrow text-center">Our Values</h3>
-                <div className="grid grid-cols-2 gap-3 sm:gap-6">
+                <div className="grid grid-cols-2 gap-3 sm:gap-6 items-stretch">
                   {SOCIETY_VALUES.map((value, index) => (
-                    <Tiltable key={value.title} tiltOptions={{ maxTilt: 4, scale: 1.02 }}>
-                      <div className="text-center p-3 sm:p-6 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm">
-                        <value.icon className="h-12 w-12 text-primary mx-auto mb-4" />
-                        <h4 className="text-lg font-semibold text-white mb-2 font-rubik">{value.title}</h4>
-                        <p className="text-sm text-white/70 font-montserrat">{value.description}</p>
+                    <Tiltable key={value.title} tiltOptions={{ maxTilt: 4, scale: 1.02 }} className="h-full">
+                      <div className="h-full text-center p-3 sm:p-6 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm flex flex-col items-center justify-start">
+                        <value.icon className="h-10 w-10 sm:h-12 sm:w-12 text-primary mx-auto mb-3 sm:mb-4 shrink-0" />
+                        <h4 className="text-base sm:text-lg font-semibold text-white mb-2 font-rubik">{value.title}</h4>
+                        <p className="text-xs sm:text-sm text-white/70 font-montserrat">{value.description}</p>
                       </div>
                     </Tiltable>
                   ))}

@@ -292,17 +292,42 @@ const SPONSORS = [
 ];
 
 function SponsorsStrip() {
-  const items = [...SPONSORS, ...SPONSORS];
+  const marqueeItems = [...SPONSORS, ...SPONSORS];
   return (
     <section className="py-6 sm:py-10 relative border-t border-white/10" aria-label="Sponsors">
       <div className="mb-5 sm:mb-7 text-center">
         <p className="text-xs font-montserrat text-white/40 uppercase tracking-widest">Proudly supported by</p>
       </div>
-      <div className="relative overflow-hidden">
-        <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-black/70 to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-black/70 to-transparent z-10 pointer-events-none" />
-        <div className="w-max flex gap-10 sm:gap-24 items-center will-change-transform animate-marquee">
-          {items.map((sponsor, i) => (
+
+      {/* Mobile: static grid of all logos */}
+      <div className="sm:hidden flex flex-wrap justify-center items-center gap-x-8 gap-y-4 px-6">
+        {SPONSORS.map((sponsor) => (
+          <a
+            key={sponsor.name}
+            href={sponsor.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={sponsor.name}
+            className="opacity-75 hover:opacity-100 transition-opacity duration-300"
+          >
+            <img
+              src={sponsor.logo}
+              alt={sponsor.name}
+              className={`h-6 w-auto object-contain${sponsor.white ? " brightness-0 invert" : ""}`}
+              style={{ maxWidth: sponsor.maxWidth }}
+              loading="lazy"
+              draggable={false}
+            />
+          </a>
+        ))}
+      </div>
+
+      {/* Desktop: scrolling marquee */}
+      <div className="hidden sm:block relative overflow-hidden">
+        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-black/70 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-black/70 to-transparent z-10 pointer-events-none" />
+        <div className="w-max flex gap-24 items-center will-change-transform animate-marquee">
+          {marqueeItems.map((sponsor, i) => (
             <a
               key={i}
               href={sponsor.url}
@@ -314,7 +339,7 @@ function SponsorsStrip() {
               <img
                 src={sponsor.logo}
                 alt={sponsor.name}
-                className={`h-5 sm:h-7 w-auto object-contain${sponsor.white ? " brightness-0 invert" : ""}`}
+                className={`h-7 w-auto object-contain${sponsor.white ? " brightness-0 invert" : ""}`}
                 style={{ maxWidth: sponsor.maxWidth }}
                 loading="lazy"
                 draggable={false}
@@ -329,17 +354,11 @@ function SponsorsStrip() {
 
 function MemberCounterSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const isInView = useInView(ref, { once: true, amount: 0.15 });
   const [displayCount, setDisplayCount] = useState(0);
 
   useEffect(() => {
     if (!isInView) return;
-
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) {
-      setDisplayCount(100);
-      return;
-    }
 
     const controls = animate(0, 100, {
       duration: 2,
@@ -354,10 +373,7 @@ function MemberCounterSection() {
     <section className="py-10 sm:py-16 relative" aria-label="Member count">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center" ref={ref}>
         <Tiltable tiltOptions={{ maxTilt: 3, scale: 1.01 }}>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+          <div
             className="bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm p-8 sm:p-16"
           >
             <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center">
@@ -392,7 +408,7 @@ function MemberCounterSection() {
                 <ArrowRight className="h-4 w-4" />
               </TiltableAnchor>
             </div>
-          </motion.div>
+          </div>
         </Tiltable>
       </div>
     </section>
