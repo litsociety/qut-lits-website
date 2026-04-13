@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useInView, animate } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, Users, Calendar, Award, BookOpen, Briefcase, Globe, Zap, Network, Scale, Cpu, Database, Brain, Code, Rocket, Search, GitBranch, Layers, Sparkles, Target, TrendingUp, Shield, Eye, Lock, Instagram, Facebook, Linkedin, Mail } from "lucide-react";
 import Navigation from "../components/Navigation";
-import AnimatedBackground from "../components/AnimatedBackground";
+import AsciiBackground from "../components/AsciiBackground";
 import { useTilt } from "../hooks/useTilt";
 import { useSwipe } from "../hooks/useSwipe";
 import { Tiltable, TiltableButton, TiltableAnchor, TiltableLink } from "../components/Tiltable";
@@ -212,7 +212,7 @@ function BannerSlideshow() {
                 className="w-full h-full object-cover"
                 loading={index === 0 ? "eager" : "lazy"}
                 decoding="async"
-                fetchPriority={index === 0 ? "high" : "low"}
+                fetchpriority={index === 0 ? "high" : "low"}
                 sizes="100vw"
               />
               <div className="absolute inset-0 bg-black/55" />
@@ -543,7 +543,7 @@ function Home() {
       <a href="#main-content" className="skip-to-main focus:top-0">
         Skip to main content
       </a>
-      <AnimatedBackground />
+      <AsciiBackground />
       <Navigation />
       <main id="main-content">
         <BannerSlideshow />

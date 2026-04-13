@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ArrowRight, Calendar, Clock, MapPin, CalendarPlus } from "lucide-react";
 import Navigation from "../components/Navigation";
-import AnimatedBackground from "../components/AnimatedBackground";
+import AsciiBackground from "../components/AsciiBackground";
 import { Tiltable, TiltableAnchor } from "../components/Tiltable";
 import CalendarModal from "../components/CalendarModal";
 import { generateICS, downloadICS } from "../utils/generateICS";
@@ -440,7 +440,7 @@ function Events() {
       <a href="#main-content" className="skip-to-main focus:top-0">
         Skip to main content
       </a>
-      <AnimatedBackground />
+      <AsciiBackground />
       <Navigation />
       <main id="main-content">
         <HeroSection onSubscribe={handleSubscribeAll} />

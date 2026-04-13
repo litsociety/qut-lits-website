@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Mail, Linkedin, Users, Target, Lightbulb, Award, ArrowRight, Instagram, Facebook } from "lucide-react";
+import TextSphere from "../components/TextSphere";
 import Navigation from "../components/Navigation";
-import AnimatedBackground from "../components/AnimatedBackground";
+import AsciiBackground from "../components/AsciiBackground";
+import ScalesTextSculpture from "../components/ScalesTextSculpture";
 import { Tiltable, TiltableAnchor, TiltableLink } from "../components/Tiltable";
 
 const EXECUTIVE_TEAM = [
@@ -116,6 +118,7 @@ const SOCIETY_VALUES = [
 function HeroSection() {
   return (
     <section className="relative pt-32 pb-10 overflow-hidden" aria-label="About section">
+      <ScalesTextSculpture className="absolute inset-0 z-0 pointer-events-none" />
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
         <div>
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 font-tomorrow">
@@ -408,11 +411,17 @@ function About() {
       <a href="#main-content" className="skip-to-main focus:top-0">
         Skip to main content
       </a>
-      <AnimatedBackground />
+      <AsciiBackground />
       <Navigation />
       <main id="main-content">
         <HeroSection />
         <MissionSection />
+        {/* Text Sphere visualization */}
+        <section className="py-10 sm:py-16 relative" aria-label="Society values visualization">
+          <div className="max-w-4xl mx-auto px-6">
+            <TextSphere />
+          </div>
+        </section>
         <ExecutiveTeamSection />
         <PastPresidentsSection />
         <CTASection />

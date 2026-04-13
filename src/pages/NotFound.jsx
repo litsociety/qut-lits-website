@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Home, Search, ArrowLeft, HelpCircle } from "lucide-react";
 import Navigation from "../components/Navigation";
-import AnimatedBackground from "../components/AnimatedBackground";
+import AsciiBackground from "../components/AsciiBackground";
 import { TiltableLink, TiltableButton } from "../components/Tiltable";
 
 function NotFound() {
@@ -13,7 +13,7 @@ function NotFound() {
       <a href="#main-content" className="skip-to-main focus:top-0">
         Skip to main content
       </a>
-      <AnimatedBackground />
+      <AsciiBackground />
       <Navigation />
       <main id="main-content">
         <section className="relative pt-32 pb-20 overflow-hidden">

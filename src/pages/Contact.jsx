@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Send, MessageCircle } from "lucide-react";
 import Navigation from "../components/Navigation";
-import AnimatedBackground from "../components/AnimatedBackground";
+import AsciiBackground from "../components/AsciiBackground";
 import { useTilt } from "../hooks/useTilt";
 import { Tiltable, TiltableAnchor, TiltableButton } from "../components/Tiltable";
 
@@ -180,7 +180,7 @@ function Contact() {
       <a href="#main-content" className="skip-to-main focus:top-0">
         Skip to main content
       </a>
-      <AnimatedBackground />
+      <AsciiBackground />
       <Navigation />
       <main id="main-content">
       

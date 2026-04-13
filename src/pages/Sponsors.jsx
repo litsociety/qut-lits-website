@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, Instagram, Facebook, Linkedin, Mail, Download, FileText, ExternalLink, BookOpen, ChevronUp } from "lucide-react";
 import Navigation from "../components/Navigation";
-import AnimatedBackground from "../components/AnimatedBackground";
+import AsciiBackground from "../components/AsciiBackground";
 import { useTilt } from "../hooks/useTilt";
 import { Tiltable, TiltableAnchor } from "../components/Tiltable";
 
@@ -331,7 +331,7 @@ function Sponsors() {
       <a href="#main-content" className="skip-to-main focus:top-0">
         Skip to main content
       </a>
-      <AnimatedBackground />
+      <AsciiBackground />
       <Navigation />
       <main id="main-content">
         <HeroSection />
