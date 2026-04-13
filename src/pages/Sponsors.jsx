@@ -1,9 +1,6 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, Instagram, Facebook, Linkedin, Mail, Download, FileText, ExternalLink, BookOpen, ChevronUp } from "lucide-react";
-import { Document, Page, pdfjs } from "react-pdf";
-
-pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 import Navigation from "../components/Navigation";
 import AnimatedBackground from "../components/AnimatedBackground";
 import { useTilt } from "../hooks/useTilt";
@@ -152,91 +149,47 @@ function SponsorsSection() {
   );
 }
 
-function ProspectusViewer({ pdfUrl }) {
-  const [numPages, setNumPages] = useState(null);
+const PROSPECTUS_PAGES = 13;
+
+function ProspectusViewer() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [containerWidth, setContainerWidth] = useState(800);
-  const containerRef = useRef(null);
   const scrollRef = useRef(null);
-  const pageRefs = useRef([]);
 
   useEffect(() => {
-    if (!containerRef.current) return;
-    const observer = new ResizeObserver(([entry]) => {
-      setContainerWidth(entry.contentRect.width);
-    });
-    observer.observe(containerRef.current);
-    setContainerWidth(containerRef.current.offsetWidth);
-    return () => observer.disconnect();
-  }, []);
-
-  // Track which page is visible as user scrolls
-  useEffect(() => {
-    if (!scrollRef.current || !numPages) return;
+    if (!scrollRef.current) return;
     const el = scrollRef.current;
     const onScroll = () => {
       const scrollTop = el.scrollTop;
-      const pageHeight = el.scrollHeight / numPages;
-      const page = Math.min(numPages, Math.floor(scrollTop / pageHeight) + 1);
+      const pageHeight = el.scrollHeight / PROSPECTUS_PAGES;
+      const page = Math.min(PROSPECTUS_PAGES, Math.floor(scrollTop / pageHeight) + 1);
       setCurrentPage(page);
     };
     el.addEventListener("scroll", onScroll, { passive: true });
     return () => el.removeEventListener("scroll", onScroll);
-  }, [numPages]);
-
-  const onDocumentLoadSuccess = useCallback(({ numPages }) => {
-    setNumPages(numPages);
   }, []);
 
-  const pageWidth = Math.min(containerWidth - 32, 900);
-
   return (
-    <div ref={containerRef} className="w-full relative">
-      {/* Page indicator */}
-      {numPages && (
-        <div className="absolute top-3 right-3 z-10 bg-black/60 backdrop-blur-sm text-white/70 text-xs font-montserrat px-3 py-1.5 rounded-full border border-white/10">
-          {currentPage} / {numPages}
-        </div>
-      )}
+    <div className="w-full relative">
+      <div className="absolute top-3 right-3 z-10 bg-black/60 backdrop-blur-sm text-white/70 text-xs font-montserrat px-3 py-1.5 rounded-full border border-white/10">
+        {currentPage} / {PROSPECTUS_PAGES}
+      </div>
 
-      {/* Scrollable PDF container — custom scrollbar */}
       <div
         ref={scrollRef}
         className="pdf-scroll w-full overflow-y-scroll"
         style={{ maxHeight: "80vh" }}
       >
-        <Document
-          file={pdfUrl}
-          onLoadSuccess={onDocumentLoadSuccess}
-          loading={
-            <div className="space-y-2">
-              {Array.from({ length: 3 }, (_, i) => (
-                <div
-                  key={i}
-                  className="w-full rounded-lg bg-white/5 animate-pulse"
-                  style={{ height: `${pageWidth * 0.707}px` }}
-                />
-              ))}
-            </div>
-          }
-          error={
-            <div className="flex flex-col items-center justify-center py-16 text-white/50 font-montserrat text-sm">
-              <FileText className="h-10 w-10 mb-3 opacity-40" />
-              <p>Unable to load PDF.</p>
-            </div>
-          }
-        >
-          {numPages && Array.from({ length: numPages }, (_, i) => (
-            <div key={i} ref={el => pageRefs.current[i] = el} className="flex justify-center mb-2 last:mb-0">
-              <Page
-                pageNumber={i + 1}
-                width={pageWidth}
-                renderAnnotationLayer={false}
-                renderTextLayer={false}
-              />
-            </div>
+        <div className="flex flex-col items-center gap-2">
+          {Array.from({ length: PROSPECTUS_PAGES }, (_, i) => (
+            <img
+              key={i}
+              src={`/prospectus/page-${String(i + 1).padStart(2, "0")}.webp`}
+              alt={`Prospectus page ${i + 1}`}
+              className="w-full max-w-[900px] rounded-lg"
+              loading="lazy"
+            />
           ))}
-        </Document>
+        </div>
       </div>
     </div>
   );
@@ -291,7 +244,7 @@ function ProspectusSection() {
               transition={{ duration: 0.25, ease: "easeOut" }}
               className="rounded-3xl overflow-hidden border border-white/20 shadow-2xl bg-zinc-900 p-4 mt-2"
             >
-              <ProspectusViewer pdfUrl={pdfUrl} />
+              <ProspectusViewer />
             </motion.div>
           )}
         </AnimatePresence>
