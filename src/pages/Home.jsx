@@ -147,97 +147,102 @@ const BENEFITS = [
 
 function BannerSlideshow() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [prevSlide, setPrevSlide] = useState(0);
+
+  const changeSlide = (next) => {
+    if (next === currentSlide) return;
+    setPrevSlide(currentSlide);
+    setCurrentSlide(next);
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % BANNER_SLIDES.length);
+      setCurrentSlide((prev) => {
+        setPrevSlide(prev);
+        return (prev + 1) % BANNER_SLIDES.length;
+      });
     }, 5000);
     return () => clearInterval(timer);
   }, []);
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % BANNER_SLIDES.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + BANNER_SLIDES.length) % BANNER_SLIDES.length);
-  };
+  const nextSlide = () => changeSlide((currentSlide + 1) % BANNER_SLIDES.length);
+  const prevSlideNav = () => changeSlide((currentSlide - 1 + BANNER_SLIDES.length) % BANNER_SLIDES.length);
 
   const swipeRef = useSwipe({
     onSwipeLeft: nextSlide,
-    onSwipeRight: prevSlide,
+    onSwipeRight: prevSlideNav,
     threshold: 50
   });
 
   useEffect(() => {
     const handleKeyPress = (e) => {
-      if (e.key === 'ArrowLeft') {
-        prevSlide();
-      } else if (e.key === 'ArrowRight') {
-        nextSlide();
-      }
+      if (e.key === 'ArrowLeft') prevSlideNav();
+      else if (e.key === 'ArrowRight') nextSlide();
     };
-
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, []);
+  }, [currentSlide]);
 
   return (
-    <section 
+    <section
       ref={swipeRef}
-      className="relative h-[60vh] sm:h-[70vh] min-h-[400px] sm:min-h-[600px] overflow-hidden z-10"
+      className="relative h-[60vh] sm:h-[70vh] min-h-[400px] sm:min-h-[600px] overflow-hidden z-10 bg-black"
       aria-label="Featured slideshow"
       role="region"
       tabIndex={0}
     >
-      <AnimatePresence initial={false}>
-        <motion.div
-          key={currentSlide}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
-          className="absolute inset-0"
-          aria-label={`Slide ${currentSlide + 1} of ${BANNER_SLIDES.length}: ${BANNER_SLIDES[currentSlide].title}`}
-        >
-          {/* Background Image with Overlay */}
-          <div className="absolute inset-0">
-            <img 
-              src={BANNER_SLIDES[currentSlide].image} 
-              alt={BANNER_SLIDES[currentSlide].title}
-              className="w-full h-full object-cover"
-              loading={currentSlide === 0 ? "eager" : "lazy"}
-              decoding="async"
-              fetchPriority={currentSlide === 0 ? "high" : "low"}
-              sizes="100vw"
-            />
-            <div className="absolute inset-0 bg-black/55"></div>
-          </div>
+      {/* Render all slides — CSS transition handles the crossfade.
+          Previous slide stays fully opaque at z-1 as a backdrop.
+          Current slide fades in on top at z-2. No black flash. */}
+      {BANNER_SLIDES.map((slide, index) => {
+        const isCurrent = index === currentSlide;
+        const isPrev = index === prevSlide && prevSlide !== currentSlide;
+        return (
+          <div
+            key={slide.id}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              isCurrent ? 'opacity-100 z-[2]' : isPrev ? 'opacity-100 z-[1]' : 'opacity-0 z-0'
+            }`}
+            aria-hidden={!isCurrent}
+          >
+            <div className="absolute inset-0">
+              <img
+                src={slide.image}
+                alt={slide.title}
+                className="w-full h-full object-cover"
+                loading={index === 0 ? "eager" : "lazy"}
+                decoding="async"
+                fetchPriority={index === 0 ? "high" : "low"}
+                sizes="100vw"
+              />
+              <div className="absolute inset-0 bg-black/55" />
+            </div>
 
-          {/* Content Overlay */}
-          <div className="relative z-10 h-full flex items-center justify-center">
-            <div className="max-w-6xl mx-auto px-6 text-center">
-              <div className="mb-6">
-                <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20 mb-6">
-                  <Zap className="h-4 w-4 text-white/80" />
-                  <span className="text-sm font-rubik text-white/90">QUT's Premier Society for Law and Technology</span>
+            {isCurrent && (
+              <div className="relative z-10 h-full flex items-center justify-center">
+                <div className="max-w-6xl mx-auto px-6 text-center">
+                  <div className="mb-6">
+                    <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20 mb-6">
+                      <Zap className="h-4 w-4 text-white/80" />
+                      <span className="text-sm font-rubik text-white/90">QUT's Premier Society for Law and Technology</span>
+                    </div>
+                  </div>
+                  <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-white mb-8 font-tomorrow leading-tight">
+                    {HERO_DATA.title}
+                  </h1>
                 </div>
               </div>
-
-              <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-white mb-8 font-tomorrow leading-tight">
-                {HERO_DATA.title}
-              </h1>
-            </div>
+            )}
           </div>
-        </motion.div>
-      </AnimatePresence>
+        );
+      })}
 
       {/* Slide Indicators */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
         {BANNER_SLIDES.map((_, index) => (
           <TiltableButton
             key={index}
-            onClick={() => setCurrentSlide(index)}
+            onClick={() => changeSlide(index)}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
               index === currentSlide ? 'bg-white w-8' : 'bg-white/40'
             }`}

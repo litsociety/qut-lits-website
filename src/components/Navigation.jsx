@@ -1,5 +1,5 @@
 import React, { useState, useEffect, memo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+// framer-motion no longer used in nav — all animations are CSS-based
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useTilt } from "../hooks/useTilt";
@@ -107,47 +107,35 @@ const Navigation = memo(function Navigation() {
 
       </div>
       
-      {/* Mobile Navigation - Outside the main nav container for proper positioning */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            id="mobile-menu"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="lg:hidden absolute top-full left-0 right-0 z-50 bg-black/90 backdrop-blur-xl rounded-xl border border-white/15 mt-2 mx-3 sm:mx-4 overflow-hidden shadow-2xl"
-            role="menu"
-            aria-label="Mobile navigation menu"
-          >
-            <div className="py-2 space-y-0.5">
-              {navigationItems.map((item, index) => (
-                <motion.div
-                  key={item.to}
-                  initial={{ opacity: 0, x: -12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.2, delay: index * 0.04 }}
-                >
-                  <TiltableLink
-                    to={item.to}
-                    onClick={(e) => {
-                      setIsMobileMenuOpen(false);
-                      handleNavigationClick();
-                      setTimeout(() => e.currentTarget.blur(), 100);
-                    }}
-                    className="block px-5 py-3.5 text-white/90 hover:text-white hover:bg-white/10 transition-colors duration-200 font-rubik text-base focus:outline-none"
-                    tiltOptions={{ maxTilt: 2, scale: 1.01 }}
-                    role="menuitem"
-                    aria-label={`Navigate to ${item.label} page`}
-                  >
-                    {item.label}
-                  </TiltableLink>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Mobile Navigation */}
+      {isMobileMenuOpen && (
+        <div
+          id="mobile-menu"
+          className="lg:hidden absolute top-full left-0 right-0 z-50 bg-black/95 backdrop-blur-xl rounded-xl border border-white/15 mt-2 mx-3 sm:mx-4 overflow-hidden shadow-2xl"
+          role="menu"
+          aria-label="Mobile navigation menu"
+        >
+          <div className="py-2">
+            {navigationItems.map((item) => (
+              <TiltableLink
+                key={item.to}
+                to={item.to}
+                onClick={(e) => {
+                  setIsMobileMenuOpen(false);
+                  handleNavigationClick();
+                  setTimeout(() => e.currentTarget.blur(), 100);
+                }}
+                className="block px-5 py-3.5 text-white/90 hover:text-white hover:bg-white/10 transition-colors duration-200 font-rubik text-base focus:outline-none"
+                tiltOptions={{ maxTilt: 2, scale: 1.01 }}
+                role="menuitem"
+                aria-label={`Navigate to ${item.label} page`}
+              >
+                {item.label}
+              </TiltableLink>
+            ))}
+          </div>
+        </div>
+      )}
     </nav>
   );
 });
