@@ -297,8 +297,7 @@ const SPONSORS = [
 ];
 
 function SponsorsStrip() {
-  // Triple the list so wide screens never see a gap
-  const marqueeItems = [...SPONSORS, ...SPONSORS, ...SPONSORS];
+  const marqueeItems = [...SPONSORS, ...SPONSORS];
   return (
     <section className="py-6 sm:py-10 relative border-t border-white/10" aria-label="Sponsors">
       <div className="mb-5 sm:mb-7 text-center">
@@ -332,7 +331,7 @@ function SponsorsStrip() {
       <div className="hidden sm:block relative overflow-hidden">
         <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
-        <div className="w-max flex gap-16 items-center will-change-transform animate-marquee">
+        <div className="w-max flex gap-12 md:gap-20 lg:gap-28 xl:gap-36 2xl:gap-44 items-center will-change-transform animate-marquee">
           {marqueeItems.map((sponsor, i) => (
             <a
               key={i}
@@ -345,7 +344,7 @@ function SponsorsStrip() {
               <img
                 src={sponsor.logo}
                 alt={sponsor.name}
-                className={`h-10 w-auto object-contain${sponsor.white ? " brightness-0 invert" : ""}`}
+                className={`h-8 md:h-9 lg:h-10 w-auto object-contain${sponsor.white ? " brightness-0 invert" : ""}`}
                 style={{ maxWidth: sponsor.maxWidth }}
                 loading="lazy"
                 draggable={false}
