@@ -4,7 +4,6 @@ import { Mail, Linkedin, Users, Target, Lightbulb, Award, ArrowRight, Instagram,
 import TextSphere from "../components/TextSphere";
 import Navigation from "../components/Navigation";
 import AsciiBackground from "../components/AsciiBackground";
-import ScalesTextSculpture from "../components/ScalesTextSculpture";
 import { Tiltable, TiltableAnchor, TiltableLink } from "../components/Tiltable";
 
 const EXECUTIVE_TEAM = [
@@ -118,7 +117,6 @@ const SOCIETY_VALUES = [
 function HeroSection() {
   return (
     <section className="relative pt-32 pb-10 overflow-hidden" aria-label="About section">
-      <ScalesTextSculpture className="absolute inset-0 z-0 pointer-events-none" />
       <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
         <div>
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 font-tomorrow">

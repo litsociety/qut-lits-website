@@ -625,12 +625,6 @@ html {
    PERFORMANCE OPTIMIZATIONS
    ========================================================================== */
 
-/* Scales of justice gentle sway */
-@keyframes sway {
-  0%, 100% { transform: rotate(-1.5deg); }
-  50% { transform: rotate(1.5deg); }
-}
-
 /* Optimize animations for reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
