@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useInView, animate } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, Users, Calendar, Award, BookOpen, Briefcase, Globe, Zap, Network, Scale, Cpu, Database, Brain, Code, Rocket, Search, GitBranch, Layers, Sparkles, Target, TrendingUp, Shield, Eye, Lock, Instagram, Facebook, Linkedin, Mail } from "lucide-react";
 import Navigation from "../components/Navigation";
@@ -327,6 +327,78 @@ function SponsorsStrip() {
   );
 }
 
+function MemberCounterSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const [displayCount, setDisplayCount] = useState(0);
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setDisplayCount(100);
+      return;
+    }
+
+    const controls = animate(0, 100, {
+      duration: 2,
+      ease: "easeOut",
+      onUpdate: (latest) => setDisplayCount(Math.round(latest)),
+    });
+
+    return () => controls.stop();
+  }, [isInView]);
+
+  return (
+    <section className="py-16 relative" aria-label="Member count">
+      <div className="max-w-4xl mx-auto px-6 text-center" ref={ref}>
+        <Tiltable tiltOptions={{ maxTilt: 3, scale: 1.01 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm p-12 sm:p-16"
+          >
+            <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center">
+              <Users className="h-8 w-8 text-white/80" />
+            </div>
+
+            <div className="flex items-baseline justify-center">
+              <span className="text-6xl sm:text-7xl md:text-8xl font-bold text-white font-tomorrow">
+                {displayCount}
+              </span>
+              <span className="text-4xl sm:text-5xl md:text-6xl font-bold text-white/60 font-tomorrow">
+                +
+              </span>
+            </div>
+
+            <p className="text-xl sm:text-2xl text-white/90 font-rubik mt-4 tracking-wide">
+              Members
+            </p>
+            <p className="text-base text-white/50 font-montserrat mt-2">
+              and growing
+            </p>
+
+            <div className="mt-8">
+              <TiltableAnchor
+                href="https://campus.hellorubric.com/?tab=memberships&s=6719"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-white/70 hover:text-white text-sm font-rubik transition-colors duration-300"
+                tiltOptions={{ maxTilt: 4, scale: 1.02 }}
+              >
+                <span>Join our community</span>
+                <ArrowRight className="h-4 w-4" />
+              </TiltableAnchor>
+            </div>
+          </motion.div>
+        </Tiltable>
+      </div>
+    </section>
+  );
+}
+
 function BenefitsSection() {
   return (
     <section className="pt-12 pb-10 relative">
@@ -456,6 +528,7 @@ function Home() {
         <BannerSlideshow />
         <SponsorsStrip />
         <HeroSection />
+        <MemberCounterSection />
         <BenefitsSection />
         <CTASection />
       </main>
