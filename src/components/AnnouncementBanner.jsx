@@ -29,24 +29,21 @@ export default function AnnouncementBanner() {
       {/* Subtle bottom accent line */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 
-      <div className="relative px-4 py-2.5 flex items-center justify-between gap-3">
+      <div className="relative px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between gap-2 sm:gap-3">
         {/* Left: pulsing dot + title */}
-        <div className="flex items-center gap-2.5 shrink-0">
+        <div className="flex items-center gap-2 shrink-0 min-w-0">
           {/* Pulsing dot */}
-          <div className="relative flex items-center justify-center w-3.5 h-3.5">
+          <div className="relative flex items-center justify-center w-3.5 h-3.5 shrink-0">
             <span className="absolute inline-flex h-3 w-3 rounded-full bg-white/40 animate-ping" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
           </div>
-          <span className="font-bold font-rubik text-white text-sm tracking-wide hidden sm:block">
+          <span className="font-bold font-rubik text-white text-xs sm:text-sm tracking-wide truncate">
             {ANNOUNCEMENT.title}
           </span>
         </div>
 
-        {/* Centre: meta info */}
-        <div className="flex-1 flex items-center justify-center gap-3 flex-wrap text-xs font-montserrat text-white/60 min-w-0">
-          <span className="font-bold font-rubik text-white text-sm tracking-wide sm:hidden">
-            {ANNOUNCEMENT.title}
-          </span>
+        {/* Centre: meta info — hidden on small mobile */}
+        <div className="hidden sm:flex flex-1 items-center justify-center gap-3 text-xs font-montserrat text-white/60 min-w-0">
           <span className="flex items-center gap-1 whitespace-nowrap">
             <Clock className="h-3 w-3 shrink-0" />
             {ANNOUNCEMENT.date} &middot; {ANNOUNCEMENT.time}
@@ -58,15 +55,15 @@ export default function AnnouncementBanner() {
         </div>
 
         {/* Right: badge + register + dismiss */}
-        <div className="flex items-center gap-2 shrink-0">
-          <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full font-rubik bg-white/10 text-white/80 border border-white/20 hidden sm:inline">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <span className="text-xs font-semibold px-2 py-0.5 rounded-full font-rubik bg-white/10 text-white/80 border border-white/20 hidden sm:inline">
             {ANNOUNCEMENT.badge}
           </span>
           <a
             href={ANNOUNCEMENT.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 bg-white text-black font-semibold px-3 py-1 rounded-full text-xs font-rubik hover:bg-white/90 transition-colors duration-200 whitespace-nowrap"
+            className="inline-flex items-center gap-1 sm:gap-1.5 bg-white text-black font-semibold px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-rubik hover:bg-white/90 transition-colors duration-200 whitespace-nowrap"
           >
             Book Now <ArrowRight className="h-3 w-3" />
           </a>

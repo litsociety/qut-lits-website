@@ -185,7 +185,7 @@ function BannerSlideshow() {
   return (
     <section 
       ref={swipeRef}
-      className="relative h-[70vh] min-h-[600px] overflow-hidden z-10"
+      className="relative h-[60vh] sm:h-[70vh] min-h-[400px] sm:min-h-[600px] overflow-hidden z-10"
       aria-label="Featured slideshow"
       role="region"
       tabIndex={0}
@@ -251,9 +251,9 @@ function BannerSlideshow() {
 
 function HeroSection() {
   return (
-    <section className="relative pt-10 pb-12 flex items-center justify-center overflow-hidden">
-      <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-        <p className="text-lg md:text-xl mb-8 text-white/90 font-montserrat max-w-3xl mx-auto leading-relaxed">
+    <section className="relative pt-8 sm:pt-10 pb-8 sm:pb-12 flex items-center justify-center overflow-hidden">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 text-center">
+        <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 text-white/90 font-montserrat max-w-3xl mx-auto leading-relaxed">
           {HERO_DATA.description}
         </p>
         
@@ -262,16 +262,16 @@ function HeroSection() {
             href={HERO_DATA.ctaLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-white/20 to-white/10 text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:from-white/30 hover:to-white/20 border border-white/30 transition-all duration-300 shadow-2xl font-rubik overflow-hidden"
+            className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-white/20 to-white/10 text-white px-6 py-3.5 sm:px-10 sm:py-5 rounded-2xl text-base sm:text-xl font-semibold hover:from-white/30 hover:to-white/20 border border-white/30 transition-all duration-300 shadow-2xl font-rubik overflow-hidden"
             tiltOptions={{ maxTilt: 4, scale: 1.02 }}
           >
             <span className="relative z-10">{HERO_DATA.cta}</span>
             <ArrowRight className="h-5 w-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
           </TiltableAnchor>
-          
+
           <TiltableLink
             to="/about"
-            className="group inline-flex items-center gap-3 border-2 border-white/30 text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm font-rubik"
+            className="group inline-flex items-center gap-3 border-2 border-white/30 text-white px-6 py-3.5 sm:px-10 sm:py-5 rounded-2xl text-base sm:text-xl font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm font-rubik"
             tiltOptions={{ maxTilt: 4, scale: 1.02 }}
           >
             Learn More
@@ -294,14 +294,14 @@ const SPONSORS = [
 function SponsorsStrip() {
   const items = [...SPONSORS, ...SPONSORS];
   return (
-    <section className="py-10 relative border-t border-white/10" aria-label="Sponsors">
-      <div className="mb-7 text-center">
+    <section className="py-6 sm:py-10 relative border-t border-white/10" aria-label="Sponsors">
+      <div className="mb-5 sm:mb-7 text-center">
         <p className="text-xs font-montserrat text-white/40 uppercase tracking-widest">Proudly supported by</p>
       </div>
       <div className="relative overflow-hidden">
-        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-black/70 to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-black/70 to-transparent z-10 pointer-events-none" />
-        <div className="w-max flex gap-24 items-center will-change-transform animate-marquee">
+        <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-black/70 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-black/70 to-transparent z-10 pointer-events-none" />
+        <div className="w-max flex gap-10 sm:gap-24 items-center will-change-transform animate-marquee">
           {items.map((sponsor, i) => (
             <a
               key={i}
@@ -314,7 +314,7 @@ function SponsorsStrip() {
               <img
                 src={sponsor.logo}
                 alt={sponsor.name}
-                className={`h-7 w-auto object-contain${sponsor.white ? " brightness-0 invert" : ""}`}
+                className={`h-5 sm:h-7 w-auto object-contain${sponsor.white ? " brightness-0 invert" : ""}`}
                 style={{ maxWidth: sponsor.maxWidth }}
                 loading="lazy"
                 draggable={false}
@@ -351,14 +351,14 @@ function MemberCounterSection() {
   }, [isInView]);
 
   return (
-    <section className="py-16 relative" aria-label="Member count">
-      <div className="max-w-4xl mx-auto px-6 text-center" ref={ref}>
+    <section className="py-10 sm:py-16 relative" aria-label="Member count">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center" ref={ref}>
         <Tiltable tiltOptions={{ maxTilt: 3, scale: 1.01 }}>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm p-12 sm:p-16"
+            className="bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm p-8 sm:p-16"
           >
             <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center">
               <Users className="h-8 w-8 text-white/80" />
@@ -401,30 +401,30 @@ function MemberCounterSection() {
 
 function BenefitsSection() {
   return (
-    <section className="pt-12 pb-10 relative">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-10">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-tomorrow">
+    <section className="pt-8 sm:pt-12 pb-10 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-8 sm:mb-10">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 font-tomorrow">
             Why Join Us?
           </h2>
-          <p className="text-xl text-white/80 font-montserrat max-w-3xl mx-auto">
+          <p className="text-base sm:text-xl text-white/80 font-montserrat max-w-3xl mx-auto">
             Discover the unique advantages of being part of our community
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8 items-stretch">
           {BENEFITS.map((benefit, index) => (
             <Tiltable
               key={benefit.title}
               tiltOptions={{ maxTilt: 4, scale: 1.02 }}
               className="h-full"
             >
-              <div className="group text-center p-8 bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm hover:border-white/20 transition-all duration-300 hover:bg-white/10 h-full flex flex-col">
-                <div className={`w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-${benefit.color}/20 to-${benefit.color}/10 border border-${benefit.color}/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                  <benefit.icon className={`h-10 w-10 text-${benefit.color}`} />
+              <div className="group text-center p-6 sm:p-8 bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm hover:border-white/20 transition-all duration-300 hover:bg-white/10 h-full flex flex-col">
+                <div className={`w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 rounded-2xl bg-gradient-to-br from-${benefit.color}/20 to-${benefit.color}/10 border border-${benefit.color}/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                  <benefit.icon className={`h-8 w-8 sm:h-10 sm:w-10 text-${benefit.color}`} />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-4 font-rubik">{benefit.title}</h3>
-                <p className="text-white/80 font-montserrat leading-relaxed">{benefit.description}</p>
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4 font-rubik">{benefit.title}</h3>
+                <p className="text-sm sm:text-base text-white/80 font-montserrat leading-relaxed">{benefit.description}</p>
               </div>
             </Tiltable>
           ))}
@@ -436,31 +436,31 @@ function BenefitsSection() {
 
 function CTASection() {
   return (
-    <section className="py-16 relative" aria-label="Call to action section">
-      <div className="max-w-4xl mx-auto px-6 text-center">
+    <section className="py-10 sm:py-16 relative" aria-label="Call to action section">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
         <Tiltable tiltOptions={{ maxTilt: 3, scale: 1.01 }}>
-          <div className="liquid-glass-strong rounded-3xl p-8 sm:p-16 border border-white/20 shadow-2xl">
-          <h2 className="text-4xl font-bold text-white mb-6 font-tomorrow">
+          <div className="liquid-glass-strong rounded-3xl p-6 sm:p-16 border border-white/20 shadow-2xl">
+          <h2 className="text-2xl sm:text-4xl font-bold text-white mb-4 sm:mb-6 font-tomorrow">
             Ready to Shape the Future?
           </h2>
-          <p className="text-xl text-white/80 mb-10 font-montserrat max-w-2xl mx-auto leading-relaxed">
-            Join us today and become part of a community that's driving innovation 
+          <p className="text-base sm:text-xl text-white/80 mb-8 sm:mb-10 font-montserrat max-w-2xl mx-auto leading-relaxed">
+            Join us today and become part of a community that's driving innovation
             at the intersection of law and technology.
           </p>
-          
-          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-10">
+
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mb-8 sm:mb-10">
             <TiltableAnchor
               href="https://campus.hellorubric.com/?tab=memberships&s=6719"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center bg-gradient-to-r from-white/20 to-white/10 text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:from-white/30 hover:to-white/20 border border-white/30 transition-all duration-300 shadow-2xl font-rubik overflow-hidden"
+              className="group relative inline-flex items-center justify-center bg-gradient-to-r from-white/20 to-white/10 text-white px-6 py-3.5 sm:px-10 sm:py-5 rounded-2xl text-base sm:text-xl font-semibold hover:from-white/30 hover:to-white/20 border border-white/30 transition-all duration-300 shadow-2xl font-rubik overflow-hidden"
               tiltOptions={{ maxTilt: 4, scale: 1.02 }}
             >
               <span className="relative z-10">Join Now</span>
             </TiltableAnchor>
             <TiltableLink
               to="/about"
-              className="group inline-flex items-center gap-3 border-2 border-white/30 text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm font-rubik"
+              className="group inline-flex items-center justify-center gap-3 border-2 border-white/30 text-white px-6 py-3.5 sm:px-10 sm:py-5 rounded-2xl text-base sm:text-xl font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm font-rubik"
               tiltOptions={{ maxTilt: 4, scale: 1.02 }}
             >
               Learn More
