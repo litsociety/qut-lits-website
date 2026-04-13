@@ -289,15 +289,16 @@ function HeroSection() {
 }
 
 const SPONSORS = [
-  { name: "Ashurst",            logo: "/ashurst-logo.png",                             url: "https://www.ashurst.com/",               maxWidth: 80  },
-  { name: "Verlata Consulting", logo: "/verlata-consulting-logo.png",                  url: "https://www.verlata.com/",               maxWidth: 130 },
-  { name: "Dundas Lawyers",     logo: "/dundas-lawyers-logo.png",                      url: "https://www.dundaslawyers.com.au/",      maxWidth: 120, white: true },
-  { name: "Clayton Utz",        logo: "/clayton-utz-logo.png",                         url: "https://www.claytonutz.com/",            maxWidth: 130, white: true },
-  { name: "PwC",                logo: "/2218a457-c3df-4a2b-b98e-c45b60e56fb7.png",    url: "https://www.pwc.com.au/",               maxWidth: 60  },
+  { name: "Ashurst",            logo: "/ashurst-logo.png",                             url: "https://www.ashurst.com/",               maxWidth: 140 },
+  { name: "Verlata Consulting", logo: "/verlata-consulting-logo.png",                  url: "https://www.verlata.com/",               maxWidth: 180 },
+  { name: "Dundas Lawyers",     logo: "/dundas-lawyers-logo.png",                      url: "https://www.dundaslawyers.com.au/",      maxWidth: 170, white: true },
+  { name: "Clayton Utz",        logo: "/clayton-utz-logo.png",                         url: "https://www.claytonutz.com/",            maxWidth: 180, white: true },
+  { name: "PwC",                logo: "/2218a457-c3df-4a2b-b98e-c45b60e56fb7.png",    url: "https://www.pwc.com.au/",               maxWidth: 90  },
 ];
 
 function SponsorsStrip() {
-  const marqueeItems = [...SPONSORS, ...SPONSORS];
+  // Triple the list so wide screens never see a gap
+  const marqueeItems = [...SPONSORS, ...SPONSORS, ...SPONSORS];
   return (
     <section className="py-6 sm:py-10 relative border-t border-white/10" aria-label="Sponsors">
       <div className="mb-5 sm:mb-7 text-center">
@@ -305,7 +306,7 @@ function SponsorsStrip() {
       </div>
 
       {/* Mobile: static grid of all logos */}
-      <div className="sm:hidden flex flex-wrap justify-center items-center gap-x-8 gap-y-4 px-6">
+      <div className="sm:hidden flex flex-wrap justify-center items-center gap-x-8 gap-y-5 px-6">
         {SPONSORS.map((sponsor) => (
           <a
             key={sponsor.name}
@@ -318,7 +319,7 @@ function SponsorsStrip() {
             <img
               src={sponsor.logo}
               alt={sponsor.name}
-              className={`h-6 w-auto object-contain${sponsor.white ? " brightness-0 invert" : ""}`}
+              className={`h-7 w-auto object-contain${sponsor.white ? " brightness-0 invert" : ""}`}
               style={{ maxWidth: sponsor.maxWidth }}
               loading="lazy"
               draggable={false}
@@ -329,9 +330,9 @@ function SponsorsStrip() {
 
       {/* Desktop: scrolling marquee */}
       <div className="hidden sm:block relative overflow-hidden">
-        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-black/70 to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-black/70 to-transparent z-10 pointer-events-none" />
-        <div className="w-max flex gap-24 items-center will-change-transform animate-marquee">
+        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
+        <div className="w-max flex gap-16 items-center will-change-transform animate-marquee">
           {marqueeItems.map((sponsor, i) => (
             <a
               key={i}
@@ -339,12 +340,12 @@ function SponsorsStrip() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={sponsor.name}
-              className="flex-shrink-0 opacity-75 hover:opacity-100 transition-opacity duration-300"
+              className="flex-shrink-0 opacity-80 hover:opacity-100 transition-opacity duration-300"
             >
               <img
                 src={sponsor.logo}
                 alt={sponsor.name}
-                className={`h-7 w-auto object-contain${sponsor.white ? " brightness-0 invert" : ""}`}
+                className={`h-10 w-auto object-contain${sponsor.white ? " brightness-0 invert" : ""}`}
                 style={{ maxWidth: sponsor.maxWidth }}
                 loading="lazy"
                 draggable={false}
