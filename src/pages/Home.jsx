@@ -25,6 +25,16 @@ const HERO_DATA = {
 // Banner slideshow data
 const BANNER_SLIDES = [
   {
+    id: 9,
+    title: "Law & Tech Networking Night",
+    subtitle: "Industry Panel",
+    description: "Highlights from our premier event connecting students with professionals at the intersection of law and technology.",
+    image: "/law-tech-networking-night.jpg",
+    cta: "Learn More",
+    link: "/events",
+    techIcons: [Scale, Network, Briefcase]
+  },
+  {
     id: 1,
     title: "Welcome to Law, Innovation and Technology Society",
     subtitle: "Where Law Meets Innovation",
@@ -103,16 +113,6 @@ const BANNER_SLIDES = [
     cta: "Connect",
     link: "/contact",
     techIcons: [Network, Globe, Briefcase]
-  },
-  {
-    id: 9,
-    title: "Law & Tech Networking Night",
-    subtitle: "Industry Panel",
-    description: "Highlights from our premier event connecting students with professionals at the intersection of law and technology.",
-    image: "/law-tech-networking-night.jpg",
-    cta: "Learn More",
-    link: "/events",
-    techIcons: [Scale, Network, Briefcase]
   }
 ];
 
