@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ArrowRight, Calendar, Clock, MapPin, CalendarPlus } from "lucide-react";
 import Navigation from "../components/Navigation";
-import AsciiBackground from "../components/AsciiBackground";
+import AnimatedBackground from "../components/AnimatedBackground";
 import { Tiltable, TiltableAnchor } from "../components/Tiltable";
 import CalendarModal from "../components/CalendarModal";
 import { generateICS, downloadICS } from "../utils/generateICS";
@@ -16,45 +16,6 @@ const BADGE_STYLES = {
 
 // All events with optional ICS date data (dtstart/dtend as YYYYMMDDTHHMMSS or YYYYMMDD)
 const SEMESTER_1 = [
-  {
-    id: 3,
-    title: "LITS x GRC",
-    badge: "Collaboration",
-    image: "/lits-workshops.jpg",
-    description:
-      "A collaborative event between QUT LITS and GRC. Taking place in Semester 1, Week 8. Details to be announced.",
-    date: "Week 8, Semester 1",
-    time: "TBA",
-    location: "TBA",
-    link: null,
-  },
-  {
-    id: 4,
-    title: "Law & Tech Networking Night",
-    badge: "Landmark Event",
-    image: "/lits-slideshow-6.jpg",
-    description:
-      "Our premier event connecting students with professionals working at the intersection of law and technology. From privacy and cybersecurity to AI governance and digital innovation, this event highlights how technology is reshaping the legal landscape. Features panel discussions and networking sessions.",
-    date: "16 April 2026",
-    time: "6:00 PM – 9:00 PM",
-    location: "Clayton Utz",
-    link: "https://campus.hellorubric.com/?eid=57583",
-    linkLabel: "Book Now",
-    dtstart: "20260416T180000",
-    dtend:   "20260416T210000",
-  },
-  {
-    id: 5,
-    title: "LITS x ESC",
-    badge: "Collaboration",
-    image: "/lits-workshops.jpg",
-    description:
-      "A collaborative event between QUT LITS and ESC. Taking place in Semester 1, Week 10. Details to be announced.",
-    date: "Week 10, Semester 1",
-    time: "TBA",
-    location: "TBA",
-    link: null,
-  },
   {
     id: 6,
     title: "End-of-Semester 1 Social Drinks",
@@ -173,6 +134,19 @@ const SEMESTER_2 = [
 ];
 
 const PREVIOUS_EVENTS = [
+  {
+    id: 4,
+    title: "Law & Tech Networking Night",
+    badge: "Landmark Event",
+    image: "/law-tech-networking-night.jpg",
+    description:
+      "Our premier event connecting students with professionals working at the intersection of law and technology. From privacy and cybersecurity to AI governance and digital innovation, this event highlighted how technology is reshaping the legal landscape, featuring panel discussions and networking sessions.",
+    date: "16 April 2026",
+    time: "6:00 PM – 9:00 PM",
+    location: "Clayton Utz",
+    link: null,
+    past: true,
+  },
   {
     id: 2,
     title: "Technology in Legal Investigations",
@@ -440,7 +414,7 @@ function Events() {
       <a href="#main-content" className="skip-to-main focus:top-0">
         Skip to main content
       </a>
-      <AsciiBackground />
+      <AnimatedBackground />
       <Navigation />
       <main id="main-content">
         <HeroSection onSubscribe={handleSubscribeAll} />

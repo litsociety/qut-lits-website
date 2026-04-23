@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useInView, animate } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, Users, Calendar, Award, BookOpen, Briefcase, Globe, Zap, Network, Scale, Cpu, Database, Brain, Code, Rocket, Search, GitBranch, Layers, Sparkles, Target, TrendingUp, Shield, Eye, Lock, Instagram, Facebook, Linkedin, Mail } from "lucide-react";
 import Navigation from "../components/Navigation";
-import AsciiBackground from "../components/AsciiBackground";
+import AnimatedBackground from "../components/AnimatedBackground";
 import { useTilt } from "../hooks/useTilt";
 import { useSwipe } from "../hooks/useSwipe";
 import { Tiltable, TiltableButton, TiltableAnchor, TiltableLink } from "../components/Tiltable";
@@ -147,102 +147,94 @@ const BENEFITS = [
 
 function BannerSlideshow() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [prevSlide, setPrevSlide] = useState(0);
-
-  const changeSlide = (next) => {
-    if (next === currentSlide) return;
-    setPrevSlide(currentSlide);
-    setCurrentSlide(next);
-  };
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => {
-        setPrevSlide(prev);
-        return (prev + 1) % BANNER_SLIDES.length;
-      });
+      setCurrentSlide((prev) => (prev + 1) % BANNER_SLIDES.length);
     }, 5000);
     return () => clearInterval(timer);
   }, []);
 
-  const nextSlide = () => changeSlide((currentSlide + 1) % BANNER_SLIDES.length);
-  const prevSlideNav = () => changeSlide((currentSlide - 1 + BANNER_SLIDES.length) % BANNER_SLIDES.length);
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % BANNER_SLIDES.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + BANNER_SLIDES.length) % BANNER_SLIDES.length);
+  };
 
   const swipeRef = useSwipe({
     onSwipeLeft: nextSlide,
-    onSwipeRight: prevSlideNav,
+    onSwipeRight: prevSlide,
     threshold: 50
   });
 
   useEffect(() => {
     const handleKeyPress = (e) => {
-      if (e.key === 'ArrowLeft') prevSlideNav();
-      else if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === 'ArrowLeft') {
+        prevSlide();
+      } else if (e.key === 'ArrowRight') {
+        nextSlide();
+      }
     };
+
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [currentSlide]);
+  }, []);
 
   return (
-    <section
+    <section 
       ref={swipeRef}
-      className="relative h-[60vh] sm:h-[70vh] min-h-[400px] sm:min-h-[600px] overflow-hidden z-10 bg-black"
+      className="relative h-[70vh] min-h-[600px] overflow-hidden z-10"
       aria-label="Featured slideshow"
       role="region"
       tabIndex={0}
     >
-      {/* Render all slides — CSS transition handles the crossfade.
-          Previous slide stays fully opaque at z-1 as a backdrop.
-          Current slide fades in on top at z-2. No black flash. */}
-      {BANNER_SLIDES.map((slide, index) => {
-        const isCurrent = index === currentSlide;
-        const isPrev = index === prevSlide && prevSlide !== currentSlide;
-        return (
-          <div
-            key={slide.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              isCurrent ? 'opacity-100 z-[2]' : isPrev ? 'opacity-100 z-[1]' : 'opacity-0 z-0'
-            }`}
-            aria-hidden={!isCurrent}
-          >
-            <div className="absolute inset-0">
-              <img
-                src={slide.image}
-                alt={slide.title}
-                className="w-full h-full object-cover"
-                loading={index === 0 ? "eager" : "lazy"}
-                decoding="async"
-                fetchpriority={index === 0 ? "high" : "low"}
-                sizes="100vw"
-              />
-              <div className="absolute inset-0 bg-black/55" />
-            </div>
+      <AnimatePresence initial={false}>
+        <motion.div
+          key={currentSlide}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+          className="absolute inset-0"
+          aria-label={`Slide ${currentSlide + 1} of ${BANNER_SLIDES.length}: ${BANNER_SLIDES[currentSlide].title}`}
+        >
+          <img
+            src={BANNER_SLIDES[currentSlide].image}
+            alt={BANNER_SLIDES[currentSlide].title}
+            className="w-full h-full object-cover"
+            loading={currentSlide === 0 ? "eager" : "lazy"}
+            decoding="async"
+            fetchPriority={currentSlide === 0 ? "high" : "low"}
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-black/55"></div>
+        </motion.div>
+      </AnimatePresence>
 
-            {isCurrent && (
-              <div className="relative z-10 h-full flex items-center justify-center">
-                <div className="max-w-6xl mx-auto px-6 text-center">
-                  <div className="mb-6">
-                    <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20 mb-6">
-                      <Zap className="h-4 w-4 text-white/80" />
-                      <span className="text-sm font-rubik text-white/90">QUT's Premier Society for Law and Technology</span>
-                    </div>
-                  </div>
-                  <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-white mb-8 font-tomorrow leading-tight">
-                    {HERO_DATA.title}
-                  </h1>
-                </div>
-              </div>
-            )}
+      {/* Static content overlay — sits above the cross-fading image */}
+      <div className="absolute inset-0 z-10 flex items-center justify-center">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <div className="mb-6">
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 border border-white/20 mb-6">
+              <Zap className="h-4 w-4 text-white/80" />
+              <span className="text-sm font-rubik text-white/90">Australia's only university society at the intersection of law and technology</span>
+            </div>
           </div>
-        );
-      })}
+
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-white mb-8 font-tomorrow leading-tight">
+            {HERO_DATA.title}
+          </h1>
+        </div>
+      </div>
 
       {/* Slide Indicators */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
         {BANNER_SLIDES.map((_, index) => (
           <TiltableButton
             key={index}
-            onClick={() => changeSlide(index)}
+            onClick={() => setCurrentSlide(index)}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
               index === currentSlide ? 'bg-white w-8' : 'bg-white/40'
             }`}
@@ -256,9 +248,9 @@ function BannerSlideshow() {
 
 function HeroSection() {
   return (
-    <section className="relative pt-8 sm:pt-10 pb-8 sm:pb-12 flex items-center justify-center overflow-hidden">
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 text-center">
-        <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 text-white/90 font-montserrat max-w-3xl mx-auto leading-relaxed">
+    <section className="relative pt-10 pb-12 flex items-center justify-center overflow-hidden">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
+        <p className="text-lg md:text-xl mb-8 text-white/90 font-montserrat max-w-3xl mx-auto leading-relaxed">
           {HERO_DATA.description}
         </p>
         
@@ -267,16 +259,16 @@ function HeroSection() {
             href={HERO_DATA.ctaLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-white/20 to-white/10 text-white px-6 py-3.5 sm:px-10 sm:py-5 rounded-2xl text-base sm:text-xl font-semibold hover:from-white/30 hover:to-white/20 border border-white/30 transition-all duration-300 shadow-2xl font-rubik overflow-hidden"
+            className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-white/20 to-white/10 text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:from-white/30 hover:to-white/20 border border-white/30 transition-all duration-300 shadow-2xl font-rubik overflow-hidden"
             tiltOptions={{ maxTilt: 4, scale: 1.02 }}
           >
             <span className="relative z-10">{HERO_DATA.cta}</span>
             <ArrowRight className="h-5 w-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
           </TiltableAnchor>
-
+          
           <TiltableLink
             to="/about"
-            className="group inline-flex items-center gap-3 border-2 border-white/30 text-white px-6 py-3.5 sm:px-10 sm:py-5 rounded-2xl text-base sm:text-xl font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm font-rubik"
+            className="group inline-flex items-center gap-3 border-2 border-white/30 text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm font-rubik"
             tiltOptions={{ maxTilt: 4, scale: 1.02 }}
           >
             Learn More
@@ -289,62 +281,37 @@ function HeroSection() {
 }
 
 const SPONSORS = [
-  { name: "Ashurst",            logo: "/ashurst-logo.png",                             url: "https://www.ashurst.com/",               maxWidth: 140 },
-  { name: "Verlata Consulting", logo: "/verlata-consulting-logo.png",                  url: "https://www.verlata.com/",               maxWidth: 180 },
-  { name: "Dundas Lawyers",     logo: "/dundas-lawyers-logo.png",                      url: "https://www.dundaslawyers.com.au/",      maxWidth: 170, white: true },
-  { name: "Clayton Utz",        logo: "/clayton-utz-logo.png",                         url: "https://www.claytonutz.com/",            maxWidth: 180, white: true },
-  { name: "PwC",                logo: "/2218a457-c3df-4a2b-b98e-c45b60e56fb7.png",    url: "https://www.pwc.com.au/",               maxWidth: 90  },
+  { name: "Ashurst",            logo: "/ashurst-logo.png",                             url: "https://www.ashurst.com/",               maxWidth: 80  },
+  { name: "Verlata Consulting", logo: "/verlata-consulting-logo.png",                  url: "https://www.verlata.com/",               maxWidth: 130 },
+  { name: "Dundas Lawyers",     logo: "/dundas-lawyers-logo.png",                      url: "https://www.dundaslawyers.com.au/",      maxWidth: 120, white: true },
+  { name: "Clayton Utz",        logo: "/clayton-utz-logo.png",                         url: "https://www.claytonutz.com/",            maxWidth: 130, white: true },
+  { name: "PwC",                logo: "/2218a457-c3df-4a2b-b98e-c45b60e56fb7.png",    url: "https://www.pwc.com.au/",               maxWidth: 60  },
 ];
 
 function SponsorsStrip() {
-  const marqueeItems = [...SPONSORS, ...SPONSORS];
+  const items = [...SPONSORS, ...SPONSORS];
   return (
-    <section className="py-6 sm:py-10 relative border-t border-white/10" aria-label="Sponsors">
-      <div className="mb-5 sm:mb-7 text-center">
+    <section className="py-10 relative border-t border-white/10" aria-label="Sponsors">
+      <div className="mb-7 text-center">
         <p className="text-xs font-montserrat text-white/40 uppercase tracking-widest">Proudly supported by</p>
       </div>
-
-      {/* Mobile: static grid of all logos */}
-      <div className="sm:hidden flex flex-wrap justify-center items-center gap-x-8 gap-y-5 px-6">
-        {SPONSORS.map((sponsor) => (
-          <a
-            key={sponsor.name}
-            href={sponsor.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={sponsor.name}
-            className="opacity-75 hover:opacity-100 transition-opacity duration-300"
-          >
-            <img
-              src={sponsor.logo}
-              alt={sponsor.name}
-              className={`h-7 w-auto object-contain${sponsor.white ? " brightness-0 invert" : ""}`}
-              style={{ maxWidth: sponsor.maxWidth }}
-              loading="lazy"
-              draggable={false}
-            />
-          </a>
-        ))}
-      </div>
-
-      {/* Desktop: scrolling marquee */}
-      <div className="hidden sm:block relative overflow-hidden">
-        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
-        <div className="w-max flex gap-12 md:gap-20 lg:gap-28 xl:gap-36 2xl:gap-44 items-center will-change-transform animate-marquee">
-          {marqueeItems.map((sponsor, i) => (
+      <div className="relative overflow-hidden">
+        <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-black/70 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-black/70 to-transparent z-10 pointer-events-none" />
+        <div className="w-max flex gap-24 items-center will-change-transform animate-marquee">
+          {items.map((sponsor, i) => (
             <a
               key={i}
               href={sponsor.url}
               target="_blank"
               rel="noopener noreferrer"
               aria-label={sponsor.name}
-              className="flex-shrink-0 opacity-80 hover:opacity-100 transition-opacity duration-300"
+              className="flex-shrink-0 opacity-75 hover:opacity-100 transition-opacity duration-300"
             >
               <img
                 src={sponsor.logo}
                 alt={sponsor.name}
-                className={`h-8 md:h-9 lg:h-10 w-auto object-contain${sponsor.white ? " brightness-0 invert" : ""}`}
+                className={`h-7 w-auto object-contain${sponsor.white ? " brightness-0 invert" : ""}`}
                 style={{ maxWidth: sponsor.maxWidth }}
                 loading="lazy"
                 draggable={false}
@@ -359,11 +326,17 @@ function SponsorsStrip() {
 
 function MemberCounterSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.15 });
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
   const [displayCount, setDisplayCount] = useState(0);
 
   useEffect(() => {
     if (!isInView) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setDisplayCount(100);
+      return;
+    }
 
     const controls = animate(0, 100, {
       duration: 2,
@@ -375,11 +348,14 @@ function MemberCounterSection() {
   }, [isInView]);
 
   return (
-    <section className="py-10 sm:py-16 relative" aria-label="Member count">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center" ref={ref}>
+    <section className="py-16 relative" aria-label="Member count">
+      <div className="max-w-4xl mx-auto px-6 text-center" ref={ref}>
         <Tiltable tiltOptions={{ maxTilt: 3, scale: 1.01 }}>
-          <div
-            className="bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm p-8 sm:p-16"
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm p-12 sm:p-16"
           >
             <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center">
               <Users className="h-8 w-8 text-white/80" />
@@ -413,7 +389,7 @@ function MemberCounterSection() {
                 <ArrowRight className="h-4 w-4" />
               </TiltableAnchor>
             </div>
-          </div>
+          </motion.div>
         </Tiltable>
       </div>
     </section>
@@ -422,30 +398,30 @@ function MemberCounterSection() {
 
 function BenefitsSection() {
   return (
-    <section className="pt-8 sm:pt-12 pb-10 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-8 sm:mb-10">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 font-tomorrow">
+    <section className="pt-12 pb-10 relative">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center mb-10">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-tomorrow">
             Why Join Us?
           </h2>
-          <p className="text-base sm:text-xl text-white/80 font-montserrat max-w-3xl mx-auto">
+          <p className="text-xl text-white/80 font-montserrat max-w-3xl mx-auto">
             Discover the unique advantages of being part of our community
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8 items-stretch">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch">
           {BENEFITS.map((benefit, index) => (
             <Tiltable
               key={benefit.title}
               tiltOptions={{ maxTilt: 4, scale: 1.02 }}
               className="h-full"
             >
-              <div className="group text-center p-6 sm:p-8 bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm hover:border-white/20 transition-all duration-300 hover:bg-white/10 h-full flex flex-col">
-                <div className={`w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 rounded-2xl bg-gradient-to-br from-${benefit.color}/20 to-${benefit.color}/10 border border-${benefit.color}/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                  <benefit.icon className={`h-8 w-8 sm:h-10 sm:w-10 text-${benefit.color}`} />
+              <div className="group text-center p-8 bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm hover:border-white/20 transition-all duration-300 hover:bg-white/10 h-full flex flex-col">
+                <div className={`w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-${benefit.color}/20 to-${benefit.color}/10 border border-${benefit.color}/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                  <benefit.icon className={`h-10 w-10 text-${benefit.color}`} />
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4 font-rubik">{benefit.title}</h3>
-                <p className="text-sm sm:text-base text-white/80 font-montserrat leading-relaxed">{benefit.description}</p>
+                <h3 className="text-xl font-bold text-white mb-4 font-rubik">{benefit.title}</h3>
+                <p className="text-white/80 font-montserrat leading-relaxed">{benefit.description}</p>
               </div>
             </Tiltable>
           ))}
@@ -457,31 +433,31 @@ function BenefitsSection() {
 
 function CTASection() {
   return (
-    <section className="py-10 sm:py-16 relative" aria-label="Call to action section">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+    <section className="py-16 relative" aria-label="Call to action section">
+      <div className="max-w-4xl mx-auto px-6 text-center">
         <Tiltable tiltOptions={{ maxTilt: 3, scale: 1.01 }}>
-          <div className="liquid-glass-strong rounded-3xl p-6 sm:p-16 border border-white/20 shadow-2xl">
-          <h2 className="text-2xl sm:text-4xl font-bold text-white mb-4 sm:mb-6 font-tomorrow">
+          <div className="liquid-glass-strong rounded-3xl p-8 sm:p-16 border border-white/20 shadow-2xl">
+          <h2 className="text-4xl font-bold text-white mb-6 font-tomorrow">
             Ready to Shape the Future?
           </h2>
-          <p className="text-base sm:text-xl text-white/80 mb-8 sm:mb-10 font-montserrat max-w-2xl mx-auto leading-relaxed">
-            Join us today and become part of a community that's driving innovation
+          <p className="text-xl text-white/80 mb-10 font-montserrat max-w-2xl mx-auto leading-relaxed">
+            Join us today and become part of a community that's driving innovation 
             at the intersection of law and technology.
           </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mb-8 sm:mb-10">
+          
+          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-10">
             <TiltableAnchor
               href="https://campus.hellorubric.com/?tab=memberships&s=6719"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center justify-center bg-gradient-to-r from-white/20 to-white/10 text-white px-6 py-3.5 sm:px-10 sm:py-5 rounded-2xl text-base sm:text-xl font-semibold hover:from-white/30 hover:to-white/20 border border-white/30 transition-all duration-300 shadow-2xl font-rubik overflow-hidden"
+              className="group relative inline-flex items-center bg-gradient-to-r from-white/20 to-white/10 text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:from-white/30 hover:to-white/20 border border-white/30 transition-all duration-300 shadow-2xl font-rubik overflow-hidden"
               tiltOptions={{ maxTilt: 4, scale: 1.02 }}
             >
               <span className="relative z-10">Join Now</span>
             </TiltableAnchor>
             <TiltableLink
               to="/about"
-              className="group inline-flex items-center justify-center gap-3 border-2 border-white/30 text-white px-6 py-3.5 sm:px-10 sm:py-5 rounded-2xl text-base sm:text-xl font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm font-rubik"
+              className="group inline-flex items-center gap-3 border-2 border-white/30 text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm font-rubik"
               tiltOptions={{ maxTilt: 4, scale: 1.02 }}
             >
               Learn More
@@ -543,7 +519,7 @@ function Home() {
       <a href="#main-content" className="skip-to-main focus:top-0">
         Skip to main content
       </a>
-      <AsciiBackground />
+      <AnimatedBackground />
       <Navigation />
       <main id="main-content">
         <BannerSlideshow />

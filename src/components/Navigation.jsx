@@ -1,5 +1,5 @@
 import React, { useState, useEffect, memo } from "react";
-// framer-motion no longer used in nav — all animations are CSS-based
+import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useTilt } from "../hooks/useTilt";
@@ -36,8 +36,8 @@ const Navigation = memo(function Navigation() {
   ];
 
   return (
-    <nav
-      className="sticky top-0 z-50 transition-all duration-300 bg-white/10 backdrop-blur-xl border-b border-white/20 shadow-lg h-16 sm:h-20"
+    <motion.nav
+      className={"sticky top-0 z-50 transition-all duration-300 bg-white/10 backdrop-blur-xl border-b border-white/20 shadow-lg h-20"}
       role="navigation"
       aria-label="Main navigation"
     >
@@ -85,7 +85,7 @@ const Navigation = memo(function Navigation() {
             <button
               ref={joinNowTiltRef}
               onClick={handleJoinClick}
-              className="bg-gradient-to-r from-white/20 to-white/10 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-xl text-sm sm:text-base font-semibold hover:from-white/30 hover:to-white/20 border border-white/30 transition-all duration-300 font-rubik shadow-lg hover:shadow-xl focus:outline-none"
+              className="bg-gradient-to-r from-white/20 to-white/10 text-white px-6 py-3 rounded-xl font-semibold hover:from-white/30 hover:to-white/20 border border-white/30 transition-all duration-300 font-rubik shadow-lg hover:shadow-xl focus:outline-none"
               aria-label="Join QUT LITS - Opens in new tab"
             >
               Join Now
@@ -107,15 +107,15 @@ const Navigation = memo(function Navigation() {
 
       </div>
       
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation - Outside the main nav container for proper positioning */}
       {isMobileMenuOpen && (
-        <div
+        <div 
           id="mobile-menu"
-          className="lg:hidden absolute top-full left-0 right-0 z-50 bg-black/95 backdrop-blur-xl rounded-xl border border-white/15 mt-2 mx-3 sm:mx-4 overflow-hidden shadow-2xl"
+          className="lg:hidden absolute top-full left-0 right-0 z-50 bg-gradient-to-br from-dark-blue via-dark-purple to-dark-blue rounded-xl border border-primary/30 mt-2 mx-4 overflow-hidden shadow-2xl"
           role="menu"
           aria-label="Mobile navigation menu"
         >
-          <div className="py-2">
+          <div className="py-4 space-y-2">
             {navigationItems.map((item) => (
               <TiltableLink
                 key={item.to}
@@ -123,9 +123,10 @@ const Navigation = memo(function Navigation() {
                 onClick={(e) => {
                   setIsMobileMenuOpen(false);
                   handleNavigationClick();
+                  // Remove focus after click to prevent stuck focus state
                   setTimeout(() => e.currentTarget.blur(), 100);
                 }}
-                className="block px-5 py-3.5 text-white/90 hover:text-white hover:bg-white/10 transition-colors duration-200 font-rubik text-base focus:outline-none"
+                className="block px-4 py-3 text-white/90 hover:text-white hover:bg-white/10 transition-colors duration-200 font-rubik focus:outline-none"
                 tiltOptions={{ maxTilt: 2, scale: 1.01 }}
                 role="menuitem"
                 aria-label={`Navigate to ${item.label} page`}
@@ -136,7 +137,7 @@ const Navigation = memo(function Navigation() {
           </div>
         </div>
       )}
-    </nav>
+    </motion.nav>
   );
 });
 

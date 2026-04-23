@@ -12,7 +12,6 @@ export default defineConfig({
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'framer-motion': ['framer-motion'],
           'lucide-react': ['lucide-react'],
-          'ascii-bg': ['simplex-noise'],
         },
       },
     },

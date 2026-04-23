@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Mail, Linkedin, Users, Target, Lightbulb, Award, ArrowRight, Instagram, Facebook } from "lucide-react";
-import TextSphere from "../components/TextSphere";
 import Navigation from "../components/Navigation";
-import AsciiBackground from "../components/AsciiBackground";
+import AnimatedBackground from "../components/AnimatedBackground";
 import { Tiltable, TiltableAnchor, TiltableLink } from "../components/Tiltable";
 
 const EXECUTIVE_TEAM = [
@@ -159,13 +158,13 @@ function MissionSection() {
             <div>
               <div className="liquid-glass-strong rounded-3xl p-6 sm:p-10 border border-white/20 shadow-2xl">
                 <h3 className="text-2xl font-bold text-white mb-6 font-tomorrow text-center">Our Values</h3>
-                <div className="grid grid-cols-2 gap-3 sm:gap-6 items-stretch">
+                <div className="grid grid-cols-2 gap-3 sm:gap-6">
                   {SOCIETY_VALUES.map((value, index) => (
-                    <Tiltable key={value.title} tiltOptions={{ maxTilt: 4, scale: 1.02 }} className="h-full">
-                      <div className="h-full text-center p-3 sm:p-6 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm flex flex-col items-center justify-start">
-                        <value.icon className="h-10 w-10 sm:h-12 sm:w-12 text-primary mx-auto mb-3 sm:mb-4 shrink-0" />
-                        <h4 className="text-base sm:text-lg font-semibold text-white mb-2 font-rubik">{value.title}</h4>
-                        <p className="text-xs sm:text-sm text-white/70 font-montserrat">{value.description}</p>
+                    <Tiltable key={value.title} tiltOptions={{ maxTilt: 4, scale: 1.02 }}>
+                      <div className="text-center p-3 sm:p-6 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm">
+                        <value.icon className="h-12 w-12 text-primary mx-auto mb-4" />
+                        <h4 className="text-lg font-semibold text-white mb-2 font-rubik">{value.title}</h4>
+                        <p className="text-sm text-white/70 font-montserrat">{value.description}</p>
                       </div>
                     </Tiltable>
                   ))}
@@ -409,17 +408,11 @@ function About() {
       <a href="#main-content" className="skip-to-main focus:top-0">
         Skip to main content
       </a>
-      <AsciiBackground />
+      <AnimatedBackground />
       <Navigation />
       <main id="main-content">
         <HeroSection />
         <MissionSection />
-        {/* Text Sphere visualization */}
-        <section className="py-10 sm:py-16 relative" aria-label="Society values visualization">
-          <div className="max-w-4xl mx-auto px-6">
-            <TextSphere />
-          </div>
-        </section>
         <ExecutiveTeamSection />
         <PastPresidentsSection />
         <CTASection />
