@@ -23,12 +23,11 @@ const SEMESTER_1 = [
     image: "/lits-social.jpg",
     description:
       "Celebrate the end of Semester 1 with drinks at Bot Bar. Connect with fellow members, share your experiences, and unwind after a great semester of events.",
-    date: "22 May 2026",
-    time: "TBA",
+    date: "20 June 2026",
+    time: "7:00 PM",
     location: "Bot Bar",
     link: null,
-    dtstart: "20260522",
-    allDay: true,
+    dtstart: "20260620T190000",
   },
 ];
 
