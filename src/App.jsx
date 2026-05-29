@@ -5,6 +5,8 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Sponsors from './pages/Sponsors'
 import Events from './pages/Events'
+import Pathways from './pages/Pathways'
+import PathwayDetail from './pages/PathwayDetail'
 import NotFound from './pages/NotFound'
 import AnnouncementBanner from './components/AnnouncementBanner'
 
@@ -49,6 +51,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/events" element={<Events />} />
+        <Route path="/pathways" element={<Pathways />} />
+        <Route path="/pathways/:track" element={<PathwayDetail />} />
         <Route path="/sponsors" element={<Sponsors />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<NotFound />} />

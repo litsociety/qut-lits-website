@@ -31,6 +31,7 @@ const Navigation = memo(function Navigation() {
     { to: "/", label: "Home" },
     { to: "/about", label: "About" },
     { to: "/events", label: "Events" },
+    { to: "/pathways", label: "Pathways" },
     { to: "/sponsors", label: "Sponsors" },
     { to: "/contact", label: "Contact" }
   ];

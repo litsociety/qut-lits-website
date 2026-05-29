@@ -14,9 +14,24 @@ export default {
           '0%': { transform: 'translate3d(0, 0, 0)' },
           '100%': { transform: 'translate3d(-50%, 0, 0)' },
         },
+        'pulse-ring': {
+          '0%, 100%': { boxShadow: '0 8px 20px rgba(0, 0, 0, 0.30), 0 0 0 0 rgba(200, 200, 200, 0)' },
+          '50%': { boxShadow: '0 8px 20px rgba(0, 0, 0, 0.30), 0 0 0 8px rgba(200, 200, 200, 0.12)' },
+        },
+        'gradient-pan': {
+          '0%': { backgroundPosition: '0% 50%' },
+          '100%': { backgroundPosition: '200% 50%' },
+        },
+        'rise-in': {
+          '0%': { transform: 'translateY(12px)' },
+          '100%': { transform: 'translateY(0)' },
+        },
       },
       animation: {
         marquee: 'marquee 24s linear infinite',
+        'pulse-ring': 'pulse-ring 2.4s ease-in-out infinite',
+        'gradient-pan': 'gradient-pan 3s linear infinite',
+        'rise-in': 'rise-in 0.5s ease-out both',
       },
       colors: {
         'primary': '#c8c8c8',
